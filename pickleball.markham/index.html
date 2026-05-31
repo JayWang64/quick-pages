@@ -271,15 +271,29 @@
     }
 
     .court-row {
+      position: relative;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 8px 12px;
       border-top: 1px solid var(--line);
       padding: 12px 0;
+      overflow: hidden;
     }
 
     .court-row:first-child {
       border-top: 0;
+    }
+
+    .court-row.featured {
+      margin: 0 -8px;
+      border-top: 0;
+      border-radius: 8px;
+      padding: 14px 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .84)),
+        var(--court-image);
+      background-position: center;
+      background-size: cover;
     }
 
     .court-row span {
@@ -404,7 +418,8 @@
         address: "8075 Bayview Avenue",
         count: "4",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        featuredImage: "assets/pickleball-court-bg.png"
       },
       {
         name: "Blodwen Davies Park",
@@ -545,7 +560,7 @@
 
     list.innerHTML = courts
       .map((court) => `
-        <li class="court-row">
+        <li class="court-row ${court.featuredImage ? "featured" : ""}"${court.featuredImage ? ` style="--court-image: url('${court.featuredImage}')"` : ""}>
           <div class="court-main">
             <b>${court.name}</b>
             <span class="status ${court.special ? "special" : ""}">${court.special ? "Detailed schedule" : "Free public play"}</span>
