@@ -148,7 +148,7 @@
     .detail-lines {
       display: grid;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 0;
       color: var(--muted);
       font-size: .98rem;
     }
@@ -158,6 +158,25 @@
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .address-row {
+      display: grid;
+      grid-template-columns: 1fr 38px;
+      gap: 8px;
+    }
+
+    .address-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .address-link span {
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .court-main {
@@ -266,10 +285,6 @@
       margin-bottom: 0;
     }
 
-    .court-row .actions {
-      grid-column: 1 / -1;
-    }
-
     .court-row .icon-link {
       width: 38px;
       min-height: 38px;
@@ -325,18 +340,21 @@
       }
 
       .court-row {
-        grid-template-columns: minmax(220px, 1.2fr) 140px 1fr auto;
+        grid-template-columns: minmax(220px, 1.2fr) 140px minmax(240px, 1fr) auto;
         align-items: center;
       }
 
       .court-row .meta-row,
-      .court-row .detail-lines,
-      .court-row .actions {
+      .court-row .detail-lines {
         grid-column: auto;
       }
 
       .court-row .detail-lines {
         gap: 6px;
+      }
+
+      .court-row .actions {
+        justify-content: flex-end;
       }
     }
   </style>
@@ -519,24 +537,21 @@
             <span class="icon-stat ${court.lights === "Yes" ? "lights-on" : "lights-off"}" title="Lights: ${court.lights}" aria-label="Lights: ${court.lights}">${lightsMarkup(court)}</span>
           </div>
           <div class="detail-lines">
-            <div class="detail-line">
-              ${mapPinIcon()}
-              <span>${court.address}</span>
+            <div class="address-row">
+              <a class="address-link" href="${mapUrl(court)}" aria-label="Open Google Maps pin for ${court.name}">
+                ${mapPinIcon()}
+                <span>${court.address}</span>
+              </a>
+              <a class="icon-link" href="${directionsUrl(court)}" aria-label="Get driving directions to ${court.name}" title="Driving directions">
+                ${carIcon()}
+              </a>
             </div>
             <div class="detail-line">
               ${hoursIcon()}
               <span>${court.hours}</span>
             </div>
           </div>
-          <div class="actions">
-            <a class="icon-link" href="${mapUrl(court)}" aria-label="Open Google Maps pin for ${court.name}" title="Open Google Maps pin">
-              ${mapPinIcon()}
-            </a>
-            <a class="icon-link" href="${directionsUrl(court)}" aria-label="Get driving directions to ${court.name}" title="Driving directions">
-              ${carIcon()}
-            </a>
-            ${court.special ? '<a class="button secondary" href="cornell-community-park.html">Schedule</a>' : ""}
-          </div>
+          ${court.special ? '<div class="actions"><a class="button secondary" href="cornell-community-park.html">Schedule</a></div>' : ""}
         </li>
       `)
       .join("");
