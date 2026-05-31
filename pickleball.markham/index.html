@@ -407,6 +407,7 @@
         name: "Bayview Reservoir Park",
         address: "8075 Bayview Avenue",
         count: "4",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -414,6 +415,7 @@
         name: "Blodwen Davies Park",
         address: "335 Donald Cousens Parkway",
         count: "2",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -421,6 +423,7 @@
         name: "Boxgrove Community Park",
         address: "346 Box Grove By-pass",
         count: "2",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -428,6 +431,7 @@
         name: "Cornell Community Park",
         address: "371 Cornell Centre Blvd",
         count: "8",
+        setting: "Outdoor",
         lights: "Yes",
         hours: "7 AM to 11 PM",
         special: true
@@ -436,6 +440,7 @@
         name: "Duncan Park",
         address: "265 Bayview Fairways Drive",
         count: "3",
+        setting: "Outdoor",
         lights: "Yes",
         hours: "7 AM to 11 PM"
       },
@@ -443,6 +448,7 @@
         name: "Morgan Park",
         address: "11 Parkway Ave",
         count: "2",
+        setting: "Outdoor",
         lights: "Yes",
         hours: "7 AM to 11 PM"
       },
@@ -450,6 +456,7 @@
         name: "Markham Civic Centre",
         address: "101 Town Center Boulevard",
         count: "6",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -457,6 +464,7 @@
         name: "Roy Ramer Park",
         address: "11 James Parrot Avenue",
         count: "2",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -464,6 +472,7 @@
         name: "South Unionville Park West",
         address: "514 Caboto Trail",
         count: "2",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       },
@@ -471,6 +480,7 @@
         name: "Wismer Park",
         address: "980 Bur Oak Avenue",
         count: "2",
+        setting: "Outdoor",
         lights: "No",
         hours: "7 AM to Dark"
       }
@@ -539,12 +549,30 @@
       `;
     }
 
+    function outdoorIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 18h16"></path>
+          <path d="M7 18a5 5 0 0 1 10 0"></path>
+          <path d="M12 6v3"></path>
+          <path d="M6.6 8.6l2.1 2.1"></path>
+          <path d="M17.4 8.6l-2.1 2.1"></path>
+          <path d="M4 13h3"></path>
+          <path d="M17 13h3"></path>
+        </svg>
+      `;
+    }
+
     function countMarkup(court) {
       return `${courtIcon()} <span>${court.count} courts</span>`;
     }
 
     function lightsMarkup(court) {
       return `${lightIcon()} <span>Lights</span><span class="sr-only">: ${court.lights}</span>`;
+    }
+
+    function settingMarkup(court) {
+      return `${outdoorIcon()} <span>${court.setting}</span>`;
     }
 
     list.innerHTML = courts
@@ -555,6 +583,7 @@
             <span class="status ${court.special ? "special" : ""}">${court.special ? "Detailed schedule" : "Free public play"}</span>
           </div>
           <div class="meta-row">
+            <span class="icon-stat">${settingMarkup(court)}</span>
             <span class="icon-stat">${countMarkup(court)}</span>
             <span class="icon-stat ${court.lights === "Yes" ? "lights-on" : "lights-off"}" title="Lights: ${court.lights}" aria-label="Lights: ${court.lights}">${lightsMarkup(court)}</span>
           </div>
