@@ -61,38 +61,11 @@
       padding: 16px;
     }
 
-    .panel,
-    .court-card,
-    .court-list {
+    .court-table {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
       box-shadow: var(--shadow);
-    }
-
-    .panel {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 14px;
-      padding: 14px;
-    }
-
-    label {
-      display: grid;
-      gap: 6px;
-      font-weight: 800;
-    }
-
-    select {
-      width: 100%;
-      min-height: 46px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      color: var(--ink);
-      padding: 10px 12px;
-      font: inherit;
-      font-weight: 700;
     }
 
     .note {
@@ -101,23 +74,10 @@
       font-size: .94rem;
     }
 
-    .court-card {
-      margin-bottom: 14px;
-      padding: 16px;
-    }
-
-    .court-card h2 {
-      margin: 0 0 4px;
-      font-size: clamp(1.25rem, 6vw, 1.8rem);
-      line-height: 1.1;
-      letter-spacing: 0;
-    }
-
     .status {
       display: inline-flex;
       align-items: center;
       width: fit-content;
-      margin: 8px 0 14px;
       border-radius: 999px;
       padding: 7px 10px;
       background: var(--green-soft);
@@ -128,6 +88,14 @@
 
     .status.special {
       background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .court-row .status {
+      color: #157a4f;
+    }
+
+    .court-row .status.special {
       color: var(--orange);
     }
 
@@ -183,10 +151,21 @@
       font-size: .98rem;
     }
 
-    .detail-line {
+    .detail-line,
+    .court-main {
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .court-main {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .court-main b {
+      font-size: 1rem;
+      letter-spacing: 0;
     }
 
     .actions {
@@ -230,61 +209,71 @@
       color: var(--green);
     }
 
-    .court-list {
+    .court-table {
       padding: 14px;
     }
 
-    .court-list h2 {
+    .court-table h2 {
       margin: 0 0 10px;
       font-size: 1.1rem;
       letter-spacing: 0;
     }
 
-    .court-list ul {
+    .court-table p {
+      margin: 0 0 12px;
+    }
+
+    .court-table ul {
       display: grid;
-      gap: 8px;
+      gap: 0;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .court-list li {
+    .court-row {
       display: grid;
-      gap: 6px;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
       border-top: 1px solid var(--line);
-      padding-top: 8px;
+      padding: 12px 0;
     }
 
-    .court-list li:first-child {
+    .court-row:first-child {
       border-top: 0;
-      padding-top: 0;
     }
 
-    .court-list b {
-      font-size: .98rem;
-    }
-
-    .court-list span {
+    .court-row span {
       color: var(--muted);
       font-size: .9rem;
     }
 
-    .court-list .meta-row {
+    .court-row .icon-stat span {
+      color: inherit;
+    }
+
+    .court-row .meta-row {
+      grid-column: 1 / -1;
       margin-bottom: 0;
       gap: 10px;
       font-size: .9rem;
     }
 
-    .court-list .actions {
-      margin-top: 2px;
+    .court-row .detail-lines {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
     }
 
-    .court-list .icon-link {
+    .court-row .actions {
+      grid-column: 1 / -1;
+    }
+
+    .court-row .icon-link {
       width: 38px;
       min-height: 38px;
     }
 
-    .court-list .icon-link svg {
+    .court-row .icon-link svg {
       width: 19px;
       height: 19px;
     }
@@ -329,12 +318,24 @@
         padding: 24px;
       }
 
-      .panel {
-        grid-template-columns: 340px 1fr;
-        align-items: end;
+      .court-table {
         padding: 16px;
       }
 
+      .court-row {
+        grid-template-columns: minmax(220px, 1.2fr) 140px 1fr auto;
+        align-items: center;
+      }
+
+      .court-row .meta-row,
+      .court-row .detail-lines,
+      .court-row .actions {
+        grid-column: auto;
+      }
+
+      .court-row .detail-lines {
+        gap: 6px;
+      }
     }
   </style>
 </head>
@@ -347,62 +348,9 @@
   </header>
 
   <main class="wrap">
-    <section class="panel" aria-label="Court selector">
-      <label for="court-select">
-        Choose a court
-        <select id="court-select"></select>
-      </label>
-      <p class="note">Pick a court to see address, courts, lights, hours, and directions. Only Cornell needs a full schedule page right now.</p>
-    </section>
-
-    <section class="court-card" aria-live="polite">
-      <h2 id="court-name"></h2>
-      <p class="status" id="court-status"></p>
-      <div class="meta-row">
-        <span class="icon-stat" id="court-count"></span>
-        <span class="icon-stat" id="court-lights"></span>
-      </div>
-      <div class="detail-lines">
-        <div class="detail-line">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
-            <circle cx="12" cy="10" r="2.5"></circle>
-          </svg>
-          <span id="court-address"></span>
-        </div>
-        <div class="detail-line">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="8"></circle>
-            <path d="M12 4v16"></path>
-            <path d="M4 12h16"></path>
-          </svg>
-          <span id="court-hours"></span>
-        </div>
-      </div>
-      <div class="actions">
-        <a class="icon-link" id="map-link" href="" aria-label="Open Google Maps pin" title="Open Google Maps pin">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
-            <circle cx="12" cy="10" r="2.5"></circle>
-          </svg>
-        </a>
-        <a class="icon-link" id="directions-link" href="" aria-label="Get Google Maps driving directions" title="Driving directions">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 17h14"></path>
-            <path d="M6.5 17v2"></path>
-            <path d="M17.5 17v2"></path>
-            <path d="M4 13l2.1-5.2A3 3 0 0 1 8.9 6h6.2a3 3 0 0 1 2.8 1.8L20 13"></path>
-            <path d="M5 13h14a2 2 0 0 1 2 2v2H3v-2a2 2 0 0 1 2-2z"></path>
-            <circle cx="7.5" cy="15.5" r=".75"></circle>
-            <circle cx="16.5" cy="15.5" r=".75"></circle>
-          </svg>
-        </a>
-        <a class="button secondary" id="schedule-link" href="cornell-community-park.html" hidden>View Cornell schedule</a>
-      </div>
-    </section>
-
-    <section class="court-list" aria-label="All courts">
-      <h2>All Listed Public Courts</h2>
+    <section class="court-table" aria-label="All courts">
+      <h2>All Public Courts</h2>
+      <p class="note">Cornell has a detailed public/MPC schedule. The other listed courts are free public play during posted hours.</p>
       <ul id="court-list"></ul>
     </section>
   </main>
@@ -486,16 +434,6 @@
       }
     ];
 
-    const select = document.querySelector("#court-select");
-    const nameEl = document.querySelector("#court-name");
-    const statusEl = document.querySelector("#court-status");
-    const addressEl = document.querySelector("#court-address");
-    const countEl = document.querySelector("#court-count");
-    const lightsEl = document.querySelector("#court-lights");
-    const hoursEl = document.querySelector("#court-hours");
-    const mapLink = document.querySelector("#map-link");
-    const directionsLink = document.querySelector("#directions-link");
-    const scheduleLink = document.querySelector("#schedule-link");
     const list = document.querySelector("#court-list");
 
     function mapUrl(court) {
@@ -529,6 +467,15 @@
       `;
     }
 
+    function hoursIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l3 2"></path>
+        </svg>
+      `;
+    }
+
     function courtIcon() {
       return `
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -558,40 +505,27 @@
       return `${lightIcon()} <span>Lights</span><span class="sr-only">: ${court.lights}</span>`;
     }
 
-    function renderCourt(index) {
-      const court = courts[index];
-      nameEl.textContent = court.name;
-      statusEl.textContent = court.special
-        ? "Detailed public / MPC schedule"
-        : "Free public play during posted hours";
-      statusEl.classList.toggle("special", Boolean(court.special));
-      addressEl.textContent = court.address;
-      countEl.innerHTML = countMarkup(court);
-      lightsEl.innerHTML = lightsMarkup(court);
-      lightsEl.classList.toggle("lights-on", court.lights === "Yes");
-      lightsEl.classList.toggle("lights-off", court.lights !== "Yes");
-      lightsEl.title = `Lights: ${court.lights}`;
-      lightsEl.setAttribute("aria-label", `Lights: ${court.lights}`);
-      hoursEl.textContent = court.hours;
-      mapLink.href = mapUrl(court);
-      directionsLink.href = directionsUrl(court);
-      scheduleLink.hidden = !court.special;
-    }
-
-    select.innerHTML = courts
-      .map((court, index) => `<option value="${index}">${court.name}</option>`)
-      .join("");
-
     list.innerHTML = courts
       .map((court) => `
-        <li>
-          <b>${court.name}</b>
+        <li class="court-row">
+          <div class="court-main">
+            <b>${court.name}</b>
+            <span class="status ${court.special ? "special" : ""}">${court.special ? "Detailed schedule" : "Free public play"}</span>
+          </div>
           <div class="meta-row">
             <span class="icon-stat">${countMarkup(court)}</span>
             <span class="icon-stat ${court.lights === "Yes" ? "lights-on" : "lights-off"}" title="Lights: ${court.lights}" aria-label="Lights: ${court.lights}">${lightsMarkup(court)}</span>
           </div>
-          <span>${court.address}</span>
-          <span>${court.hours}</span>
+          <div class="detail-lines">
+            <div class="detail-line">
+              ${mapPinIcon()}
+              <span>${court.address}</span>
+            </div>
+            <div class="detail-line">
+              ${hoursIcon()}
+              <span>${court.hours}</span>
+            </div>
+          </div>
           <div class="actions">
             <a class="icon-link" href="${mapUrl(court)}" aria-label="Open Google Maps pin for ${court.name}" title="Open Google Maps pin">
               ${mapPinIcon()}
@@ -599,18 +533,11 @@
             <a class="icon-link" href="${directionsUrl(court)}" aria-label="Get driving directions to ${court.name}" title="Driving directions">
               ${carIcon()}
             </a>
+            ${court.special ? '<a class="button secondary" href="cornell-community-park.html">Schedule</a>' : ""}
           </div>
         </li>
       `)
       .join("");
-
-    const cornellIndex = courts.findIndex((court) => court.special);
-    select.value = String(cornellIndex);
-    renderCourt(cornellIndex);
-
-    select.addEventListener("change", (event) => {
-      renderCourt(Number(event.target.value));
-    });
   </script>
 </body>
 </html>
