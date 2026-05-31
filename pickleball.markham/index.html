@@ -181,6 +181,44 @@
       padding: 14px;
     }
 
+    details.tip {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .tip summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    .tip summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tip summary::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid #174a35;
+      border-bottom: 2px solid #174a35;
+      transform: rotate(-45deg);
+      transition: transform .18s ease;
+    }
+
+    .tip[open] summary::before {
+      transform: rotate(45deg);
+    }
+
+    .tip-body {
+      padding: 0 14px 14px 32px;
+    }
+
     .tip b {
       display: block;
       font-size: 1rem;
@@ -199,6 +237,29 @@
       padding-left: 18px;
       color: var(--muted);
       font-size: .92rem;
+    }
+
+    .video-card {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      color: #174a35;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .video-card img {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .next-up {
+      grid-column: 1 / -1;
     }
 
     .today-card {
@@ -552,28 +613,47 @@
         <b>When You Arrive</b>
         <ul>
           <li>Find the courts at Cornell Community Park.</li>
-          <li>If courts are full and new players arrive, use the Next Up rotation board. <a href="https://youtu.be/emvxSXu4Sno?si=zI0TFv_xON_-X8Go">Watch how it works</a>.</li>
+          <li>If courts are full and new players arrive, use the Next Up rotation board.</li>
           <li>Play doubles when people are waiting.</li>
         </ul>
       </div>
-      <div class="tip">
-        <b>Bring</b>
-        <ul>
-          <li>Paddle</li>
-          <li>Outdoor balls</li>
-          <li>Water</li>
-          <li>Shirt and non-marking court shoes</li>
-        </ul>
-      </div>
-      <div class="tip">
-        <b>Rules</b>
-        <ul>
-          <li>Games are to 11, or 20 minutes max.</li>
-          <li>Use the Next Up board when courts are full.</li>
-          <li>Do not enter nearby courts while play is active.</li>
-          <li>Clear the court when public or club time changes.</li>
-        </ul>
-      </div>
+      <details class="tip">
+        <summary>Bring</summary>
+        <div class="tip-body">
+          <ul>
+            <li>Paddle</li>
+            <li>Outdoor balls</li>
+            <li>Water</li>
+            <li>Shirt and non-marking court shoes</li>
+          </ul>
+        </div>
+      </details>
+      <details class="tip">
+        <summary>Rules</summary>
+        <div class="tip-body">
+          <ul>
+            <li>Games are to 11, or 20 minutes max.</li>
+            <li>Use the Next Up board when courts are full.</li>
+            <li>Do not enter nearby courts while play is active.</li>
+            <li>Clear the court when public or club time changes.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="tip next-up">
+        <summary>Next Up Board</summary>
+        <div class="tip-body">
+          <ul>
+            <li>Use the board when all courts are full and a new person or group arrives.</li>
+            <li>Put your paddle in the next open spot on the board.</li>
+            <li>Wait for the next finished game or 20-minute rotation.</li>
+            <li>When your spot is called, enter the assigned court and start the next game.</li>
+          </ul>
+          <a class="video-card" href="https://youtu.be/emvxSXu4Sno?si=zI0TFv_xON_-X8Go">
+            <img src="https://img.youtube.com/vi/emvxSXu4Sno/hqdefault.jpg" alt="Video thumbnail for how to use the Next Up rotation board">
+            <span>Watch how to use the Next Up rotation board</span>
+          </a>
+        </div>
+      </details>
     </section>
 
     <p class="note">
