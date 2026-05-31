@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Markham Pickleball Court Times</title>
+  <title>Markham Pickleball Courts</title>
   <style>
     :root {
       color-scheme: light;
@@ -12,12 +12,10 @@
       --line: #dce5dd;
       --page: #f7faf7;
       --panel: #ffffff;
-      --free: #157a4f;
-      --free-bg: #dff4e8;
-      --club: #9b4d18;
-      --club-bg: #ffe9d6;
-      --closed: #6f7580;
-      --closed-bg: #edf0f2;
+      --green: #174a35;
+      --green-soft: #dff4e8;
+      --orange: #9b4d18;
+      --orange-soft: #ffe9d6;
       --shadow: 0 12px 30px rgba(29, 54, 38, .10);
     }
 
@@ -35,9 +33,9 @@
     }
 
     header {
-      background: #174a35;
+      background: var(--green);
       color: white;
-      padding: 22px 18px 18px;
+      padding: 28px 18px 22px;
     }
 
     .wrap {
@@ -47,7 +45,7 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(1.45rem, 8vw, 2.7rem);
+      font-size: clamp(1.7rem, 8vw, 2.8rem);
       line-height: 1.05;
       letter-spacing: 0;
     }
@@ -55,453 +53,191 @@
     .subhead {
       margin: 10px 0 0;
       max-width: 58rem;
-      color: rgba(255, 255, 255, .86);
-      font-size: .98rem;
-    }
-
-    .top-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .top-link,
-    .icon-link {
-      display: inline-flex;
-      align-items: center;
-      min-height: 42px;
-      border-radius: 999px;
-      background: white;
-      color: #174a35;
-      padding: 9px 14px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: .94rem;
-    }
-
-    .icon-link {
-      justify-content: center;
-      width: 42px;
-      padding: 0;
-    }
-
-    .icon-link svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      stroke-width: 2.25;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      color: rgba(255, 255, 255, .88);
+      font-size: 1rem;
     }
 
     main {
       padding: 16px;
     }
 
-    .starter-tips {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .after-schedule {
-      margin-top: 14px;
-    }
-
-    .explainer {
-      margin-bottom: 14px;
-      padding: 14px;
+    .panel,
+    .court-card,
+    .court-list {
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: white;
+      background: var(--panel);
       box-shadow: var(--shadow);
     }
 
-    .explainer h2 {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-      letter-spacing: 0;
+    .panel {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 14px;
     }
 
-    .explainer p {
-      margin: 0 0 8px;
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 800;
+    }
+
+    select {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      padding: 10px 12px;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .note {
+      margin: 0;
       color: var(--muted);
       font-size: .94rem;
     }
 
-    .explainer p:last-child {
-      margin-bottom: 0;
-    }
-
-    .legend {
-      display: grid;
-      gap: 8px;
+    .court-card {
       margin-bottom: 14px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      box-shadow: var(--shadow);
+      padding: 16px;
     }
 
-    .legend-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: var(--muted);
-      font-size: .93rem;
-    }
-
-    .legend-chip {
-      flex: 0 0 auto;
-      border-radius: 999px;
-      padding: 3px 8px;
-      font-size: .76rem;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .legend-chip.free {
-      background: var(--free-bg);
-      color: var(--free);
-    }
-
-    .legend-chip.club {
-      background: var(--club-bg);
-      color: var(--club);
-    }
-
-    .tip {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-
-    details.tip {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .tip summary {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 14px;
-      cursor: pointer;
-      font-weight: 800;
-      list-style: none;
-    }
-
-    .tip summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .tip summary::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-right: 2px solid #174a35;
-      border-bottom: 2px solid #174a35;
-      transform: rotate(-45deg);
-      transition: transform .18s ease;
-    }
-
-    .tip[open] summary::before {
-      transform: rotate(45deg);
-    }
-
-    .tip-body {
-      padding: 0 14px 14px 32px;
-    }
-
-    .tip b {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 2px;
-    }
-
-    .tip span {
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .tip ul {
-      display: grid;
-      gap: 6px;
-      margin: 6px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .video-card {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-      color: #174a35;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .video-card img {
-      display: block;
-      width: 100%;
-      max-width: 360px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-
-    .next-up {
-      grid-column: 1 / -1;
-    }
-
-    .today-card {
-      margin-bottom: 14px;
-      padding: 14px;
-      border: 2px solid #174a35;
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: var(--shadow);
-    }
-
-    .today-card h2 {
-      margin: 0 0 8px;
-      font-size: 1.14rem;
+    .court-card h2 {
+      margin: 0 0 4px;
+      font-size: clamp(1.25rem, 6vw, 1.8rem);
+      line-height: 1.1;
       letter-spacing: 0;
     }
 
-    .today-card p {
-      margin: 0 0 12px;
-      color: var(--muted);
-      font-size: .96rem;
-    }
-
-    .today-card strong {
-      color: var(--ink);
-    }
-
-    .today-card button {
+    .status {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 40px;
+      width: fit-content;
+      margin: 8px 0 14px;
       border-radius: 999px;
-      background: #174a35;
-      color: white;
-      padding: 8px 14px;
-      font-size: .92rem;
-    }
-
-    .controls {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-      display: grid;
-      gap: 10px;
-      padding: 10px 0 14px;
-      background: linear-gradient(var(--page) 82%, rgba(247, 250, 247, 0));
-    }
-
-    .segmented {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      background: #e5ece7;
-      border-radius: 8px;
-      padding: 5px;
-    }
-
-    button {
-      min-height: 42px;
-      border: 0;
-      border-radius: 6px;
-      background: transparent;
-      color: var(--muted);
-      font: inherit;
+      padding: 7px 10px;
+      background: var(--green-soft);
+      color: #157a4f;
+      font-weight: 900;
       font-size: .88rem;
-      font-weight: 700;
-      line-height: 1.15;
-      padding: 6px;
-      cursor: pointer;
     }
 
-    button[aria-pressed="true"] {
-      background: white;
-      color: var(--ink);
-      box-shadow: 0 1px 8px rgba(20, 44, 31, .12);
+    .status.special {
+      background: var(--orange-soft);
+      color: var(--orange);
     }
 
-    .jump {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-      scrollbar-width: none;
-    }
-
-    .jump::-webkit-scrollbar {
-      display: none;
-    }
-
-    .jump a {
-      flex: 0 0 auto;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: white;
-      color: var(--ink);
-      padding: 9px 13px;
-      text-decoration: none;
-      font-size: .9rem;
-      font-weight: 700;
-    }
-
-    .today {
-      border: 2px solid #174a35;
-    }
-
-    .calendar {
+    .facts {
       display: grid;
-      gap: 12px;
-    }
-
-    .day {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .day h2 {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 0;
-      padding: 13px 14px;
-      background: #eef5ef;
-      font-size: 1.03rem;
-      letter-spacing: 0;
-    }
-
-    .day h2 span {
-      color: var(--muted);
-      font-size: .84rem;
-      font-weight: 700;
-    }
-
-    .slots {
-      display: grid;
-      gap: 9px;
-      padding: 12px;
-    }
-
-    .slot {
-      display: grid;
-      grid-template-columns: minmax(94px, 124px) 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      align-items: center;
+      margin: 0 0 14px;
+    }
+
+    .fact {
+      min-height: 76px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 10px;
-      background: #fff;
+      background: #fbfdfb;
     }
 
-    .slot.free {
-      border-color: #abd9bf;
-      background: var(--free-bg);
-    }
-
-    .slot.club {
-      border-color: #f3c9a7;
-      background: var(--club-bg);
-    }
-
-    .slot.closed {
-      background: var(--closed-bg);
-    }
-
-    .time {
-      font-weight: 800;
-      font-size: .95rem;
-    }
-
-    .tag {
-      display: inline-flex;
-      width: fit-content;
-      max-width: 100%;
-      border-radius: 999px;
-      padding: 4px 9px;
+    .fact span {
+      display: block;
+      color: var(--muted);
       font-size: .78rem;
       font-weight: 800;
-      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: .04em;
     }
 
-    .free .tag {
+    .fact b {
+      display: block;
+      margin-top: 4px;
+      font-size: .98rem;
+      letter-spacing: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--green);
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .button.secondary {
+      border: 1px solid var(--line);
       background: white;
-      color: var(--free);
+      color: var(--green);
     }
 
-    .club .tag {
-      background: white;
-      color: var(--club);
+    .court-list {
+      padding: 14px;
     }
 
-    .closed .tag {
-      background: white;
-      color: var(--closed);
+    .court-list h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      letter-spacing: 0;
     }
 
-    .detail {
+    .court-list ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .court-list li {
+      display: grid;
+      gap: 2px;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+
+    .court-list li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .court-list b {
+      font-size: .98rem;
+    }
+
+    .court-list span {
       color: var(--muted);
       font-size: .9rem;
-      margin-top: 3px;
     }
 
-    .note {
-      margin: 18px 0 0;
+    footer {
+      padding: 0 16px 24px;
+    }
+
+    footer p {
+      margin: 0 auto;
       color: var(--muted);
       font-size: .88rem;
     }
 
-    .source-list {
-      margin: 18px 0 0;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .source-list h2 {
-      margin: 0 0 8px;
-      color: var(--ink);
-      font-size: 1rem;
-      letter-spacing: 0;
-    }
-
-    .source-list p {
-      margin: 0 0 10px;
-    }
-
-    .source-list ul {
-      display: grid;
-      gap: 7px;
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .note a,
-    .source-list a {
-      color: #174a35;
+    footer a {
+      color: var(--green);
       font-weight: 800;
     }
 
@@ -511,28 +247,21 @@
 
     @media (min-width: 720px) {
       header {
-        padding: 34px 24px 28px;
+        padding: 38px 24px 30px;
       }
 
       main {
         padding: 24px;
       }
 
-      .starter-tips {
-        grid-template-columns: repeat(2, 1fr);
+      .panel {
+        grid-template-columns: 340px 1fr;
+        align-items: end;
+        padding: 16px;
       }
 
-      .controls {
-        grid-template-columns: 320px 1fr;
-        align-items: center;
-      }
-
-      .calendar {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .day.today {
-        grid-column: span 2;
+      .facts {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
   </style>
@@ -540,286 +269,182 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>Markham Pickleball Times</h1>
-      <p class="subhead">The primary outdoor pickleball courts in Markham are located in the community of Cornell. This is a simplified view of public access hours and Markham Pickleball Club member/program blocks.</p>
-      <div class="top-links" aria-label="Helpful links">
-        <a class="icon-link" href="https://maps.app.goo.gl/kBmmdU1neY3DwiyeA?g_st=ic" aria-label="Open Google Maps pin" title="Open Google Maps pin">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
-            <circle cx="12" cy="10" r="2.5"></circle>
-          </svg>
-        </a>
-        <a class="icon-link" href="https://www.google.com/maps/dir/?api=1&destination=Cornell%20Community%20Park%20Pickleball%20Courts%2C%20371%20Cornell%20Centre%20Blvd%2C%20Markham%2C%20ON" aria-label="Get Google Maps driving directions" title="Driving directions">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 17h14"></path>
-            <path d="M6.5 17v2"></path>
-            <path d="M17.5 17v2"></path>
-            <path d="M4 13l2.1-5.2A3 3 0 0 1 8.9 6h6.2a3 3 0 0 1 2.8 1.8L20 13"></path>
-            <path d="M5 13h14a2 2 0 0 1 2 2v2H3v-2a2 2 0 0 1 2-2z"></path>
-            <circle cx="7.5" cy="15.5" r=".75"></circle>
-            <circle cx="16.5" cy="15.5" r=".75"></circle>
-          </svg>
-        </a>
-        <a class="top-link" href="https://www.markham.ca/sports-recreation-fitness/parks-trails/pickleball-courts">City of Markham Pickleball</a>
-      </div>
+      <h1>Markham Pickleball Courts</h1>
+      <p class="subhead">A quick reference for public outdoor pickleball courts in Markham. Cornell has a detailed public/MPC schedule; the other listed courts are simple public open-hour courts.</p>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="today-card" aria-label="Today's public availability">
-      <h2>Today's Public Times</h2>
-      <p id="today-summary">Loading today's public court times...</p>
-      <button type="button" id="today-jump">Jump to Today</button>
+    <section class="panel" aria-label="Court selector">
+      <label for="court-select">
+        Choose a court
+        <select id="court-select"></select>
+      </label>
+      <p class="note">Pick a court to see address, courts, lights, hours, and directions. Only Cornell needs a full schedule page right now.</p>
     </section>
 
-    <section class="legend" aria-label="Schedule legend">
-      <div class="legend-item">
-        <span class="legend-chip free">Free</span>
-        <span>Public play, no cost. Go during these green times if space is available.</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-chip club">Paid / MPC</span>
-        <span>Markham Pickleball Club member/program time. Not a public drop-in window.</span>
-      </div>
-    </section>
-
-    <section class="explainer" aria-label="How the court schedule works">
-      <h2>How It Works</h2>
-      <p>Pick the day you are free, look for a green Free block, and go during that window. If courts are full, use the Next Up board and rotate in.</p>
-      <p>Paid blocks are for Markham Pickleball Club (MPC) members/programs. Click <a href="https://secure.pickleballcanada.org/club/markham-pickleball-club/32000/about-us/6956/">here</a> to learn more about MPC.</p>
-    </section>
-
-    <section class="controls" aria-label="Calendar controls">
-      <div class="segmented" role="group" aria-label="Filter schedule">
-        <button type="button" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" data-filter="free" aria-pressed="false">Free</button>
-        <button type="button" data-filter="club" aria-pressed="false">Paid / MPC</button>
-      </div>
-      <nav class="jump" aria-label="Jump to day">
-        <a href="#monday">Mon</a>
-        <a href="#tuesday">Tue</a>
-        <a href="#wednesday">Wed</a>
-        <a href="#thursday">Thu</a>
-        <a href="#friday">Fri</a>
-        <a href="#saturday">Sat</a>
-        <a href="#sunday">Sun</a>
-      </nav>
-    </section>
-
-    <section class="calendar" id="calendar" aria-label="Weekly court calendar"></section>
-
-    <section class="starter-tips after-schedule" aria-label="Beginner tips">
-      <div class="tip">
-        <b>When You Arrive</b>
-        <ul>
-          <li>Find the courts at Cornell Community Park.</li>
-          <li>If courts are full and new players arrive, use the Next Up rotation board.</li>
-          <li>Play doubles when people are waiting.</li>
-        </ul>
-      </div>
-      <details class="tip">
-        <summary>Bring</summary>
-        <div class="tip-body">
-          <ul>
-            <li>Paddle</li>
-            <li>Outdoor balls</li>
-            <li>Water</li>
-            <li>Shirt and non-marking court shoes</li>
-          </ul>
+    <section class="court-card" aria-live="polite">
+      <h2 id="court-name"></h2>
+      <p class="status" id="court-status"></p>
+      <div class="facts">
+        <div class="fact">
+          <span>Address</span>
+          <b id="court-address"></b>
         </div>
-      </details>
-      <details class="tip">
-        <summary>Rules</summary>
-        <div class="tip-body">
-          <ul>
-            <li>Games are to 11, or 20 minutes max.</li>
-            <li>Use the Next Up board when courts are full.</li>
-            <li>Do not enter nearby courts while play is active.</li>
-            <li>Clear the court when public or club time changes.</li>
-          </ul>
+        <div class="fact">
+          <span>Courts</span>
+          <b id="court-count"></b>
         </div>
-      </details>
-      <details class="tip next-up">
-        <summary>Next Up Board</summary>
-        <div class="tip-body">
-          <ul>
-            <li>Use the board when all courts are full and a new person or group arrives.</li>
-            <li>Put your paddle in the next open spot on the board.</li>
-            <li>Wait for the next finished game or 20-minute rotation.</li>
-            <li>When your spot is called, enter the assigned court and start the next game.</li>
-          </ul>
-          <a class="video-card" href="https://youtu.be/emvxSXu4Sno?si=zI0TFv_xON_-X8Go">
-            <img src="https://img.youtube.com/vi/emvxSXu4Sno/hqdefault.jpg" alt="Video thumbnail for how to use the Next Up rotation board">
-            <span>Watch how to use the Next Up rotation board</span>
-          </a>
+        <div class="fact">
+          <span>Lights</span>
+          <b id="court-lights"></b>
         </div>
-      </details>
+        <div class="fact">
+          <span>Hours</span>
+          <b id="court-hours"></b>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="button" id="directions-link" href="">Directions</a>
+        <a class="button secondary" id="schedule-link" href="cornell-community-park.html" hidden>View Cornell schedule</a>
+      </div>
     </section>
 
-    <p class="note">
-      Source: <a href="https://www.markham.ca/sports-recreation-fitness/parks-trails/pickleball-courts">City of Markham Pickleball Courts</a>, public access hours section. Last update shown there: May 19, 2026.
-    </p>
-
-    <section class="source-list" aria-label="Reference links">
-      <h2>Quick Reference</h2>
-      <p>Working summary: Markham Pickleball Club is the documented private/member club tied to Cornell Community Park. The remaining listed blocks are public access.</p>
-      <ul>
-        <li><a href="https://www.markham.ca/sports-recreation-fitness/parks-trails/pickleball-courts">City of Markham court hours</a></li>
-        <li><a href="https://secure.pickleballcanada.org/club/markham-pickleball-club/32000/about-us/6956/">MPC club profile</a></li>
-        <li><a href="https://secure.pickleballcanada.org/event/mpc-outdoor-season-2025/40076/">MPC 2025 outdoor registration</a></li>
-        <li><a href="https://ward5markham.ca/pickleball-courts-at-cornell-community-park/">Councillor Andrew Keyes update</a></li>
-      </ul>
+    <section class="court-list" aria-label="All courts">
+      <h2>All Listed Public Courts</h2>
+      <ul id="court-list"></ul>
     </section>
   </main>
 
+  <footer>
+    <p class="wrap">Source: <a href="https://www.markham.ca/sports-recreation-fitness/parks-trails/pickleball-courts">City of Markham Pickleball Courts</a>. Last update shown there: May 19, 2026.</p>
+  </footer>
+
   <script>
-    const days = [
+    const courts = [
       {
-        day: "Monday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-5 PM", "Public access on courts 5-8 only"],
-          ["club", "1-5 PM", "Courts 1-4: MPC member/program block"],
-          ["free", "5-8 PM", "Public access on courts 1-8"],
-          ["club", "8-11 PM", "MPC member/program block"]
-        ]
+        name: "Bayview Reservoir Park",
+        address: "8075 Bayview Avenue",
+        count: "4",
+        lights: "No",
+        hours: "7 AM to Dark"
       },
       {
-        day: "Tuesday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-5 PM", "Public access on courts 5-8 only"],
-          ["club", "1-5 PM", "Courts 1-4: MPC member/program block"],
-          ["club", "5-8 PM", "MPC member/program block"],
-          ["free", "8-11 PM", "Public access on courts 1-8"]
-        ]
+        name: "Blodwen Davies Park",
+        address: "335 Donald Cousens Parkway",
+        count: "2",
+        lights: "No",
+        hours: "7 AM to Dark"
       },
       {
-        day: "Wednesday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-5 PM", "Public access on courts 5-8 only"],
-          ["club", "1-5 PM", "Courts 1-4: MPC member/program block"],
-          ["free", "5-8 PM", "Public access on courts 1-8"],
-          ["club", "8-11 PM", "MPC member/program block"]
-        ]
+        name: "Boxgrove Community Park",
+        address: "346 Box Grove By-pass",
+        count: "2",
+        lights: "No",
+        hours: "7 AM to Dark"
       },
       {
-        day: "Thursday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-5 PM", "Public access on courts 5-8 only"],
-          ["club", "1-5 PM", "Courts 1-4: MPC member/program block"],
-          ["club", "5-8 PM", "MPC member/program block"],
-          ["free", "8-11 PM", "Public access on courts 1-8"]
-        ]
+        name: "Cornell Community Park",
+        address: "371 Cornell Centre Blvd",
+        count: "8",
+        lights: "Yes",
+        hours: "7 AM to 11 PM",
+        special: true
       },
       {
-        day: "Friday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-5 PM", "Public access on courts 5-8 only"],
-          ["club", "1-5 PM", "Courts 1-4: MPC member/program block"],
-          ["free", "5-8 PM", "Public access on courts 1-8"],
-          ["club", "8-11 PM", "MPC member/program block"]
-        ]
+        name: "Duncan Park",
+        address: "265 Bayview Fairways Drive",
+        count: "3",
+        lights: "Yes",
+        hours: "7 AM to 11 PM"
       },
       {
-        day: "Saturday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-2 PM", "MPC member/program block"],
-          ["free", "2-8 PM", "Public access on courts 1-8"],
-          ["club", "8-11 PM", "MPC member/program block"]
-        ]
+        name: "Morgan Park",
+        address: "11 Parkway Ave",
+        count: "2",
+        lights: "Yes",
+        hours: "7 AM to 11 PM"
       },
       {
-        day: "Sunday",
-        slots: [
-          ["free", "7-10 AM", "Public access on courts 1-8"],
-          ["club", "10 AM-1 PM", "MPC member/program block"],
-          ["free", "1-4 PM", "Public access on courts 1-8"],
-          ["club", "4-8 PM", "MPC member/program block"],
-          ["free", "8-11 PM", "Public access on courts 1-8"]
-        ]
+        name: "Markham Civic Centre",
+        address: "101 Town Center Boulevard",
+        count: "6",
+        lights: "No",
+        hours: "7 AM to Dark"
+      },
+      {
+        name: "Roy Ramer Park",
+        address: "11 James Parrot Avenue",
+        count: "2",
+        lights: "No",
+        hours: "7 AM to Dark"
+      },
+      {
+        name: "South Unionville Park West",
+        address: "514 Caboto Trail",
+        count: "2",
+        lights: "No",
+        hours: "7 AM to Dark"
+      },
+      {
+        name: "Wismer Park",
+        address: "980 Bur Oak Avenue",
+        count: "2",
+        lights: "No",
+        hours: "7 AM to Dark"
       }
     ];
 
-    const calendar = document.querySelector("#calendar");
-    const todaySummary = document.querySelector("#today-summary");
-    const todayJump = document.querySelector("#today-jump");
-    const todayName = new Date().toLocaleDateString("en-CA", { weekday: "long" });
+    const select = document.querySelector("#court-select");
+    const nameEl = document.querySelector("#court-name");
+    const statusEl = document.querySelector("#court-status");
+    const addressEl = document.querySelector("#court-address");
+    const countEl = document.querySelector("#court-count");
+    const lightsEl = document.querySelector("#court-lights");
+    const hoursEl = document.querySelector("#court-hours");
+    const directionsLink = document.querySelector("#directions-link");
+    const scheduleLink = document.querySelector("#schedule-link");
+    const list = document.querySelector("#court-list");
 
-    function slug(text) {
-      return text.toLowerCase();
+    function directionsUrl(court) {
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
     }
 
-    function slotMarkup(type, time, detail) {
-      const label = type === "free" ? "Free" : "Paid / MPC";
-      return `
-        <article class="slot ${type}" data-type="${type}">
-          <div class="time">${time}</div>
-          <div>
-            <span class="tag">${label}</span>
-            <div class="detail">${detail}</div>
-          </div>
-        </article>
-      `;
+    function renderCourt(index) {
+      const court = courts[index];
+      nameEl.textContent = court.name;
+      statusEl.textContent = court.special
+        ? "Detailed public / MPC schedule"
+        : "Free public play during posted hours";
+      statusEl.classList.toggle("special", Boolean(court.special));
+      addressEl.textContent = court.address;
+      countEl.textContent = court.count;
+      lightsEl.textContent = court.lights;
+      hoursEl.textContent = court.hours;
+      directionsLink.href = directionsUrl(court);
+      scheduleLink.hidden = !court.special;
     }
 
-    function render() {
-      calendar.innerHTML = days.map((item) => {
-        const todayClass = item.day === todayName ? " today" : "";
-        const slots = item.slots
-          .map(([type, time, detail]) => slotMarkup(type, time, detail))
-          .join("");
+    select.innerHTML = courts
+      .map((court, index) => `<option value="${index}">${court.name}</option>`)
+      .join("");
 
-        return `
-          <article class="day${todayClass}" id="${slug(item.day)}">
-            <h2>${item.day}<span>${item.day === todayName ? "Today" : "Weekly"}</span></h2>
-            <div class="slots">
-              ${slots}
-            </div>
-          </article>
-        `;
-      }).join("");
+    list.innerHTML = courts
+      .map((court) => `
+        <li>
+          <b>${court.name}</b>
+          <span>${court.address} · ${court.count} courts · Lights: ${court.lights} · ${court.hours}</span>
+        </li>
+      `)
+      .join("");
 
-      const today = days.find((item) => item.day === todayName);
-      const publicTimes = today.slots
-        .filter(([type]) => type === "free")
-        .map(([, time, detail]) => `${time} (${detail.replace("Public access on ", "")})`);
+    const cornellIndex = courts.findIndex((court) => court.special);
+    select.value = String(cornellIndex);
+    renderCourt(cornellIndex);
 
-      todaySummary.innerHTML = publicTimes.length
-        ? `<strong>Yes, there is public play today.</strong> ${todayName}: ${publicTimes.join("; ")}.`
-        : `<strong>No public play is listed today.</strong> Check another day below.`;
-    }
-
-    function applyFilter(filter) {
-      document.querySelectorAll("[data-filter]").forEach((button) => {
-        button.setAttribute("aria-pressed", String(button.dataset.filter === filter));
-      });
-
-      document.querySelectorAll(".slot").forEach((slot) => {
-        slot.hidden = filter !== "all" && slot.dataset.type !== filter;
-      });
-    }
-
-    document.querySelector(".segmented").addEventListener("click", (event) => {
-      const button = event.target.closest("button");
-      if (!button) return;
-      applyFilter(button.dataset.filter);
+    select.addEventListener("change", (event) => {
+      renderCourt(Number(event.target.value));
     });
-
-    todayJump.addEventListener("click", () => {
-      document.querySelector(`#${slug(todayName)}`).scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    render();
   </script>
 </body>
 </html>
