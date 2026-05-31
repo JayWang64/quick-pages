@@ -181,6 +181,16 @@
       stroke-width: 2.25;
     }
 
+    .address-link .map-pin path {
+      fill: var(--green);
+      stroke: var(--green);
+    }
+
+    .address-link .map-pin circle {
+      fill: white;
+      stroke: white;
+    }
+
     .address-link span {
       color: var(--muted);
       text-decoration: underline;
@@ -474,7 +484,7 @@
 
     function mapPinIcon() {
       return `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+        <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
           <circle cx="12" cy="10" r="2.5"></circle>
         </svg>
