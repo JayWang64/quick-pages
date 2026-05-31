@@ -88,6 +88,7 @@
       color: #157a4f;
       font-weight: 900;
       font-size: .88rem;
+      text-decoration: none;
     }
 
     .status.special {
@@ -362,7 +363,7 @@
       }
 
       .court-row {
-        grid-template-columns: minmax(220px, 1.2fr) 140px minmax(240px, 1fr) auto;
+        grid-template-columns: minmax(220px, 1.2fr) 140px minmax(240px, 1fr);
         align-items: center;
       }
 
@@ -373,10 +374,6 @@
 
       .court-row .detail-lines {
         gap: 6px;
-      }
-
-      .court-row .actions {
-        justify-content: flex-end;
       }
     }
   </style>
@@ -580,7 +577,9 @@
         <li class="court-row">
           <div class="court-main">
             <b>${court.name}</b>
-            <span class="status ${court.special ? "special" : ""}">${court.special ? "Detailed schedule" : "Free public play"}</span>
+            ${court.special
+              ? '<a class="status special" href="cornell-community-park.html">Click for schedule</a>'
+              : '<span class="status">Free public play</span>'}
           </div>
           <div class="meta-row">
             <span class="icon-stat">${settingMarkup(court)}</span>
@@ -602,7 +601,6 @@
               <span>${court.hours}</span>
             </div>
           </div>
-          ${court.special ? '<div class="actions"><a class="button secondary" href="cornell-community-park.html">Schedule</a></div>' : ""}
         </li>
       `)
       .join("");
