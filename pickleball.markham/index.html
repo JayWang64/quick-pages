@@ -168,6 +168,7 @@
       gap: 8px;
     }
 
+    .icon-link,
     .button {
       display: inline-flex;
       align-items: center;
@@ -179,6 +180,21 @@
       color: white;
       text-decoration: none;
       font-weight: 900;
+    }
+
+    .icon-link {
+      width: 44px;
+      padding: 0;
+    }
+
+    .icon-link svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .button.secondary {
@@ -305,7 +321,23 @@
         </div>
       </div>
       <div class="actions">
-        <a class="button" id="directions-link" href="">Directions</a>
+        <a class="icon-link" id="map-link" href="" aria-label="Open Google Maps pin" title="Open Google Maps pin">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
+            <circle cx="12" cy="10" r="2.5"></circle>
+          </svg>
+        </a>
+        <a class="icon-link" id="directions-link" href="" aria-label="Get Google Maps driving directions" title="Driving directions">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 17h14"></path>
+            <path d="M6.5 17v2"></path>
+            <path d="M17.5 17v2"></path>
+            <path d="M4 13l2.1-5.2A3 3 0 0 1 8.9 6h6.2a3 3 0 0 1 2.8 1.8L20 13"></path>
+            <path d="M5 13h14a2 2 0 0 1 2 2v2H3v-2a2 2 0 0 1 2-2z"></path>
+            <circle cx="7.5" cy="15.5" r=".75"></circle>
+            <circle cx="16.5" cy="15.5" r=".75"></circle>
+          </svg>
+        </a>
         <a class="button secondary" id="schedule-link" href="cornell-community-park.html" hidden>View Cornell schedule</a>
       </div>
     </section>
@@ -402,9 +434,14 @@
     const countEl = document.querySelector("#court-count");
     const lightsEl = document.querySelector("#court-lights");
     const hoursEl = document.querySelector("#court-hours");
+    const mapLink = document.querySelector("#map-link");
     const directionsLink = document.querySelector("#directions-link");
     const scheduleLink = document.querySelector("#schedule-link");
     const list = document.querySelector("#court-list");
+
+    function mapUrl(court) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
+    }
 
     function directionsUrl(court) {
       return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
@@ -421,6 +458,7 @@
       countEl.textContent = court.count;
       lightsEl.textContent = court.lights;
       hoursEl.textContent = court.hours;
+      mapLink.href = mapUrl(court);
       directionsLink.href = directionsUrl(court);
       scheduleLink.hidden = !court.special;
     }
