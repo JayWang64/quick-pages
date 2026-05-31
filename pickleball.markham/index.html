@@ -131,35 +131,62 @@
       color: var(--orange);
     }
 
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin: 0 0 14px;
-    }
-
-    .fact {
-      min-height: 76px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px;
-      background: #fbfdfb;
-    }
-
-    .fact span {
-      display: block;
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
       color: var(--muted);
-      font-size: .78rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
     }
 
-    .fact b {
-      display: block;
-      margin-top: 4px;
+    .icon-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--ink);
+    }
+
+    .icon-stat svg,
+    .detail-line svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-stat.lights-on {
+      color: #157a4f;
+    }
+
+    .icon-stat.lights-off {
+      color: #9aa3a0;
+    }
+
+    .icon-stat.lights-on svg {
+      fill: #dff4e8;
+    }
+
+    .icon-stat.lights-off svg {
+      fill: #edf0f2;
+    }
+
+    .detail-lines {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--muted);
       font-size: .98rem;
-      letter-spacing: 0;
+    }
+
+    .detail-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .actions {
@@ -223,7 +250,7 @@
 
     .court-list li {
       display: grid;
-      gap: 2px;
+      gap: 6px;
       border-top: 1px solid var(--line);
       padding-top: 8px;
     }
@@ -240,6 +267,38 @@
     .court-list span {
       color: var(--muted);
       font-size: .9rem;
+    }
+
+    .court-list .meta-row {
+      margin-bottom: 0;
+      gap: 10px;
+      font-size: .9rem;
+    }
+
+    .court-list .actions {
+      margin-top: 2px;
+    }
+
+    .court-list .icon-link {
+      width: 38px;
+      min-height: 38px;
+    }
+
+    .court-list .icon-link svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     footer {
@@ -276,9 +335,6 @@
         padding: 16px;
       }
 
-      .facts {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
     }
   </style>
 </head>
@@ -302,22 +358,25 @@
     <section class="court-card" aria-live="polite">
       <h2 id="court-name"></h2>
       <p class="status" id="court-status"></p>
-      <div class="facts">
-        <div class="fact">
-          <span>Address</span>
-          <b id="court-address"></b>
+      <div class="meta-row">
+        <span class="icon-stat" id="court-count"></span>
+        <span class="icon-stat" id="court-lights"></span>
+      </div>
+      <div class="detail-lines">
+        <div class="detail-line">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
+            <circle cx="12" cy="10" r="2.5"></circle>
+          </svg>
+          <span id="court-address"></span>
         </div>
-        <div class="fact">
-          <span>Courts</span>
-          <b id="court-count"></b>
-        </div>
-        <div class="fact">
-          <span>Lights</span>
-          <b id="court-lights"></b>
-        </div>
-        <div class="fact">
-          <span>Hours</span>
-          <b id="court-hours"></b>
+        <div class="detail-line">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M12 4v16"></path>
+            <path d="M4 12h16"></path>
+          </svg>
+          <span id="court-hours"></span>
         </div>
       </div>
       <div class="actions">
@@ -447,6 +506,58 @@
       return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
     }
 
+    function mapPinIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11z"></path>
+          <circle cx="12" cy="10" r="2.5"></circle>
+        </svg>
+      `;
+    }
+
+    function carIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 17h14"></path>
+          <path d="M6.5 17v2"></path>
+          <path d="M17.5 17v2"></path>
+          <path d="M4 13l2.1-5.2A3 3 0 0 1 8.9 6h6.2a3 3 0 0 1 2.8 1.8L20 13"></path>
+          <path d="M5 13h14a2 2 0 0 1 2 2v2H3v-2a2 2 0 0 1 2-2z"></path>
+          <circle cx="7.5" cy="15.5" r=".75"></circle>
+          <circle cx="16.5" cy="15.5" r=".75"></circle>
+        </svg>
+      `;
+    }
+
+    function courtIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+          <path d="M12 4v16"></path>
+          <path d="M5 10h14"></path>
+          <path d="M5 14h14"></path>
+        </svg>
+      `;
+    }
+
+    function lightIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 18h6"></path>
+          <path d="M10 22h4"></path>
+          <path d="M8.5 14.5a5 5 0 1 1 7 0c-.9.8-1.5 1.9-1.5 3H10c0-1.1-.6-2.2-1.5-3z"></path>
+        </svg>
+      `;
+    }
+
+    function countMarkup(court) {
+      return `${courtIcon()} <span>${court.count} courts</span>`;
+    }
+
+    function lightsMarkup(court) {
+      return `${lightIcon()} <span>Lights</span><span class="sr-only">: ${court.lights}</span>`;
+    }
+
     function renderCourt(index) {
       const court = courts[index];
       nameEl.textContent = court.name;
@@ -455,8 +566,12 @@
         : "Free public play during posted hours";
       statusEl.classList.toggle("special", Boolean(court.special));
       addressEl.textContent = court.address;
-      countEl.textContent = court.count;
-      lightsEl.textContent = court.lights;
+      countEl.innerHTML = countMarkup(court);
+      lightsEl.innerHTML = lightsMarkup(court);
+      lightsEl.classList.toggle("lights-on", court.lights === "Yes");
+      lightsEl.classList.toggle("lights-off", court.lights !== "Yes");
+      lightsEl.title = `Lights: ${court.lights}`;
+      lightsEl.setAttribute("aria-label", `Lights: ${court.lights}`);
       hoursEl.textContent = court.hours;
       mapLink.href = mapUrl(court);
       directionsLink.href = directionsUrl(court);
@@ -471,7 +586,20 @@
       .map((court) => `
         <li>
           <b>${court.name}</b>
-          <span>${court.address} · ${court.count} courts · Lights: ${court.lights} · ${court.hours}</span>
+          <div class="meta-row">
+            <span class="icon-stat">${countMarkup(court)}</span>
+            <span class="icon-stat ${court.lights === "Yes" ? "lights-on" : "lights-off"}" title="Lights: ${court.lights}" aria-label="Lights: ${court.lights}">${lightsMarkup(court)}</span>
+          </div>
+          <span>${court.address}</span>
+          <span>${court.hours}</span>
+          <div class="actions">
+            <a class="icon-link" href="${mapUrl(court)}" aria-label="Open Google Maps pin for ${court.name}" title="Open Google Maps pin">
+              ${mapPinIcon()}
+            </a>
+            <a class="icon-link" href="${directionsUrl(court)}" aria-label="Get driving directions to ${court.name}" title="Driving directions">
+              ${carIcon()}
+            </a>
+          </div>
         </li>
       `)
       .join("");
