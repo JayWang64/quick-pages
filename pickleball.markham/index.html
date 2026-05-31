@@ -457,11 +457,11 @@
     const list = document.querySelector("#court-list");
 
     function mapUrl(court) {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${court.address}, Markham, ON`)}`;
     }
 
     function directionsUrl(court) {
-      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${court.name}, ${court.address}, Markham, ON`)}`;
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${court.address}, Markham, ON`)}`;
     }
 
     function mapPinIcon() {
