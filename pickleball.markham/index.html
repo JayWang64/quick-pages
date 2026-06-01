@@ -70,7 +70,11 @@
     }
 
     .map-panel {
+      position: sticky;
+      top: 0;
+      z-index: 10;
       padding: 16px 16px 0;
+      background: var(--page);
     }
 
     #court-map {
@@ -315,10 +319,21 @@
       gap: 8px 12px;
       border-top: 1px solid var(--line);
       padding: 12px 0;
+      transition: background-color .2s ease, box-shadow .2s ease;
     }
 
     .court-row:first-child {
       border-top: 0;
+    }
+
+    .court-row.is-active {
+      background: #effaf4;
+      box-shadow: inset 4px 0 0 var(--green);
+    }
+
+    .court-row:focus {
+      outline: 3px solid rgba(21, 122, 79, .25);
+      outline-offset: 2px;
     }
 
     .court-row span {
@@ -561,6 +576,7 @@
     ];
 
     const list = document.querySelector("#court-list");
+    const mapPanel = document.querySelector(".map-panel");
 
     function mapUrl(court) {
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${court.name}, Markham, ON`)}`;
@@ -649,9 +665,36 @@
       return `${outdoorIcon()} <span>${court.setting}</span>`;
     }
 
+    function courtId(court) {
+      return court.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+
+    function focusCourtRow(court) {
+      const row = document.querySelector(`#court-${courtId(court)}`);
+
+      if (!row) {
+        return;
+      }
+
+      document.querySelectorAll(".court-row.is-active").forEach((activeRow) => {
+        activeRow.classList.remove("is-active");
+      });
+
+      row.classList.add("is-active");
+      row.focus({ preventScroll: true });
+
+      const stickyOffset = mapPanel ? mapPanel.getBoundingClientRect().height + 12 : 12;
+      const targetTop = row.getBoundingClientRect().top + window.scrollY - stickyOffset;
+
+      window.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: "smooth"
+      });
+    }
+
     list.innerHTML = courts
       .map((court) => `
-        <li class="court-row">
+        <li class="court-row" id="court-${courtId(court)}" tabindex="-1">
           <div class="court-main">
             <b>${court.name}</b>
             ${court.special
@@ -720,6 +763,7 @@
           <a href="${mapUrl(court)}">Open map pin</a> · <a href="${directionsUrl(court)}">Directions</a>
           ${scheduleLink}
         `);
+        marker.on("click", () => focusCourtRow(court));
         bounds.push([court.lat, court.lng]);
       });
 
