@@ -202,6 +202,11 @@
       text-underline-offset: 2px;
     }
 
+    .intersection {
+      color: var(--muted);
+      font-style: italic;
+    }
+
     .court-main {
       align-items: flex-start;
       flex-direction: column;
@@ -403,6 +408,7 @@
       {
         name: "Bayview Reservoir Park",
         address: "8075 Bayview Avenue",
+        majorIntersection: "Bayview Ave + Hwy 407",
         count: "4",
         setting: "Outdoor",
         lights: "No",
@@ -411,6 +417,7 @@
       {
         name: "Blodwen Davies Park",
         address: "335 Donald Cousens Parkway",
+        majorIntersection: "Delray Dr + Donald Cousins Pkwy",
         count: "2",
         setting: "Outdoor",
         lights: "No",
@@ -419,6 +426,7 @@
       {
         name: "Boxgrove Community Park",
         address: "346 Box Grove By-pass",
+        majorIntersection: "Box Grove Bypass + 14th Ave",
         count: "2",
         setting: "Outdoor",
         lights: "No",
@@ -427,6 +435,7 @@
       {
         name: "Cornell Community Park",
         address: "371 Cornell Centre Blvd",
+        majorIntersection: "Cornell Centre Blvd + Cornell Park Ave",
         count: "8",
         setting: "Outdoor",
         lights: "Yes",
@@ -436,6 +445,7 @@
       {
         name: "Duncan Park",
         address: "265 Bayview Fairways Drive",
+        majorIntersection: "Leslie Ave + John St",
         count: "3",
         setting: "Outdoor",
         lights: "Yes",
@@ -444,6 +454,7 @@
       {
         name: "Morgan Park",
         address: "11 Parkway Ave",
+        majorIntersection: "Markham Main St + Parkway Ave",
         count: "2",
         setting: "Outdoor",
         lights: "Yes",
@@ -452,6 +463,7 @@
       {
         name: "Markham Civic Centre",
         address: "101 Town Center Boulevard",
+        majorIntersection: "Warden Ave + Hwy 7",
         count: "6",
         setting: "Outdoor",
         lights: "No",
@@ -460,6 +472,7 @@
       {
         name: "Roy Ramer Park",
         address: "11 James Parrot Avenue",
+        majorIntersection: "McCowan Rd + 16th Ave",
         count: "2",
         setting: "Outdoor",
         lights: "No",
@@ -468,6 +481,7 @@
       {
         name: "South Unionville Park West",
         address: "514 Caboto Trail",
+        majorIntersection: "Kennedy Rd + Hwy 407",
         count: "2",
         setting: "Outdoor",
         lights: "No",
@@ -476,6 +490,7 @@
       {
         name: "Wismer Park",
         address: "980 Bur Oak Avenue",
+        majorIntersection: "Markham Rd + Castlemore Ave",
         count: "2",
         setting: "Outdoor",
         lights: "No",
@@ -595,6 +610,14 @@
               <a class="icon-link" href="${directionsUrl(court)}" aria-label="Get driving directions to ${court.name}" title="Driving directions">
                 ${carIcon()}
               </a>
+            </div>
+            <div class="detail-line">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+                <path d="M7 7l10 10"></path>
+              </svg>
+              <span class="intersection">${court.majorIntersection}</span>
             </div>
             <div class="detail-line">
               ${hoursIcon()}
