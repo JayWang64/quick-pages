@@ -421,7 +421,7 @@
       display: grid;
       grid-template-columns: minmax(94px, 124px) 1fr;
       gap: 10px;
-      align-items: center;
+      align-items: start;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 10px;
@@ -477,6 +477,70 @@
       color: var(--muted);
       font-size: .9rem;
       margin-top: 3px;
+    }
+
+    .court-strip {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 9px;
+      align-items: center;
+      margin-top: 7px;
+    }
+
+    .court-strip svg {
+      width: 22px;
+      height: 22px;
+      color: var(--muted);
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .court-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .court-dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 999px;
+      border: 1px solid #cfd8d1;
+      background: #edf0f2;
+      color: #7a8380;
+      font-size: .8rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .court-dot.free {
+      border-color: var(--free);
+      background: var(--free);
+      color: white;
+    }
+
+    .court-dot.club {
+      border-color: #b42318;
+      background: #b42318;
+      color: white;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .note {
@@ -776,6 +840,47 @@
       return text.toLowerCase();
     }
 
+    function courtIcon() {
+      return `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+          <path d="M12 4v16"></path>
+          <path d="M5 10h14"></path>
+          <path d="M5 14h14"></path>
+        </svg>
+      `;
+    }
+
+    function activeCourts(detail) {
+      if (detail.includes("1-4")) {
+        return [1, 2, 3, 4];
+      }
+
+      if (detail.includes("5-8")) {
+        return [5, 6, 7, 8];
+      }
+
+      return [1, 2, 3, 4, 5, 6, 7, 8];
+    }
+
+    function courtStripMarkup(type, detail) {
+      const active = activeCourts(detail);
+      const activeLabel = type === "free" ? "free public" : "paid MPC";
+      const dots = [1, 2, 3, 4, 5, 6, 7, 8].map((courtNumber) => {
+        const isActive = active.includes(courtNumber);
+        const stateClass = isActive ? type : "";
+        const stateLabel = isActive ? activeLabel : "not included";
+        return `<span class="court-dot ${stateClass}" aria-label="Court ${courtNumber}: ${stateLabel}">${courtNumber}</span>`;
+      }).join("");
+
+      return `
+        <div class="court-strip" aria-label="${detail}">
+          ${courtIcon()}
+          <div class="court-dots">${dots}</div>
+        </div>
+      `;
+    }
+
     function slotMarkup(type, time, detail) {
       const label = type === "free" ? "Free" : "Paid / MPC";
       return `
@@ -783,7 +888,8 @@
           <div class="time">${time}</div>
           <div>
             <span class="tag">${label}</span>
-            <div class="detail">${detail}</div>
+            ${courtStripMarkup(type, detail)}
+            <div class="sr-only">${detail}</div>
           </div>
         </article>
       `;
