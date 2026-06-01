@@ -319,6 +319,7 @@
     }
 
     .court-table {
+      --row-highlight-overhang: 14px;
       padding: 14px;
     }
 
@@ -362,7 +363,7 @@
     .court-row.is-active::before {
       content: "";
       position: absolute;
-      inset: 4px -10px;
+      inset: 4px calc(-1 * var(--row-highlight-overhang));
       border-left: 4px solid var(--green);
       border-radius: 6px;
       background: #effaf4;
@@ -374,6 +375,10 @@
     }
 
     .court-row:focus {
+      outline: none;
+    }
+
+    .court-row:focus-visible {
       outline: 3px solid rgba(21, 122, 79, .25);
       outline-offset: 2px;
     }
@@ -454,6 +459,7 @@
       }
 
       .court-table {
+        --row-highlight-overhang: 16px;
         padding: 16px;
       }
 
