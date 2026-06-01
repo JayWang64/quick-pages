@@ -447,6 +447,31 @@
       font-size: .95rem;
     }
 
+    .time-stack {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    .court-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 800;
+    }
+
+    .court-label svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .tag {
       display: inline-flex;
       width: fit-content;
@@ -480,22 +505,7 @@
     }
 
     .court-strip {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 9px;
-      align-items: center;
       margin-top: 7px;
-    }
-
-    .court-strip svg {
-      width: 22px;
-      height: 22px;
-      color: var(--muted);
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
     }
 
     .court-dots {
@@ -875,7 +885,6 @@
 
       return `
         <div class="court-strip" aria-label="${detail}">
-          ${courtIcon()}
           <div class="court-dots">${dots}</div>
         </div>
       `;
@@ -885,7 +894,10 @@
       const label = type === "free" ? "Free" : "Paid / MPC";
       return `
         <article class="slot ${type}" data-type="${type}">
-          <div class="time">${time}</div>
+          <div class="time-stack">
+            <div class="time">${time}</div>
+            <div class="court-label">Courts ${courtIcon()}</div>
+          </div>
           <div>
             <span class="tag">${label}</span>
             ${courtStripMarkup(type, detail)}
