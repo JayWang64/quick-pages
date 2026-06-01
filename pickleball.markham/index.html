@@ -799,9 +799,8 @@
       const bounds = [];
 
       courts.forEach((court) => {
-        const marker = L.marker([court.lat, court.lng], {
-          icon: court.special ? specialMarkerIcon : undefined
-        }).addTo(map);
+        const markerOptions = court.special ? { icon: specialMarkerIcon } : {};
+        const marker = L.marker([court.lat, court.lng], markerOptions).addTo(map);
         const scheduleLink = court.special
           ? '<br><a href="cornell-community-park.html">Click for schedule</a>'
           : "";
