@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Markham Pickleball Courts</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQhYfizxft9WUo3slF5Hcq3igXC0Sfw="
+    crossorigin=""
+  >
   <style>
     :root {
       color-scheme: light;
@@ -63,6 +69,31 @@
 
     main {
       padding: 16px;
+    }
+
+    .map-panel {
+      padding: 16px 16px 0;
+    }
+
+    #court-map {
+      height: min(56vh, 420px);
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #dce5dd;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.35;
+    }
+
+    .leaflet-popup-content a {
+      color: var(--green);
+      font-weight: 800;
     }
 
     .court-table {
@@ -363,6 +394,10 @@
         padding: 24px;
       }
 
+      .map-panel {
+        padding: 24px 24px 0;
+      }
+
       .court-table {
         padding: 16px;
       }
@@ -391,6 +426,12 @@
     </div>
   </header>
 
+  <section class="map-panel" aria-label="Map of Markham pickleball courts">
+    <div class="wrap">
+      <div id="court-map"></div>
+    </div>
+  </section>
+
   <main class="wrap">
     <section class="court-table" aria-label="All courts">
       <h2>All Public Courts</h2>
@@ -403,6 +444,11 @@
     <p class="wrap">Source: <a href="https://www.markham.ca/sports-recreation-fitness/parks-trails/pickleball-courts" target="_blank" rel="noopener noreferrer">City of Markham Pickleball Courts</a>. Last update shown there: May 19, 2026.</p>
   </footer>
 
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
   <script>
     const courts = [
       {
@@ -412,7 +458,9 @@
         count: "4",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8320424,
+        lng: -79.4019818
       },
       {
         name: "Blodwen Davies Park",
@@ -421,7 +469,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8719154,
+        lng: -79.212177
       },
       {
         name: "Boxgrove Community Park",
@@ -430,7 +480,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8559,
+        lng: -79.2315
       },
       {
         name: "Cornell Community Park",
@@ -440,6 +492,8 @@
         setting: "Outdoor",
         lights: "Yes",
         hours: "7 AM to 11 PM",
+        lat: 43.8907907,
+        lng: -79.2232747,
         special: true
       },
       {
@@ -449,7 +503,9 @@
         count: "3",
         setting: "Outdoor",
         lights: "Yes",
-        hours: "7 AM to 11 PM"
+        hours: "7 AM to 11 PM",
+        lat: 43.8191348,
+        lng: -79.3827968
       },
       {
         name: "Morgan Park",
@@ -458,7 +514,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "Yes",
-        hours: "7 AM to 11 PM"
+        hours: "7 AM to 11 PM",
+        lat: 43.8811487,
+        lng: -79.2587553
       },
       {
         name: "Markham Civic Centre",
@@ -467,7 +525,9 @@
         count: "6",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8563521,
+        lng: -79.3372281
       },
       {
         name: "Roy Ramer Park",
@@ -476,7 +536,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8946,
+        lng: -79.2888
       },
       {
         name: "South Unionville Park West",
@@ -485,7 +547,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8534809,
+        lng: -79.2989378
       },
       {
         name: "Wismer Park",
@@ -494,7 +558,9 @@
         count: "2",
         setting: "Outdoor",
         lights: "No",
-        hours: "7 AM to Dark"
+        hours: "7 AM to Dark",
+        lat: 43.8993769,
+        lng: -79.2798606
       }
     ];
 
@@ -627,6 +693,46 @@
         </li>
       `)
       .join("");
+
+    function initMap() {
+      if (!window.L) {
+        return;
+      }
+
+      const map = L.map("court-map", {
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const bounds = [];
+
+      courts.forEach((court) => {
+        const marker = L.marker([court.lat, court.lng]).addTo(map);
+        const scheduleLink = court.special
+          ? '<br><a href="cornell-community-park.html">Click for schedule</a>'
+          : "";
+
+        marker.bindPopup(`
+          <strong>${court.name}</strong><br>
+          ${court.address}<br>
+          <em>${court.majorIntersection}</em><br>
+          ${court.count} courts · Lights: ${court.lights}<br>
+          <a href="${mapUrl(court)}">Open map pin</a> · <a href="${directionsUrl(court)}">Directions</a>
+          ${scheduleLink}
+        `);
+        bounds.push([court.lat, court.lng]);
+      });
+
+      map.fitBounds(bounds, {
+        padding: [24, 24]
+      });
+    }
+
+    initMap();
   </script>
 </body>
 </html>
