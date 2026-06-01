@@ -314,6 +314,7 @@
     }
 
     .court-row {
+      position: relative;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 8px 12px;
@@ -327,8 +328,22 @@
     }
 
     .court-row.is-active {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .court-row.is-active::before {
+      content: "";
+      position: absolute;
+      inset: 4px -10px;
+      border-left: 4px solid var(--green);
+      border-radius: 6px;
       background: #effaf4;
-      box-shadow: inset 4px 0 0 var(--green);
+    }
+
+    .court-row > * {
+      position: relative;
+      z-index: 1;
     }
 
     .court-row:focus {
