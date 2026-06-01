@@ -98,6 +98,33 @@
       font-weight: 800;
     }
 
+    .special-map-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .special-map-marker::before {
+      content: "";
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid white;
+      border-radius: 50% 50% 50% 0;
+      background: var(--orange);
+      box-shadow: 0 3px 10px rgba(67, 36, 15, .35);
+      transform: rotate(-45deg);
+    }
+
+    .special-map-marker::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange-soft);
+    }
+
     .court-table {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -753,6 +780,13 @@
         return;
       }
 
+      const specialMarkerIcon = L.divIcon({
+        className: "special-map-marker",
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -28]
+      });
+
       const map = L.map("court-map", {
         scrollWheelZoom: false
       });
@@ -765,7 +799,9 @@
       const bounds = [];
 
       courts.forEach((court) => {
-        const marker = L.marker([court.lat, court.lng]).addTo(map);
+        const marker = L.marker([court.lat, court.lng], {
+          icon: court.special ? specialMarkerIcon : undefined
+        }).addTo(map);
         const scheduleLink = court.special
           ? '<br><a href="cornell-community-park.html">Click for schedule</a>'
           : "";
