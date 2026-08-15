@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[65902,["/quick-pages/paper-arcade/_next/static/chunks/01xlw8hd842-c.js","/quick-pages/paper-arcade/_next/static/chunks/0d3shmwh5_nmn.js","/quick-pages/paper-arcade/_next/static/chunks/0i-fe.~.0c~ft.js"],"default"]
+3:I[97367,["/quick-pages/paper-arcade/_next/static/chunks/01xlw8hd842-c.js","/quick-pages/paper-arcade/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/quick-pages/paper-arcade/_next/static/chunks/0i-fe.~.0c~ft.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"36ppZhXEzOLgQYByUnBtG"}
+5:null
