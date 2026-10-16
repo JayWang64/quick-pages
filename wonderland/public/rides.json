@@ -1,0 +1,3201 @@
+{
+  "title": "Canada's Wonderland rides \u2014 parent seed",
+  "schema_version": 1,
+  "updated": "2026-09-13",
+  "source_csv": "/workspace/wonderland-research/canadas-wonderland-rides.csv",
+  "google_sheet": "https://docs.google.com/spreadsheets/d/1vrrgX4Sww4glnh2uXYeV4_KGHpnMjpsuWjzZYlNXHE0/edit",
+  "ride_count": 79,
+  "notes": [
+    "Null/empty = unknown; do not treat as no.",
+    "ride_type_coarse is a Directory Bot convenience field derived from ride_type \u2014 not inventing attraction facts.",
+    "Coords merged 2026-09-13 from Research Bot CSV (OSM / area-approx). map_url = Google Maps query from lat,lng when present.",
+    "Google Sheet (live Google copy; ignore older placeholders): https://docs.google.com/spreadsheets/d/1vrrgX4Sww4glnh2uXYeV4_KGHpnMjpsuWjzZYlNXHE0/edit",
+    "Official thrill 1\u20135 merged 2026-09-13 from Research Bot CSV (Six Flags JSON). Scale: 1 low, 2 mild, 3 moderate, 4 high, 5 aggressive. Filled 77/79; blanks left null (not invented): Lakeside Lagoon (pool), Lakeside Lagoon Slides."
+  ],
+  "rides": [
+    {
+      "id": "antique-carrousel",
+      "name": "Antique Carrousel",
+      "park_area": "Grande World Expo",
+      "ride_type": "Flat ride / carousel",
+      "ride_type_coarse": "kids",
+      "category_notes": "Classic carousel; kids + family",
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/antique-carrousel",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/antique-carrousel",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840553,
+        "lng": -79.540234,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840553,-79.540234",
+        "coords_source": "OpenStreetMap way/189873175 name=Antique Carrousel",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/antique-carrousel",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "the-daredeviler",
+      "name": "The DareDeviler",
+      "park_area": "Grande World Expo",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Inverted steel (formerly Flight Deck / Top Gun); 2026 retheme",
+      "height": {
+        "min_in": 52,
+        "max_in": 78,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** May not accommodate guests of larger size (map). New Vekoma trains 2026 (RCDB)."
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "109.3 ft (height; RCDB)",
+        "track_length": "2260.5 ft (RCDB)",
+        "max_speed": "49.7 mph (RCDB)",
+        "inversions": "5 (RCDB)",
+        "duration": "1:28 (RCDB)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/the-daredeviler",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/the-daredeviler; https://rcdb.com/57.htm; https://www.sixflags.com/blog/canadaswonderland-new2026",
+      "confidence": "mixed",
+      "gaps_notes": "Heights official map+page. Coaster stats RCDB.",
+      "location": {
+        "lat": 43.84123,
+        "lng": -79.539044,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84123,-79.539044",
+        "coords_source": "OpenStreetMap way/662522690 name=The Daredeviler; OSM wikidata=Q2880135",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'The Daredeviler'"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/the-daredeviler",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "swing-of-the-century",
+      "name": "Swing of the Century",
+      "park_area": "Grande World Expo",
+      "ride_type": "Flat ride / swing",
+      "ride_type_coarse": "flat",
+      "category_notes": "Wave swinger / thrill swing",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/swing-of-the-century",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/swing-of-the-century",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840889,
+        "lng": -79.540736,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840889,-79.540736",
+        "coords_source": "OpenStreetMap way/900565156 name=Swing of the Century",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/swing-of-the-century",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "backlot-stunt-coaster",
+      "name": "Backlot Stunt Coaster",
+      "park_area": "Action Zone",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Premier launched sit-down",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/backlot-stunt-coaster",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/backlot-stunt-coaster; https://rcdb.com/4539.htm",
+      "confidence": "official-heights",
+      "gaps_notes": "Need official/RCDB page for length/speed/inversions.",
+      "location": {
+        "lat": 43.838718,
+        "lng": -79.541168,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838718,-79.541168",
+        "coords_source": "OpenStreetMap way/900252837 name=Backlot Stunt Coaster; OSM wikidata=Q798461",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/backlot-stunt-coaster",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "behemoth",
+      "name": "Behemoth",
+      "park_area": "Action Zone",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "B&M hyper; no inversions; Fast Lane Plus; FunPix",
+      "height": {
+        "min_in": 54,
+        "max_in": 80,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "230 ft lift; 75\u00b0 drop (official)",
+        "track_length": "5318 ft (RCDB)",
+        "max_speed": "125 km/h official (~77 mph RCDB)",
+        "inversions": "0 (RCDB)",
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/behemoth",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/behemoth; https://rcdb.com/4005.htm",
+      "confidence": "mixed",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838975,
+        "lng": -79.540659,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838975,-79.540659",
+        "coords_source": "OpenStreetMap way/189870686 name=Behemoth; OSM wikidata=Q662312",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/behemoth",
+      "thrill_level_confidence": "official",
+      "operating_status": "temporarily_closed",
+      "status_notes": "Temporarily closed since Oct 12, 2026 after a fatal incident at Six Flags Over Georgia; no reopening date announced. Confirm with the park before visiting.",
+      "status_sources": ["https://apnews.com/article/six-flags-georgia-roller-coaster-death-a9ce45f681772b828f7b5d3c59d010d1", "https://toronto.citynews.ca/2026/10/12/2-canadas-wonderland-roller-coasters-shut-down-following-fatal-incident-at-georgia-park/"],
+      "status_updated": "2026-10-15"
+    },
+    {
+      "id": "psyclone",
+      "name": "Psyclone",
+      "park_area": "Action Zone",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Pendulum / looping flat",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/psyclone",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/psyclone",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840061,
+        "lng": -79.540388,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840061,-79.540388",
+        "coords_source": "OpenStreetMap way/902585924 name=Psyclone; OSM wikidata=Q7256548",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/psyclone",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "skyhawk",
+      "name": "Skyhawk",
+      "park_area": "Action Zone",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Screamin' Swing type",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/skyhawk",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/skyhawk",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.841066,
+        "lng": -79.542222,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.841066,-79.542222",
+        "coords_source": "OpenStreetMap way/1233146610 name=Skyhawk",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/skyhawk",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "sledge-hammer",
+      "name": "Sledge Hammer",
+      "park_area": "Action Zone",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Power Hammer / drop-and-launch",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/sledge-hammer",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/sledge-hammer",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839674,
+        "lng": -79.540676,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839674,-79.540676",
+        "coords_source": "OpenStreetMap way/189874505 name=Sledge Hammer; OSM wikidata=Q7539623",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/sledge-hammer",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "slingshot",
+      "name": "SlingShot",
+      "park_area": "Action Zone",
+      "ride_type": "Thrill / extra-charge",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Reverse bungee / catapult; extra-charge attraction",
+      "height": {
+        "min_in": 44,
+        "max_in": 79,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/slingshot",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/slingshot",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840627,
+        "lng": -79.541798,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840627,-79.541798",
+        "coords_source": "OpenStreetMap way/1233146615 name=SlingShot",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/slingshot",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "windseeker",
+      "name": "WindSeeker",
+      "park_area": "Action Zone",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Tower swing",
+      "height": {
+        "min_in": 52,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/windseeker",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/windseeker",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840631,
+        "lng": -79.542472,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840631,-79.542472",
+        "coords_source": "OpenStreetMap way/899063086 name=WindSeeker",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/windseeker",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "alpenfury",
+      "name": "AlpenFury",
+      "park_area": "Alpenfest",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Premier dual-launch; Canada's longest/tallest/fastest launch; 2025 debut, back 2026",
+      "height": {
+        "min_in": 54,
+        "max_in": 81,
+        "supervised_companion_rule": null,
+        "other_restrictions": "Official page lists max 81\"; 2026 map did not print a max. Prefer page."
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "Launch 164 ft / 50 m; drop 154 ft / 47 m (official)",
+        "track_length": "3281 ft / 1000 m (official)",
+        "max_speed": "115 km/h (official)",
+        "inversions": "9 (official; most for a launch coaster)",
+        "duration": "1:20 (official)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/alpenfury",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/alpenfury",
+      "confidence": "official",
+      "gaps_notes": "Map vs page max-height mismatch \u2014 used official page 81\".",
+      "location": {
+        "lat": 43.842753,
+        "lng": -79.543197,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842753,-79.543197",
+        "coords_source": "OpenStreetMap way/1436586991 name=AlpenFury",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM roller_coaster=track centroid (not station). Still ride-level."
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/alpenfury",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "klockwerks",
+      "name": "Klockwerks",
+      "park_area": "Alpenfest",
+      "ride_type": "Flat ride",
+      "ride_type_coarse": "flat",
+      "category_notes": "Spinning teacups / clockworks",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Between 44\"\u201348\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/klockwerks",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/klockwerks",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843023,
+        "lng": -79.542504,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843023,-79.542504",
+        "coords_source": "OpenStreetMap way/899060038 name=Klockwerks",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/klockwerks",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "krachenwagen",
+      "name": "Krachenwagen",
+      "park_area": "Alpenfest",
+      "ride_type": "Flat ride / bumper cars",
+      "ride_type_coarse": "flat",
+      "category_notes": "Dodgems",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": "Map prints 54\" to ride and 48\" (likely passenger/driver split \u2014 confirm at ride)",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/krachenwagen",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/krachenwagen",
+      "confidence": "official-heights",
+      "gaps_notes": "Map text ambiguous: '54\" To Ride 48\"'. Confirm driver vs passenger on official page/sign.",
+      "location": {
+        "lat": 43.843178,
+        "lng": -79.541958,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843178,-79.541958",
+        "coords_source": "OpenStreetMap way/189869580 name=Krachenwagen",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/krachenwagen",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "shockwave",
+      "name": "Shockwave",
+      "park_area": "Alpenfest",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Stand-up spinning / enterprise-adjacent thrill",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/shockwave",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/shockwave",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843142,
+        "lng": -79.543145,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843142,-79.543145",
+        "coords_source": "OpenStreetMap way/900232919 name=Shockwave; OSM wikidata=Q7499932",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/shockwave",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "the-fly",
+      "name": "The Fly",
+      "park_area": "Alpenfest",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Mack wild mouse",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": "Between 44\"\u201354\" with supervising companion",
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "49.8 ft drop / 51.8 ft height (RCDB)",
+        "track_length": "1312.3 ft (RCDB)",
+        "max_speed": "35 mph (RCDB)",
+        "inversions": "0 (RCDB)",
+        "duration": "1:30 (RCDB)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/the-fly",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/the-fly; https://rcdb.com/540.htm",
+      "confidence": "mixed",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842924,
+        "lng": -79.543618,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842924,-79.543618",
+        "coords_source": "OpenStreetMap way/189870303 name=The Fly",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/the-fly",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "thunder-run",
+      "name": "Thunder Run",
+      "park_area": "Alpenfest",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Mack powered; through Wonder Mountain",
+      "height": {
+        "min_in": 46,
+        "max_in": null,
+        "supervised_companion_rule": "Between 40\"\u201346\" with supervising companion",
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/thunder-run",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/thunder-run; https://rcdb.com/4539.htm",
+      "confidence": "official-heights",
+      "gaps_notes": "Stats not pulled from official page this pass.",
+      "location": {
+        "lat": 43.842736,
+        "lng": -79.542295,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842736,-79.542295",
+        "coords_source": "OpenStreetMap way/900215383 name=Thunder Run; OSM wikidata=Q7799028",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/thunder-run",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "wonder-mountain-s-guardian",
+      "name": "Wonder Mountain's Guardian",
+      "park_area": "Alpenfest",
+      "ride_type": "Roller coaster / dark ride",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Family steel + interactive dark-ride elements",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Between 42\"\u201348\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/wonder-mountains-guardian",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/wonder-mountains-guardian",
+      "confidence": "official-heights",
+      "gaps_notes": "Coaster stats not filled.",
+      "location": {
+        "lat": 43.842058,
+        "lng": -79.542451,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842058,-79.542451",
+        "coords_source": "OpenStreetMap node/8363213940 name=Wonder Mountain's Guardians; OSM wikidata=Q14875488",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: \"Wonder Mountain's Guardians\""
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/wonder-mountains-guardian",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "flying-canoes",
+      "name": "Flying Canoes",
+      "park_area": "Frontier Canada",
+      "ride_type": "Flat ride / family",
+      "ride_type_coarse": "flat",
+      "category_notes": "Flying scooters / canoes",
+      "height": {
+        "min_in": 48,
+        "max_in": 79,
+        "supervised_companion_rule": "Between 36\"\u201348\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/flying-canoes",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/flying-canoes",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.841704,
+        "lng": -79.544998,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.841704,-79.544998",
+        "coords_source": "OpenStreetMap way/899725386 name=Flying Canoes",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/flying-canoes",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "lumberjack",
+      "name": "Lumberjack",
+      "park_area": "Frontier Canada",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Booster / looping boom",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/lumberjack",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/lumberjack",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842317,
+        "lng": -79.544043,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842317,-79.544043",
+        "coords_source": "OpenStreetMap way/899719389 name=Lumberjack",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/lumberjack",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "mighty-canadian-minebuster",
+      "name": "Mighty Canadian Minebuster",
+      "park_area": "Frontier Canada",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Wooden; 2026 retracking (Gravity Group, 980 ft) per park blog",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/mighty-canadian-minebuster",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/mighty-canadian-minebuster; https://www.sixflags.com/blog/canadaswonderland-new2026; https://rcdb.com/4539.htm",
+      "confidence": "official-heights",
+      "gaps_notes": "Length/speed/drop not filled this pass.",
+      "location": {
+        "lat": 43.839164,
+        "lng": -79.541909,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839164,-79.541909",
+        "coords_source": "OpenStreetMap way/189870691 name=Mighty Canadian Minebuster; OSM wikidata=Q1408480",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/mighty-canadian-minebuster",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "soaring-timbers",
+      "name": "Soaring Timbers",
+      "park_area": "Frontier Canada",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Giant Frisbee / pendulum",
+      "height": {
+        "min_in": 54,
+        "max_in": 77,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/soaring-timbers",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/soaring-timbers",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842286,
+        "lng": -79.543585,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842286,-79.543585",
+        "coords_source": "OpenStreetMap way/908585003 name=Soaring Timbers",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/soaring-timbers",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "timberwolf-falls",
+      "name": "Timberwolf Falls",
+      "park_area": "Frontier Canada",
+      "ride_type": "Water ride",
+      "ride_type_coarse": "water",
+      "category_notes": "Hopkins log flume / shoot-the-chute",
+      "height": {
+        "min_in": 46,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Boats; ~50 ft drop splash; observation deck also gets soaked (official)",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/timberwolf-falls",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/timberwolf-falls",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.841505,
+        "lng": -79.544189,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.841505,-79.544189",
+        "coords_source": "OpenStreetMap way/189873124 name=Timberwolf Falls; OSM wikidata=Q7804723",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/timberwolf-falls",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "tundra-twister",
+      "name": "Tundra Twister",
+      "park_area": "Frontier Canada",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Spinning thrill",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/tundra-twister",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/tundra-twister",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.840495,
+        "lng": -79.543777,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.840495,-79.543777",
+        "coords_source": "OpenStreetMap node/13110901945 name=Tundra Twister",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/tundra-twister",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "vortex",
+      "name": "Vortex",
+      "park_area": "Frontier Canada",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Arrow suspended; swings freely; Fast Lane",
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "Lift 98 ft / 30 m (official)",
+        "track_length": null,
+        "max_speed": "80 km/h (official)",
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/vortex",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/vortex",
+      "confidence": "official",
+      "gaps_notes": "Track length / inversion count / duration not on official page (suspended = typically 0 inversions).",
+      "location": {
+        "lat": 43.841927,
+        "lng": -79.543464,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.841927,-79.543464",
+        "coords_source": "OpenStreetMap way/189871430 name=Vortex; OSM wikidata=Q2534596",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/vortex",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "white-water-canyon",
+      "name": "White Water Canyon",
+      "park_area": "Frontier Canada",
+      "ride_type": "Water ride",
+      "ride_type_coarse": "water",
+      "category_notes": "River rapids rafts",
+      "height": {
+        "min_in": 46,
+        "max_in": 76,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": "yes \u2014 very wet (official)",
+      "water_notes": "Spinning rafts; geysers; cave waterfall",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/white-water-canyon",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/white-water-canyon",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839934,
+        "lng": -79.545746,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839934,-79.545746",
+        "coords_source": "OpenStreetMap way/189870825 name=White Water Canyon",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/white-water-canyon",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "yukon-striker",
+      "name": "Yukon Striker",
+      "park_area": "Frontier Canada",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "B&M dive; floorless; Fast Lane",
+      "height": {
+        "min_in": 52,
+        "max_in": 77,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "245 ft / 75 m incl. underground tunnel (official)",
+        "track_length": "3625 ft / 1105 m (official)",
+        "max_speed": "130 km/h (official)",
+        "inversions": "4 (official)",
+        "duration": "3:25 (official)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/yukon-striker",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/yukon-striker",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839958,
+        "lng": -79.542477,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839958,-79.542477",
+        "coords_source": "OpenStreetMap way/899666525 name=Yukon Striker",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/yukon-striker",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "beagle-brigade-airfield",
+      "name": "Beagle Brigade Airfield",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 36\" with supervising companion",
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/beagle-brigade-airfield",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/beagle-brigade-airfield",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843669,
+        "lng": -79.544575,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843669,-79.544575",
+        "coords_source": "OpenStreetMap way/902186991 name=Beagle Brigade Airfield",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/beagle-brigade-airfield",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "boo-blasters-on-boo-hill",
+      "name": "Boo Blasters on Boo Hill",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Dark ride / interactive",
+      "ride_type_coarse": "dark_ride",
+      "category_notes": "Family dark ride; shoot targets",
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/boo-blasters-on-boo-hill",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/boo-blasters-on-boo-hill",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.84448,
+        "lng": -79.544228,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84448,-79.544228",
+        "coords_source": "OpenStreetMap way/189870230 name=Boo Blasters on Boo Hill",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/boo-blasters-on-boo-hill",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "character-carrousel",
+      "name": "Character Carrousel",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / carousel",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with companion; hand-held infants OK in chariots (official page)",
+        "other_restrictions": "Guests over 60\" not permitted on jumper horse (official page)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/character-carrousel",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/character-carrousel",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.84385,
+        "lng": -79.544985,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84385,-79.544985",
+        "coords_source": "OpenStreetMap way/902190725 name=Character Carousel",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Character Carousel'"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/character-carrousel",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "ghoster-coaster",
+      "name": "Ghoster Coaster",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "PTC wooden family",
+      "height": {
+        "min_in": 46,
+        "max_in": null,
+        "supervised_companion_rule": "Between 40\"\u201346\" with supervising companion",
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "39 ft drop / 41 ft height (RCDB)",
+        "track_length": "1356 ft (RCDB)",
+        "max_speed": "35 mph (RCDB)",
+        "inversions": "0 (RCDB)",
+        "duration": "1:20 (RCDB)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/ghoster-coaster",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/ghoster-coaster; https://rcdb.com/61.htm",
+      "confidence": "mixed",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843414,
+        "lng": -79.545765,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843414,-79.545765",
+        "coords_source": "OpenStreetMap way/189872600 name=Ghoster Coaster",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/ghoster-coaster",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "joe-cool-s-dodgem-school",
+      "name": "Joe Cool's Dodgem School",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / bumper cars",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": 54,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/joe-cools-dodgem-school",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/joe-cools-dodgem-school",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844458,
+        "lng": -79.544852,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844458,-79.544852",
+        "coords_source": "OpenStreetMap way/189869956 name=Joe Cool's Dodgem School",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/joe-cools-dodgem-school",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "lucy-s-tugboat",
+      "name": "Lucy's Tugboat",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/lucys-tugboat",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/lucys-tugboat",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844447,
+        "lng": -79.545343,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844447,-79.545343",
+        "coords_source": "OpenStreetMap way/902190375 name=Lucy's Tugboat",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/lucys-tugboat",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "peanuts-500",
+      "name": "PEANUTS 500",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": "Kiddie cars",
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 36\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/peanuts-500",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/peanuts-500",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844868,
+        "lng": -79.544552,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844868,-79.544552",
+        "coords_source": "OpenStreetMap way/189873901 name=Peanuts 500",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Peanuts 500'"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/peanuts-500",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "sally-s-love-buggies",
+      "name": "Sally's Love Buggies",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 44,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 44\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/sallys-love-buggies",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/sallys-love-buggies",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844541,
+        "lng": -79.545114,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844541,-79.545114",
+        "coords_source": "OpenStreetMap way/288251760 name=Sally's Love Buggies",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/sallys-love-buggies",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "snoopy-vs-red-baron",
+      "name": "Snoopy vs. Red Baron",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": 54,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/snoopy-vs-red-baron",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/snoopy-vs-red-baron",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844087,
+        "lng": -79.544873,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844087,-79.544873",
+        "coords_source": "OpenStreetMap way/902186998 name=Snoopy vs Red Baron",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Snoopy vs Red Baron'"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/snoopy-vs-red-baron",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "snoopy-s-revolution",
+      "name": "Snoopy's Revolution",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / ferris-style",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/snoopys-revolution",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/snoopys-revolution",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844762,
+        "lng": -79.544431,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844762,-79.544431",
+        "coords_source": "OpenStreetMap way/902191697 name=Snoopy's Revolution",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/snoopys-revolution",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "snoopy-s-racing-railway",
+      "name": "Snoopy's Racing Railway",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Family launch; park's 18th coaster (official)",
+      "height": {
+        "min_in": 48,
+        "max_in": 77,
+        "supervised_companion_rule": "36\" with supervising companion; 48\" to ride alone (official page)",
+        "other_restrictions": "Map also lists 36\"\u201348\" companion band"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/snoopys-racing-railway",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/snoopys-racing-railway",
+      "confidence": "official",
+      "gaps_notes": "Official page: 0\u201350 km/h launch mentioned; exact length/inversions not listed.",
+      "location": {
+        "lat": 43.84437,
+        "lng": -79.545767,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84437,-79.545767",
+        "coords_source": "OpenStreetMap node/14127168711 name=Snoopy's Racing Railway",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/snoopys-racing-railway",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "snoopy-s-space-race",
+      "name": "Snoopy's Space Race",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": null,
+        "max_in": 60,
+        "supervised_companion_rule": null,
+        "other_restrictions": "Must be less than 60\"; no hand-held infants (official). Map listed 60\" as the constraint."
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/snoopys-space-race",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/snoopys-space-race",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844027,
+        "lng": -79.544702,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844027,-79.544702",
+        "coords_source": "OpenStreetMap way/902190368 name=Snoopy's Space Race",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/snoopys-space-race",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "swan-lake",
+      "name": "Swan Lake",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Boat / family",
+      "ride_type_coarse": "boat",
+      "category_notes": "Paddle swan boats",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Under 48\" with companion; no hand-held infants. Over 60\" must ride with a guest under 60\"; max 1 guest over 60\" per boat (official).",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": "no (leisure boats)",
+      "water_notes": "Paddle boats on lake",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/swan-lake",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/swan-lake",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843997,
+        "lng": -79.544051,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843997,-79.544051",
+        "coords_source": "OpenStreetMap way/288137746 name=Swan Lake",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/swan-lake",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "the-pumpkin-patch",
+      "name": "The Pumpkin Patch",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/the-pumpkin-patch",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/the-pumpkin-patch",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844643,
+        "lng": -79.544906,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844643,-79.544906",
+        "coords_source": "OpenStreetMap way/288251748 name=The Pumpkin Patch",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/the-pumpkin-patch",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "woodstock-whirlybirds",
+      "name": "Woodstock Whirlybirds",
+      "park_area": "Planet Snoopy",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 40,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 40\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/woodstock-whirlybirds",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/woodstock-whirlybirds",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844729,
+        "lng": -79.545227,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844729,-79.545227",
+        "coords_source": "OpenStreetMap way/902564178 name=Woodstock Whirlybirds",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/woodstock-whirlybirds",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "blast-off",
+      "name": "Blast Off!",
+      "park_area": "KidZville",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/blast-off",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/blast-off",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843013,
+        "lng": -79.545983,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843013,-79.545983",
+        "coords_source": "OpenStreetMap way/899959904 name=Blast Off",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Blast Off'"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/blast-off",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "flying-eagles",
+      "name": "Flying Eagles",
+      "park_area": "KidZville",
+      "ride_type": "Kids / family flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 44,
+        "max_in": null,
+        "supervised_companion_rule": "Between 36\"\u201344\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/flying-eagles",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/flying-eagles",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842577,
+        "lng": -79.544971,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842577,-79.544971",
+        "coords_source": "OpenStreetMap way/899056036 name=Flying Eagles",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/flying-eagles",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "frequent-flyers",
+      "name": "Frequent Flyers",
+      "park_area": "KidZville",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": "Mini balloons; orig. Balloon Race (1981)",
+      "height": {
+        "min_in": null,
+        "max_in": 60,
+        "supervised_companion_rule": null,
+        "other_restrictions": "Must be less than 60\"; no hand-held infants (official)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/frequent-flyers",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/frequent-flyers",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.84261,
+        "lng": -79.545482,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84261,-79.545482",
+        "coords_source": "OpenStreetMap way/899741275 name=Frequent Flyers",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/frequent-flyers",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "jokey-s-jalopies",
+      "name": "Jokey's Jalopies",
+      "park_area": "KidZville",
+      "ride_type": "Kids / track ride",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 46,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 46\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/jokeys-jalopies",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/jokeys-jalopies",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842773,
+        "lng": -79.54481,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842773,-79.54481",
+        "coords_source": "OpenStreetMap way/902723855 name=Jokey's Jalopies",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/jokeys-jalopies",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "jumpin-jet",
+      "name": "Jumpin' Jet",
+      "park_area": "KidZville",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 36\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/jumpin-jet",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/jumpin-jet",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842871,
+        "lng": -79.546101,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842871,-79.546101",
+        "coords_source": "OpenStreetMap way/899959903 name=Jumpin' Jet",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/jumpin-jet",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "kidzville-station",
+      "name": "KidZville Station",
+      "park_area": "KidZville",
+      "ride_type": "Kids / train",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 40,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 40\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/kidzville-station",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/kidzville-station",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843366,
+        "lng": -79.544517,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843366,-79.544517",
+        "coords_source": "OpenStreetMap way/286082447 name=Kidzvill Station",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Kidzvill Station'"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/kidzville-station",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "maple-park-treehouse",
+      "name": "Maple Park Treehouse",
+      "park_area": "KidZville",
+      "ride_type": "Play structure",
+      "ride_type_coarse": "kids",
+      "category_notes": "Walk-through / climb play (not a typical ride)",
+      "height": {
+        "min_in": null,
+        "max_in": 54,
+        "supervised_companion_rule": null,
+        "other_restrictions": "* Must be accompanied by a child if over this height (map footnote)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/maple-park-treehouse",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/maple-park-treehouse",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842321,
+        "lng": -79.545564,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842321,-79.545564",
+        "coords_source": "OpenStreetMap way/904327541 name=Maple Park Treehouse",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/maple-park-treehouse",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "silver-streak",
+      "name": "Silver Streak",
+      "park_area": "KidZville",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Junior inverted; helix",
+      "height": {
+        "min_in": 44,
+        "max_in": 76,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/silver-streak",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/silver-streak",
+      "confidence": "official",
+      "gaps_notes": "Official page has thrill-level widget but no numeric length/speed in fetched text.",
+      "location": {
+        "lat": 43.842413,
+        "lng": -79.546224,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842413,-79.546224",
+        "coords_source": "OpenStreetMap way/189869354 name=Silver Streak",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/silver-streak",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "sugar-shack",
+      "name": "Sugar Shack",
+      "park_area": "KidZville",
+      "ride_type": "Kids / flat",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 36\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/sugar-shack",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/sugar-shack",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842477,
+        "lng": -79.545353,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842477,-79.545353",
+        "coords_source": "OpenStreetMap way/899962090 name=Sugar Shack",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/sugar-shack",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "swing-time",
+      "name": "Swing Time",
+      "park_area": "KidZville",
+      "ride_type": "Kids / swing",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": 54,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/swing-time",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/swing-time",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843328,
+        "lng": -79.545062,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843328,-79.545062",
+        "coords_source": "OpenStreetMap way/527409710 name=Swing Time",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/swing-time",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "taxi-jam",
+      "name": "Taxi Jam",
+      "park_area": "KidZville",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Kiddie coaster",
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/taxi-jam",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/taxi-jam; https://rcdb.com/4539.htm",
+      "confidence": "official-heights",
+      "gaps_notes": "RCDB lists as operating family/kiddie; stats not fetched.",
+      "location": {
+        "lat": 43.843175,
+        "lng": -79.544716,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843175,-79.544716",
+        "coords_source": "OpenStreetMap way/899724290 name=Taxi Jam",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/taxi-jam",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "treetop-adventure",
+      "name": "Treetop Adventure",
+      "park_area": "KidZville",
+      "ride_type": "Kids / family",
+      "ride_type_coarse": "kids",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/treetop-adventure",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/treetop-adventure",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.842464,
+        "lng": -79.544632,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.842464,-79.544632",
+        "coords_source": "OpenStreetMap way/902152755 name=Treetop Adventure",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/treetop-adventure",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "dragon-fyre",
+      "name": "Dragon Fyre",
+      "park_area": "Medieval Faire",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Arrow looping",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "76 ft drop / 78 ft height (RCDB)",
+        "track_length": "2160 ft (RCDB)",
+        "max_speed": "50 mph (RCDB)",
+        "inversions": "4 (RCDB: 2 loops + double corkscrew)",
+        "duration": "1:30 (RCDB)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/dragon-fyre",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/dragon-fyre; https://rcdb.com/58.htm",
+      "confidence": "mixed",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844501,
+        "lng": -79.540646,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844501,-79.540646",
+        "coords_source": "OpenStreetMap way/662523171 name=Dragon Fyre; OSM wikidata=Q1882515",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/dragon-fyre",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "drop-tower",
+      "name": "Drop Tower",
+      "park_area": "Medieval Faire",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Freefall tower",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/drop-tower",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/drop-tower",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844406,
+        "lng": -79.542812,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844406,-79.542812",
+        "coords_source": "OpenStreetMap way/899759199 name=Drop Tower",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/drop-tower",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "leviathan",
+      "name": "Leviathan",
+      "park_area": "Medieval Faire",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "B&M giga; tallest/fastest in park; Fast Lane Plus; FunPix",
+      "height": {
+        "min_in": 54,
+        "max_in": 80,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "306 ft / 80\u00b0 (official); RCDB drop 306 ft",
+        "track_length": "5486 ft (RCDB)",
+        "max_speed": "148 km/h official (~92 mph RCDB)",
+        "inversions": "0 (RCDB)",
+        "duration": "2:08 (RCDB)"
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/leviathan",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/leviathan; https://rcdb.com/10108.htm",
+      "confidence": "mixed",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.84516,
+        "lng": -79.541879,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84516,-79.541879",
+        "coords_source": "OpenStreetMap way/286082449 name=Leviathan",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM roller_coaster=track centroid (not station). Still ride-level."
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/leviathan",
+      "thrill_level_confidence": "official",
+      "operating_status": "temporarily_closed",
+      "status_notes": "Temporarily closed since Oct 12, 2026 after a fatal incident at Six Flags Over Georgia; no reopening date announced. Confirm with the park before visiting.",
+      "status_sources": ["https://apnews.com/article/six-flags-georgia-roller-coaster-death-a9ce45f681772b828f7b5d3c59d010d1", "https://toronto.citynews.ca/2026/10/12/2-canadas-wonderland-roller-coasters-shut-down-following-fatal-incident-at-georgia-park/"],
+      "status_updated": "2026-10-15"
+    },
+    {
+      "id": "riptide",
+      "name": "Riptide",
+      "park_area": "Medieval Faire",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Top Spin; not Splash Works",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": "sometimes (splash effects possible \u2014 confirm signage)",
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/riptide",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/riptide",
+      "confidence": "official-heights",
+      "gaps_notes": "Name collision with Splash Works Riptide Racer. Wetness not confirmed this pass.",
+      "location": {
+        "lat": 43.84417,
+        "lng": -79.540575,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84417,-79.540575",
+        "coords_source": "OpenStreetMap way/902586549 name=Riptide; OSM wikidata=Q7335761",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/riptide",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "spinovator",
+      "name": "Spinovator",
+      "park_area": "Medieval Faire",
+      "ride_type": "Flat ride",
+      "ride_type_coarse": "flat",
+      "category_notes": "Calypso / spinning tubs",
+      "height": {
+        "min_in": 52,
+        "max_in": null,
+        "supervised_companion_rule": "Between 48\"\u201352\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/spinovator",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/spinovator",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.844378,
+        "lng": -79.541066,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844378,-79.541066",
+        "coords_source": "OpenStreetMap way/592409731 name=Spinovator",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/spinovator",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "the-bat",
+      "name": "The Bat",
+      "park_area": "Medieval Faire",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Vekoma boomerang / shuttle; forward + backward",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": "Lift 121 ft / 36.88 m (official)",
+        "track_length": null,
+        "max_speed": "~75 km/h (official)",
+        "inversions": "Yes \u2014 corkscrew + loop + cobra roll (official prose; typically 6 on a boomerang \u2014 confirm RCDB before publishing count)",
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/the-bat",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/the-bat",
+      "confidence": "official",
+      "gaps_notes": "Did not record inversion count from RCDB this pass.",
+      "location": {
+        "lat": 43.843596,
+        "lng": -79.543284,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843596,-79.543284",
+        "coords_source": "OpenStreetMap way/458798685 name=The Bat; OSM wikidata=Q7715787",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/the-bat",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "viking-s-rage",
+      "name": "Viking's Rage",
+      "park_area": "Medieval Faire",
+      "ride_type": "Flat ride / family thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Pirate ship",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Between 39\"\u201348\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/vikings-rage",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/vikings-rage",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.843914,
+        "lng": -79.541909,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.843914,-79.541909",
+        "coords_source": "OpenStreetMap way/899743681 name=Viking's Rage",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/vikings-rage",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "wilde-beast",
+      "name": "Wilde Beast",
+      "park_area": "Medieval Faire",
+      "ride_type": "Roller coaster",
+      "ride_type_coarse": "coaster",
+      "category_notes": "Wooden",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "** Larger size (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/wilde-beast",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/wilde-beast; https://rcdb.com/4539.htm",
+      "confidence": "official-heights",
+      "gaps_notes": "Length/speed/drop not filled.",
+      "location": {
+        "lat": 43.844122,
+        "lng": -79.543136,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.844122,-79.543136",
+        "coords_source": "OpenStreetMap way/189869955 name=Wilde Beast; OSM wikidata=Q8000523",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/wilde-beast",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "wilde-knight-mares",
+      "name": "Wilde Knight Mares",
+      "park_area": "Medieval Faire",
+      "ride_type": "Flat ride / thrill",
+      "ride_type_coarse": "thrill",
+      "category_notes": "Enterprise / standing spinning; no seat belts (official)",
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "Lifted 49 ft / 15 m (official)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": null,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/wilde-knight-mares",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/wilde-knight-mares",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.84409,
+        "lng": -79.542559,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84409,-79.542559",
+        "coords_source": "OpenStreetMap way/899745448 name=Wilde Knight Mares",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/wilde-knight-mares",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "barracuda-blaster",
+      "name": "Barracuda Blaster",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": "Tube slide",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "250 lb rider / 400 lb tube (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Tube slide",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/barracuda-blaster",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/barracuda-blaster",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839792,
+        "lng": -79.543296,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839792,-79.543296",
+        "coords_source": "OpenStreetMap way/289665423 name=Barracuda Blaster",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/barracuda-blaster",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "black-hole",
+      "name": "Black Hole",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/black-hole",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/black-hole",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838021,
+        "lng": -79.545149,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838021,-79.545149",
+        "coords_source": "OpenStreetMap way/900589457 name=Black Hole",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/black-hole",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "lakeside-lagoon-pool",
+      "name": "Lakeside Lagoon (pool)",
+      "park_area": "Splash Works",
+      "ride_type": "Water play / pool",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": null,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Pool; no min height printed on map (blank). Slides listed separately.",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": null,
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013)",
+      "confidence": "official-map-only",
+      "gaps_notes": "No dedicated sixflags attraction URL (404). Confirm hours/depth at park.",
+      "location": {
+        "lat": 43.84023,
+        "lng": -79.544468,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.84023,-79.544468",
+        "coords_source": "OpenStreetMap way/189872269 name=Lakeside Lagoon Pool",
+        "coords_confidence": "precise",
+        "coords_notes": "OSM name differs: 'Lakeside Lagoon Pool'"
+      },
+      "thrill_level_1_to_5": null,
+      "thrill_level_label": null,
+      "thrill_level_source": null,
+      "thrill_level_confidence": null
+    },
+    {
+      "id": "lakeside-lagoon-slides",
+      "name": "Lakeside Lagoon Slides",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": null,
+        "max_in": 60,
+        "supervised_companion_rule": null,
+        "other_restrictions": "* Accompanied by a child if over this height (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": null,
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013)",
+      "confidence": "official-map-only",
+      "gaps_notes": "No separate official URL found.",
+      "location": {
+        "lat": 43.839854,
+        "lng": -79.544655,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839854,-79.544655",
+        "coords_source": "OpenStreetMap node/8370435085 name=Lakeside Lagoon Slides",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": null,
+      "thrill_level_label": null,
+      "thrill_level_source": null,
+      "thrill_level_confidence": null
+    },
+    {
+      "id": "lazy-river",
+      "name": "Lazy River",
+      "park_area": "Splash Works",
+      "ride_type": "Water / lazy river",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with supervising companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Boats/tubes on lazy river",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/lazy-river",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/lazy-river",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839529,
+        "lng": -79.54347,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839529,-79.54347",
+        "coords_source": "OpenStreetMap relation/3829184 name=Lazy River",
+        "coords_confidence": "precise-pool",
+        "coords_notes": "OSM leisure=swimming_pool named feature (not tagged attraction). {'leisure': 'swimming_pool'}"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/lazy-river",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "moosehorn-falls",
+      "name": "Moosehorn Falls",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": "Raft",
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "1,000 lb raft max (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Raft slide",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/moosehorn-falls",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/moosehorn-falls",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839013,
+        "lng": -79.543991,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839013,-79.543991",
+        "coords_source": "OpenStreetMap relation/12297020 AREA Splash Works (no ride-level feature found)",
+        "coords_confidence": "area-approx",
+        "coords_notes": "No OSM/Nominatim/Wikidata point for 'Moosehorn Falls'. Using Splash Works centroid. FLAG: approximate."
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/moosehorn-falls",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "mountain-bay-cliffs",
+      "name": "Mountain Bay Cliffs",
+      "park_area": "Splash Works",
+      "ride_type": "Water / cliff jump",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 54,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/mountain-bay-cliffs",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/mountain-bay-cliffs",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.837617,
+        "lng": -79.544806,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.837617,-79.544806",
+        "coords_source": "OpenStreetMap way/900589455 name=Mountain Bay Cliffs",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/mountain-bay-cliffs",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "muskoka-plunge",
+      "name": "Muskoka Plunge",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide / drop",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "45\u2013300 lb (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/muskoka-plunge",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/muskoka-plunge",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839045,
+        "lng": -79.543352,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839045,-79.543352",
+        "coords_source": "OpenStreetMap way/901053858 name=Muskoka Plunge",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/muskoka-plunge",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "pumphouse",
+      "name": "Pumphouse",
+      "park_area": "Splash Works",
+      "ride_type": "Water play",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": null,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/pumphouse",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/pumphouse",
+      "confidence": "official-map-only",
+      "gaps_notes": "No height printed on 2026 chart for Pumphouse itself.",
+      "location": {
+        "lat": 43.838305,
+        "lng": -79.544404,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838305,-79.544404",
+        "coords_source": "OpenStreetMap way/288724283 name=Pumphouse",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/pumphouse",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "riptide-racer",
+      "name": "Riptide Racer",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide / mat racer",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 40,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/riptide-racer",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/riptide-racer",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.8388,
+        "lng": -79.544184,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.8388,-79.544184",
+        "coords_source": "OpenStreetMap way/902855114 name=Riptide Racer",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/riptide-racer",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "splash-station",
+      "name": "Splash Station",
+      "park_area": "Splash Works",
+      "ride_type": "Kids water play / slides",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "Map prints 36\" (slides) and 48\" (slides) \u2014 likely different slide elements; confirm signage"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/splash-station",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/splash-station",
+      "confidence": "official-heights",
+      "gaps_notes": "Two slide height lines on map; not fully parsed.",
+      "location": {
+        "lat": 43.839483,
+        "lng": -79.542583,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839483,-79.542583",
+        "coords_source": "OpenStreetMap way/901056510 name=Splash Station",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 1,
+      "thrill_level_label": "low",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=1 (low); https://www.sixflags.com/canadaswonderland/attractions/splash-station",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "super-soaker",
+      "name": "Super Soaker",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": "Family raft",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Between 40\"\u201348\" with companion",
+        "other_restrictions": "800 lb raft; *** PFD required under 48\""
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Raft",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/super-soaker",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/super-soaker",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838682,
+        "lng": -79.543926,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838682,-79.543926",
+        "coords_source": "OpenStreetMap way/899711965 name=The Plunge and Super Soaker",
+        "coords_confidence": "precise-shared-station",
+        "coords_notes": "OSM maps Super Soaker and The Plunge as one station/tower (The Plunge and Super Soaker). Same lat/lng for both."
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/super-soaker",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "the-plunge",
+      "name": "The Plunge",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": "Family raft",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": "Between 40\"\u201348\" with companion",
+        "other_restrictions": "800 lb raft; *** PFD under 48\""
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/the-plunge",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/the-plunge",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838682,
+        "lng": -79.543926,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838682,-79.543926",
+        "coords_source": "OpenStreetMap way/899711965 name=The Plunge and Super Soaker",
+        "coords_confidence": "precise-shared-station",
+        "coords_notes": "OSM maps Super Soaker and The Plunge as one station/tower (The Plunge and Super Soaker). Same lat/lng for both."
+      },
+      "thrill_level_1_to_5": 5,
+      "thrill_level_label": "aggressive",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=5 (aggressive); https://www.sixflags.com/canadaswonderland/attractions/the-plunge",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "typhoon",
+      "name": "Typhoon",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": "Tube",
+      "height": {
+        "min_in": 48,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "250 lb (map)"
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/typhoon",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/typhoon",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838953,
+        "lng": -79.543001,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838953,-79.543001",
+        "coords_source": "OpenStreetMap way/901054518 name=Typhoon",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 4,
+      "thrill_level_label": "high",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=4 (high); https://www.sixflags.com/canadaswonderland/attractions/typhoon",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "waterways",
+      "name": "Waterways",
+      "park_area": "Splash Works",
+      "ride_type": "Kids water",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 36,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 36\" with companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/waterways",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/waterways",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839567,
+        "lng": -79.545384,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839567,-79.545384",
+        "coords_source": "OpenStreetMap way/288724281 name=Waterways",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 2,
+      "thrill_level_label": "mild",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=2 (mild); https://www.sixflags.com/canadaswonderland/attractions/waterways",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "whirlwinds",
+      "name": "Whirlwinds",
+      "park_area": "Splash Works",
+      "ride_type": "Water slide",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 40,
+        "max_in": null,
+        "supervised_companion_rule": null,
+        "other_restrictions": "*** PFD under 48\""
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": null,
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/whirlwinds",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/whirlwinds",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.839226,
+        "lng": -79.544323,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.839226,-79.544323",
+        "coords_source": "OpenStreetMap way/289312182 name=Whirlwinds",
+        "coords_confidence": "precise"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/whirlwinds",
+      "thrill_level_confidence": "official"
+    },
+    {
+      "id": "white-water-bay",
+      "name": "White Water Bay",
+      "park_area": "Splash Works",
+      "ride_type": "Wave pool",
+      "ride_type_coarse": "water",
+      "category_notes": null,
+      "height": {
+        "min_in": 42,
+        "max_in": null,
+        "supervised_companion_rule": "Less than 42\" with companion",
+        "other_restrictions": null
+      },
+      "thrill_level_published": null,
+      "gets_wet": true,
+      "water_notes": "Wave pool",
+      "coaster": {
+        "drop_height": null,
+        "track_length": null,
+        "max_speed": null,
+        "inversions": null,
+        "duration": null
+      },
+      "accessibility_notes": "Per-ride accessibility is on official pages (JS) and the Guest Accessibility Guide: https://www.sixflags.com/canadaswonderland/accessibility \u2014 pick up at Guest Services.",
+      "official_url": "https://www.sixflags.com/canadaswonderland/attractions/white-water-bay",
+      "sources": "2026 official park map/guide height chart (reprint: https://deeparrival.com/wp-content/uploads/2026/07/canadas-wonderland-map-2026-web.pdf ; branded canadaswonderland.com / Six Flags CW-26-0013); https://www.sixflags.com/canadaswonderland/attractions/white-water-bay",
+      "confidence": "official",
+      "gaps_notes": null,
+      "location": {
+        "lat": 43.838008,
+        "lng": -79.543954,
+        "map_url": "https://www.google.com/maps/search/?api=1&query=43.838008,-79.543954",
+        "coords_source": "OpenStreetMap way/905946643 name=White Water Bay",
+        "coords_confidence": "precise-pool",
+        "coords_notes": "OSM leisure=swimming_pool named feature (not tagged attraction). {'leisure': 'swimming_pool'}"
+      },
+      "thrill_level_1_to_5": 3,
+      "thrill_level_label": "moderate",
+      "thrill_level_source": "Official Six Flags attraction page JSON thrillLevel=3 (moderate); https://www.sixflags.com/canadaswonderland/attractions/white-water-bay",
+      "thrill_level_confidence": "official"
+    }
+  ],
+  "google_sheet_title": "Canada's Wonderland Rides"
+}

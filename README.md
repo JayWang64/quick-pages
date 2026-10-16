@@ -12,6 +12,10 @@ Live pages hosted on GitHub Pages. Click any link to open it.
 - [Markham Pickleball Courts](https://jaywang64.github.io/quick-pages/pickleball.markham/)
 - [Cornell Community Park Courts](https://jaywang64.github.io/quick-pages/pickleball.markham/cornell-community-park.html)
 
+## Canada's Wonderland Rides
+
+- [Wonderland Rides Directory](https://jaywang64.github.io/quick-pages/wonderland/)
+
 ## Paper Arcade
 
 - [Paper Arcade home](https://jaywang64.github.io/quick-pages/paper-arcade/)

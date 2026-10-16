@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTA Skateparks for Parents</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231d;
+      --muted: #627066;
+      --line: #dce5dd;
+      --page: #f7faf7;
+      --panel: #ffffff;
+      --green: #174a35;
+      --green-soft: #dff4e8;
+      --orange: #9b4d18;
+      --orange-soft: #ffe9d6;
+      --shadow: 0 12px 30px rgba(29, 54, 38, .10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 28px 18px 22px;
+    }
+
+    .wrap {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 8vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      margin: 10px 0 0;
+      max-width: 58rem;
+      color: rgba(255, 255, 255, .88);
+      font-size: 1rem;
+    }
+
+    main { padding: 16px; }
+
+    .map-panel {
+      padding: 16px 16px 0;
+      background: var(--page);
+    }
+
+    #park-map {
+      height: min(56vh, 420px);
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #dce5dd;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.35;
+    }
+
+    .leaflet-popup-content a {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .park-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .park-marker::before {
+      content: "";
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid white;
+      border-radius: 50% 50% 50% 0;
+      background: var(--green);
+      box-shadow: 0 3px 10px rgba(29, 54, 38, .35);
+      transform: rotate(-45deg);
+    }
+
+    .park-marker::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-soft);
+    }
+
+    .park-marker.special::before {
+      background: var(--orange);
+      box-shadow: 0 3px 10px rgba(67, 36, 15, .35);
+    }
+
+    .park-marker.special::after {
+      background: var(--orange-soft);
+    }
+
+    .filter-bar {
+      padding: 12px 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .filter-section {
+      margin-bottom: 10px;
+    }
+
+    .filter-section:last-child { margin-bottom: 0; }
+
+    .filter-label {
+      display: block;
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      font-size: .88rem;
+      font-weight: 700;
+      background: var(--page);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--muted);
+    }
+
+    .chip:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .chip.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .clear-btn {
+      padding: 7px 12px;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--green);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    .park-table {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      --row-highlight-overhang: 14px;
+      padding: 14px;
+    }
+
+    .park-table h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .park-table > p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .park-table ul {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .park-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      border-top: 1px solid var(--line);
+      padding: 12px 0;
+      transition: background-color .2s ease, box-shadow .2s ease;
+    }
+
+    .park-row:first-child { border-top: 0; }
+
+    .park-row.is-active::before {
+      content: "";
+      position: absolute;
+      inset: 4px calc(-1 * var(--row-highlight-overhang));
+      border-left: 4px solid var(--green);
+      border-radius: 6px;
+      background: #effaf4;
+    }
+
+    .park-row > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .park-row:focus { outline: none; }
+
+    .park-row:focus-visible {
+      outline: 3px solid rgba(21, 122, 79, .25);
+      outline-offset: 2px;
+    }
+
+    .park-main {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .park-main b {
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--green-soft);
+      color: #157a4f;
+      font-weight: 900;
+      font-size: .78rem;
+      text-decoration: none;
+    }
+
+    .status.special {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+
+    .icon-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--ink);
+    }
+
+    .icon-stat svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-stat.yes {
+      color: #157a4f;
+    }
+
+    .icon-stat.yes svg {
+      fill: #dff4e8;
+    }
+
+    .icon-stat.no {
+      color: #b42318;
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .icon-stat.no svg {
+      fill: #ffe4e0;
+    }
+
+    .icon-stat.unknown {
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    .icon-stat {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .icon-stat .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 8px;
+      background: var(--ink);
+      color: white;
+      font-size: .75rem;
+      font-weight: 600;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 100;
+      margin-bottom: 4px;
+    }
+
+    .icon-stat .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--ink);
+    }
+
+    .icon-stat:hover .tooltip,
+    .icon-stat.show-tooltip .tooltip {
+      opacity: 1;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      padding: 10px 0;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .detail-lines {
+      display: grid;
+      gap: 6px;
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .address-row {
+      display: grid;
+      grid-template-columns: 1fr 38px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .address-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .address-link svg {
+      flex: 0 0 auto;
+      width: 19px;
+      height: 19px;
+      stroke-width: 2.25;
+    }
+
+    .address-link .map-pin path {
+      fill: var(--green);
+      stroke: var(--green);
+    }
+
+    .address-link .map-pin circle {
+      fill: white;
+      stroke: white;
+    }
+
+    .address-link span {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .park-note {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: .9rem;
+      font-style: italic;
+    }
+
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      min-height: 38px;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      text-decoration: none;
+    }
+
+    .icon-link svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 0 16px 24px;
+    }
+
+    footer p {
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    footer a {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (min-width: 720px) {
+      header { padding: 38px 24px 30px; }
+      main { padding: 24px; }
+      .map-panel { padding: 24px 24px 0; }
+      .filter-bar { padding: 14px 16px; }
+
+      .park-table {
+        --row-highlight-overhang: 16px;
+        padding: 16px;
+      }
+
+      .park-row {
+        grid-template-columns: minmax(200px, 1.2fr) minmax(200px, 1fr) minmax(220px, 1fr);
+        align-items: center;
+      }
+
+      .park-row .meta-row,
+      .park-row .detail-lines,
+      .park-row .park-note {
+        grid-column: auto;
+      }
+
+      .detail-lines { gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>GTA Skateparks</h1>
+      <p class="subhead">Quick picks for parents with learning skaters</p>
+    </div>
+  </header>
+
+  <div class="map-panel">
+    <div id="park-map"></div>
+  </div>
+
+  <main>
+    <div class="filter-bar">
+      <div class="filter-section">
+        <span class="filter-label">Skill Level</span>
+        <div class="filter-chips">
+          <button class="chip" data-filter="skill" data-value="still_learning">Still Learning</button>
+          <button class="chip" data-filter="skill" data-value="beginner">Beginner</button>
+          <button class="chip" data-filter="skill" data-value="intermediate">Intermediate</button>
+          <button class="chip" data-filter="skill" data-value="advanced">Advanced</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Amenities</span>
+        <div class="filter-chips">
+          <button class="chip" data-filter="amenity" data-value="bathrooms">Bathroom</button>
+          <button class="chip" data-filter="amenity" data-value="shade">Shade</button>
+          <button class="chip" data-filter="amenity" data-value="lot_parking">Lot Parking</button>
+          <button class="chip" data-filter="amenity" data-value="water">Water</button>
+          <button class="chip" data-filter="amenity" data-value="playground">Playground</button>
+          <button class="chip" data-filter="amenity" data-value="splash_pad">Splash Pad</button>
+          <button class="chip" data-filter="amenity" data-value="evening_lights">Evening Lights</button>
+          <button class="clear-btn" id="clearFilters">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="park-table">
+      <h2>All Skateparks</h2>
+      <p>8 parks across Scarborough, Markham &amp; Ajax. Parent-focused amenities and skill levels.</p>
+      <div class="legend" aria-label="Icon legend">
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v1H8V6a4 4 0 0 1 4-4z"/><rect x="4" y="7" width="16" height="5" rx="1"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/></svg> Bathroom</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg> Shade</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg> Water</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg> Lot parking</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M2 22h20"/><path d="M6.36 17.4 4 22"/><path d="m11.64 17.4 2.36 4.6"/><path d="M5 12h14l-3 5H8z"/><circle cx="9" cy="7" r="2"/></svg> Playground</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 14.69c1.37 0 2.5-1.14 2.5-2.53 0-.72-.36-1.41-1.07-1.99s-1.35-1.25-1.43-2.17c-.18.92-.71 1.78-1.43 2.35S10.06 11.44 10.06 12.16c0 1.39 1.12 2.53 2.5 2.53z"/></svg> Splash pad</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> Evening lights</span>
+        <span class="legend-item" style="margin-left:auto; color:#157a4f">✓ yes</span>
+        <span class="legend-item" style="color:#b42318">✗ no</span>
+        <span class="legend-item" style="opacity:0.6">? unknown</span>
+      </div>
+      <ul id="parkList"></ul>
+    </div>
+
+    <div class="no-results" id="noResults" hidden>
+      <p>No parks match your filters.</p>
+      <button class="chip active" onclick="clearAllFilters()">Clear filters</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>Seed data from Justin. Map pins from public address lookups. <strong>Draft</strong> — not for distribution.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const parks = [
+      {
+        id: "fundy-bay-park",
+        name: "Skate Park, Fundy Bay Park",
+        location: "Scarborough, Ontario",
+        address: "190 Fundy Bay Blvd, Scarborough, ON M1W 3G1",
+        map_url: "https://www.google.com/maps/search/?api=1&query=190+Fundy+Bay+Blvd,+Scarborough,+ON+M1W+3G1",
+        skill_level: ["still_learning", "beginner"],
+        bathrooms: false,
+        water: false,
+        natural_shade: true,
+        covered_shade: "unknown",
+        parking: "street",
+        playground_nearby: true,
+        splash_pad_nearby: false,
+        lighting_evening: false,
+        note: "Path/walking lights nearby; not suitable for nighttime skatepark use.",
+        lat: 43.81045, lng: -79.31809
+      },
+      {
+        id: "cornell-community-park",
+        name: "Cornell Community Park skate park",
+        location: "Markham, Ontario",
+        address: "371 Cornell Centre Blvd, Markham, ON L6B 0R1",
+        map_url: "https://www.google.com/maps/search/?api=1&query=371+Cornell+Centre+Blvd,+Markham,+ON+L6B+0R1",
+        skill_level: ["still_learning", "beginner"],
+        bathrooms: true,
+        water: true,
+        natural_shade: "unknown",
+        covered_shade: true,
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: true,
+        lighting_evening: false,
+        note: null,
+        lat: 43.89079, lng: -79.22327
+      },
+      {
+        id: "box-grove-community-center",
+        name: "Box Grove Community Center skate park",
+        location: "Markham, Ontario",
+        address: "346 Box Grove By-pass, Markham, ON L6B 0H9",
+        map_url: "https://www.google.com/maps/search/?api=1&query=Box+Grove+Community+Park+skate+park+346+Box+Grove+By-pass+Markham+ON",
+        skill_level: ["still_learning", "beginner"],
+        bathrooms: true,
+        water: true,
+        natural_shade: "unknown",
+        covered_shade: true,
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: true,
+        lighting_evening: false,
+        note: null,
+        lat: 43.8559, lng: -79.2315
+      },
+      {
+        id: "neilson-skate-park",
+        name: "Neilson Skate Park",
+        location: "Scarborough, Ontario",
+        address: "1555 Neilson Rd, Scarborough, ON M1B 5Z7",
+        map_url: "https://www.google.com/maps/search/?api=1&query=1555+Neilson+Rd,+Scarborough,+ON+Neilson+Skatepark",
+        skill_level: ["still_learning", "beginner"],
+        bathrooms: true,
+        water: true,
+        natural_shade: false,
+        covered_shade: false,
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: true,
+        lighting_evening: false,
+        note: "No shade; no evening skate lighting.",
+        lat: 43.81237, lng: -79.22504
+      },
+      {
+        id: "greensborough-skate-park",
+        name: "Greensborough Skate Park",
+        location: "Markham, Ontario",
+        address: "190 Williamson Rd, Markham (Laura & Alf Weaver Park)",
+        map_url: "https://maps.app.goo.gl/6WiSK2wH3mrq8fJE6?g_st=ic",
+        skill_level: ["beginner", "intermediate"],
+        bathrooms: true,
+        water: false,
+        natural_shade: false,
+        covered_shade: false,
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: false,
+        lighting_evening: false,
+        note: "Mostly a bowl.",
+        lat: 43.9048, lng: -79.2635,
+        special: true
+      },
+      {
+        id: "audley-community-centre",
+        name: "Audley Community Centre skate park",
+        location: "Ajax, Ontario",
+        address: "1955 Audley Road North, Ajax, ON L1Z 0L2",
+        map_url: "https://www.google.com/maps/search/?api=1&query=Audley+Recreation+Centre+skate+park+1955+Audley+Road+North+Ajax+ON",
+        skill_level: ["beginner", "intermediate"],
+        bathrooms: true,
+        water: true,
+        natural_shade: false,
+        covered_shade: false,
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: true,
+        lighting_evening: false,
+        note: null,
+        lat: 43.9000, lng: -79.0100
+      },
+      {
+        id: "markham-centennial",
+        name: "Markham Centennial Skatepark",
+        location: "Markham, Ontario",
+        address: "4 Miley Drive / Centennial Community Centre, Markham, ON",
+        map_url: "https://www.google.com/maps/search/?api=1&query=Markham+Centennial+Skatepark+4+Miley+Drive+Markham+ON",
+        skill_level: ["beginner", "intermediate", "advanced"],
+        bathrooms: true,
+        water: true,
+        natural_shade: true,
+        covered_shade: "unknown",
+        parking: "lot",
+        playground_nearby: true,
+        splash_pad_nearby: false,
+        lighting_evening: false,
+        note: "Shade trees (natural).",
+        lat: 43.8700, lng: -79.2800,
+        special: true
+      },
+      {
+        id: "mcc-skatepark",
+        name: "MCC Skatepark (McLean Community Centre)",
+        location: "Ajax, Ontario",
+        address: "95 Magill Drive, Ajax, ON L1T 4M5 (McLean Community Centre)",
+        map_url: "https://www.google.com/maps/search/?api=1&query=McLean+Community+Centre+skate+park+95+Magill+Drive+Ajax+ON",
+        skill_level: ["beginner"],
+        bathrooms: true,
+        water: true,
+        natural_shade: "unknown",
+        covered_shade: "unknown",
+        shade_yes_unspecified: true,
+        parking: "unknown",
+        playground_nearby: true,
+        splash_pad_nearby: true,
+        lighting_evening: false,
+        note: "Skatepark made of metal (steel components, not concrete). Shade: yes (type TBD). McLean Community Centre (MCC).",
+        lat: 43.87, lng: -79.04
+      }
+    ];
+
+    const skillLabels = {
+      still_learning: "Still learning",
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced"
+    };
+
+    let activeFilters = { skill: [], amenity: [] };
+    let map = null;
+    let markers = {};
+    const mapPanel = document.querySelector(".map-panel");
+
+    function parkId(park) {
+      return park.id;
+    }
+
+    function hasShade(park) {
+      return park.natural_shade === true || park.covered_shade === true || park.shade_yes_unspecified === true;
+    }
+
+    function checkAmenity(park, key) {
+      switch (key) {
+        case "bathrooms": return park.bathrooms === true;
+        case "water": return park.water === true;
+        case "shade": return hasShade(park);
+        case "lot_parking": return park.parking === "lot";
+        case "playground": return park.playground_nearby === true;
+        case "splash_pad": return park.splash_pad_nearby === true;
+        case "evening_lights": return park.lighting_evening === true;
+        default: return false;
+      }
+    }
+
+    function getAmenityStatus(park, key) {
+      let val;
+      switch (key) {
+        case "bathrooms": val = park.bathrooms; break;
+        case "water": val = park.water; break;
+        case "shade":
+          if (park.natural_shade === true || park.covered_shade === true || park.shade_yes_unspecified === true) return "yes";
+          if (park.natural_shade === false && park.covered_shade === false && !park.shade_yes_unspecified) return "no";
+          return "unknown";
+        case "lot_parking": 
+          if (park.parking === "lot") return "yes";
+          if (park.parking === "unknown") return "unknown";
+          return "no";
+        case "playground": val = park.playground_nearby; break;
+        case "splash_pad": val = park.splash_pad_nearby; break;
+        case "evening_lights": val = park.lighting_evening; break;
+        default: return "unknown";
+      }
+      if (val === true) return "yes";
+      if (val === false) return "no";
+      return "unknown";
+    }
+
+    function filterParks() {
+      return parks.filter(park => {
+        if (activeFilters.skill.length > 0) {
+          if (!activeFilters.skill.some(s => park.skill_level.includes(s))) return false;
+        }
+        if (activeFilters.amenity.length > 0) {
+          if (!activeFilters.amenity.every(a => checkAmenity(park, a))) return false;
+        }
+        return true;
+      });
+    }
+
+    function mapPinIcon() {
+      return `<svg class="map-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+    }
+
+    function carIcon() {
+      return `<svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h14l2 5v6h-2"/><path d="M5 11h14"/></svg>`;
+    }
+
+    function bathroomIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v1H8V6a4 4 0 0 1 4-4z"/><rect x="4" y="7" width="16" height="5" rx="1"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/></svg>`;
+    }
+
+    function shadeIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg>`;
+    }
+
+    function waterIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+    }
+
+    function parkingIcon() {
+      return `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>`;
+    }
+
+    function playgroundIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M2 22h20"/><path d="M6.36 17.4 4 22"/><path d="m11.64 17.4 2.36 4.6"/><path d="M5 12h14l-3 5H8z"/><circle cx="9" cy="7" r="2"/></svg>`;
+    }
+
+    function splashIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 14.69c1.37 0 2.5-1.14 2.5-2.53 0-.72-.36-1.41-1.07-1.99s-1.35-1.25-1.43-2.17c-.18.92-.71 1.78-1.43 2.35S10.06 11.44 10.06 12.16c0 1.39 1.12 2.53 2.5 2.53z"/><path d="M19 13.54c1.1 0 2-.92 2-2.02 0-.58-.29-1.13-.86-1.6s-1.08-1-1.14-1.74c-.15.74-.57 1.42-1.15 1.88s-.85.97-.85 1.46c0 1.1.9 2.02 2 2.02z"/></svg>`;
+    }
+
+    function lightsIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`;
+    }
+
+    const amenityLabels = {
+      bathrooms: "Bathroom",
+      shade: "Shade",
+      water: "Water",
+      lot_parking: "Lot parking",
+      playground: "Playground",
+      splash_pad: "Splash pad",
+      evening_lights: "Evening lights"
+    };
+
+    function amenityMarkup(park, key, icon, label) {
+      const status = getAmenityStatus(park, key);
+      const statusText = status === "yes" ? "✓" : status === "no" ? "✗" : "?";
+      const statusWord = status === "yes" ? "yes" : status === "no" ? "no" : "unknown";
+      const fullLabel = `${amenityLabels[key]}: ${statusWord}`;
+      return `<span class="icon-stat ${status}" title="${fullLabel}" aria-label="${fullLabel}" role="img" tabindex="0"><span class="tooltip">${fullLabel}</span>${icon} ${statusText}</span>`;
+    }
+
+    function skillPillsMarkup(park) {
+      return park.skill_level.map(s => {
+        const isSpecial = s === "intermediate" || s === "advanced";
+        return `<span class="status${isSpecial ? " special" : ""}">${skillLabels[s]}</span>`;
+      }).join(" ");
+    }
+
+    function focusParkRow(park) {
+      const row = document.querySelector(`#park-${parkId(park)}`);
+      if (!row) return;
+
+      document.querySelectorAll(".park-row.is-active").forEach(r => r.classList.remove("is-active"));
+      row.classList.add("is-active");
+      row.focus({ preventScroll: true });
+
+      const targetTop = row.getBoundingClientRect().top + window.scrollY - 20;
+      window.scrollTo({ top: Math.max(targetTop, 0), behavior: "smooth" });
+    }
+
+    function renderParks() {
+      const list = document.getElementById("parkList");
+      const noResults = document.getElementById("noResults");
+      const filtered = filterParks();
+
+      if (filtered.length === 0) {
+        list.innerHTML = "";
+        noResults.hidden = false;
+        return;
+      }
+
+      noResults.hidden = true;
+      list.innerHTML = filtered.map(park => `
+        <li class="park-row" id="park-${parkId(park)}" tabindex="0">
+          <div class="park-main">
+            <b>${park.name}</b>
+            <div class="skill-pills">${skillPillsMarkup(park)}</div>
+          </div>
+          <a href="${park.map_url}" target="_blank" rel="noopener" class="icon-link" title="Open in Maps">${carIcon()}</a>
+          <div class="meta-row">
+            ${amenityMarkup(park, "bathrooms", bathroomIcon(), "Bath")}
+            ${amenityMarkup(park, "shade", shadeIcon(), "Shade")}
+            ${amenityMarkup(park, "water", waterIcon(), "Water")}
+            ${amenityMarkup(park, "lot_parking", parkingIcon(), "Lot")}
+            ${amenityMarkup(park, "playground", playgroundIcon(), "Play")}
+            ${amenityMarkup(park, "splash_pad", splashIcon(), "Splash")}
+            ${amenityMarkup(park, "evening_lights", lightsIcon(), "Lights")}
+          </div>
+          <div class="detail-lines">
+            <div class="address-row">
+              <a href="${park.map_url}" target="_blank" rel="noopener" class="address-link">
+                ${mapPinIcon()}
+                <span>${park.address}</span>
+              </a>
+            </div>
+            ${park.note ? `<span class="park-note">${park.note}</span>` : ""}
+          </div>
+        </li>
+      `).join("");
+    }
+
+    function updateMapMarkers() {
+      const filtered = filterParks();
+      const ids = new Set(filtered.map(p => p.id));
+      Object.entries(markers).forEach(([id, m]) => {
+        m.setOpacity(ids.has(id) ? 1 : 0.3);
+      });
+    }
+
+    function initMap() {
+      if (!window.L) return;
+
+      const defaultIcon = L.divIcon({
+        className: "park-marker",
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -28]
+      });
+
+      const specialIcon = L.divIcon({
+        className: "park-marker special",
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -28]
+      });
+
+      map = L.map("park-map", { scrollWheelZoom: false });
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '© <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      const bounds = [];
+
+      parks.forEach(park => {
+        const icon = park.special ? specialIcon : defaultIcon;
+        const marker = L.marker([park.lat, park.lng], { icon }).addTo(map);
+
+        marker.bindPopup(`
+          <b>${park.name}</b><br>
+          <span style="color:var(--muted)">${park.location}</span><br>
+          <a href="${park.map_url}" target="_blank">Open in Maps</a>
+        `);
+
+        marker.on("click", () => focusParkRow(park));
+        markers[park.id] = marker;
+        bounds.push([park.lat, park.lng]);
+      });
+
+      map.fitBounds(bounds, { padding: [24, 24] });
+    }
+
+    function toggleFilter(type, value) {
+      const idx = activeFilters[type].indexOf(value);
+      if (idx > -1) activeFilters[type].splice(idx, 1);
+      else activeFilters[type].push(value);
+    }
+
+    function clearAllFilters() {
+      activeFilters = { skill: [], amenity: [] };
+      document.querySelectorAll(".chip.active").forEach(c => c.classList.remove("active"));
+      renderParks();
+      updateMapMarkers();
+    }
+    window.clearAllFilters = clearAllFilters;
+
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const type = chip.dataset.filter;
+        const val = chip.dataset.value;
+        toggleFilter(type, val);
+        chip.classList.toggle("active");
+        renderParks();
+        updateMapMarkers();
+      });
+    });
+
+    document.getElementById("clearFilters").addEventListener("click", clearAllFilters);
+
+    renderParks();
+    initMap();
+
+    // Mobile tap-to-show tooltip for amenity icons
+    let activeTooltip = null;
+    document.addEventListener("click", (e) => {
+      const iconStat = e.target.closest(".icon-stat");
+      
+      // Hide any active tooltip if clicking elsewhere
+      if (activeTooltip && activeTooltip !== iconStat) {
+        activeTooltip.classList.remove("show-tooltip");
+        activeTooltip = null;
+      }
+      
+      // Toggle tooltip on icon tap
+      if (iconStat) {
+        e.preventDefault();
+        if (iconStat.classList.contains("show-tooltip")) {
+          iconStat.classList.remove("show-tooltip");
+          activeTooltip = null;
+        } else {
+          iconStat.classList.add("show-tooltip");
+          activeTooltip = iconStat;
+          // Auto-hide after 2.5 seconds
+          setTimeout(() => {
+            if (activeTooltip === iconStat) {
+              iconStat.classList.remove("show-tooltip");
+              activeTooltip = null;
+            }
+          }, 2500);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

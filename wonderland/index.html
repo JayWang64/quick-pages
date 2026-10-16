@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canada's Wonderland Rides — Parent Directory</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231d;
+      --muted: #627066;
+      --line: #dce5dd;
+      --page: #f7faf7;
+      --panel: #ffffff;
+      --green: #174a35;
+      --green-soft: #dff4e8;
+      --orange: #9b4d18;
+      --orange-soft: #ffe9d6;
+      --blue: #1e5a8a;
+      --blue-soft: #dbeeff;
+      --purple: #5a3d8a;
+      --purple-soft: #efe8ff;
+      --shadow: 0 12px 30px rgba(29, 54, 38, .10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 28px 18px 22px;
+    }
+
+    .wrap {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 8vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      margin: 10px 0 0;
+      max-width: 58rem;
+      color: rgba(255, 255, 255, .88);
+      font-size: 1rem;
+    }
+
+    main { padding: 16px; }
+
+    .map-panel {
+      padding: 16px 16px 0;
+      background: var(--page);
+    }
+
+    #ride-map {
+      height: min(56vh, 420px);
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #dce5dd;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.35;
+    }
+
+    .leaflet-popup-content a {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .ride-overlay {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(23, 74, 53, 0.08);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .ride-overlay:hover {
+      background: rgba(23, 74, 53, 0.18);
+      border-color: rgba(23, 74, 53, 0.4);
+    }
+
+    .ride-overlay.is-selected {
+      background: rgba(23, 74, 53, 0.22);
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(23, 74, 53, 0.15);
+    }
+
+    .ride-overlay.filtered-out {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .user-location-dot {
+      width: 16px;
+      height: 16px;
+      background: #1a73e8;
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
+    }
+
+    .leaflet-control-rotate {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+
+    .leaflet-control-rotate a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: transform 0.15s ease;
+    }
+
+    .leaflet-control-rotate a:hover {
+      background: #f4f4f4;
+    }
+
+    .leaflet-control-locate {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+
+    .leaflet-control-locate a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      color: #333;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .leaflet-control-locate a:hover {
+      background: #f4f4f4;
+    }
+
+    .leaflet-control-locate a svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .leaflet-control-locate.active a {
+      color: #1a73e8;
+    }
+
+    .leaflet-control-locate.locating a {
+      animation: pulse-locate 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse-locate {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .location-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 10000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .location-toast.visible {
+      opacity: 1;
+    }
+
+    .filter-bar {
+      padding: 12px 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .filter-section {
+      margin-bottom: 10px;
+    }
+
+    .filter-section:last-child { margin-bottom: 0; }
+
+    .filter-label {
+      display: block;
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      font-size: .88rem;
+      font-weight: 700;
+      background: var(--page);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--muted);
+    }
+
+    .chip:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .chip.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .height-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .height-input {
+      width: 60px;
+      padding: 7px 10px;
+      font-size: .88rem;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    .height-input:focus {
+      outline: 2px solid var(--green);
+      outline-offset: 1px;
+      border-color: var(--green);
+    }
+
+    .height-unit {
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .clear-btn {
+      padding: 7px 12px;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--green);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+    }
+
+    .ride-table {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      --row-highlight-overhang: 14px;
+      padding: 14px;
+    }
+
+    .ride-table h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .ride-table > p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .ride-table ul {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ride-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      border-top: 1px solid var(--line);
+      padding: 12px 0;
+      transition: background-color .2s ease, box-shadow .2s ease;
+      cursor: pointer;
+    }
+
+    .ride-row:first-child { border-top: 0; }
+
+    .ride-row:hover::before {
+      content: "";
+      position: absolute;
+      inset: 4px calc(-1 * var(--row-highlight-overhang));
+      border-radius: 6px;
+      background: rgba(23, 74, 53, 0.04);
+    }
+
+    .ride-row.is-active::before {
+      content: "";
+      position: absolute;
+      inset: 4px calc(-1 * var(--row-highlight-overhang));
+      border-left: 4px solid var(--green);
+      border-radius: 6px;
+      background: #effaf4;
+    }
+
+    .ride-row > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ride-row:focus { outline: none; }
+
+    .ride-row:focus-visible {
+      outline: 3px solid rgba(21, 122, 79, .25);
+      outline-offset: 2px;
+    }
+
+    .ride-main {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ride-main b {
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .status-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--green-soft);
+      color: #157a4f;
+      font-weight: 900;
+      font-size: .78rem;
+      text-decoration: none;
+    }
+
+    .status.coaster {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .status.water {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .status.thrill {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .status.thrill-level {
+      background: #fff3e0;
+      color: #e65100;
+      font-size: .72rem;
+    }
+
+    .status.closed {
+      background: #fdecea;
+      color: #b42318;
+    }
+
+    .status.area {
+      background: #f0f0f0;
+      color: #555;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    .icon-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--ink);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .icon-stat svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-stat.wet-yes {
+      color: var(--blue);
+    }
+
+    .icon-stat.wet-yes svg {
+      fill: var(--blue-soft);
+    }
+
+    .icon-stat.wet-no {
+      color: #157a4f;
+    }
+
+    .icon-stat.wet-maybe {
+      color: var(--orange);
+    }
+
+    .icon-stat.wet-unknown {
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    .icon-stat .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 8px;
+      background: var(--ink);
+      color: white;
+      font-size: .75rem;
+      font-weight: 600;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 100;
+      margin-bottom: 4px;
+      max-width: 200px;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .icon-stat .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--ink);
+    }
+
+    .icon-stat:hover .tooltip,
+    .icon-stat.show-tooltip .tooltip {
+      opacity: 1;
+    }
+
+    .height-req {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: .88rem;
+    }
+
+    .height-req svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .height-req.eligible {
+      color: #157a4f;
+    }
+
+    .height-req.with-companion {
+      color: var(--orange);
+    }
+
+    .height-req.too-short {
+      color: #b42318;
+    }
+
+    .height-req.too-tall {
+      color: #b42318;
+    }
+
+    .coaster-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      grid-column: 1 / -1;
+      font-size: .85rem;
+      color: var(--muted);
+      padding: 4px 0;
+    }
+
+    .coaster-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .coaster-stat strong {
+      color: var(--ink);
+    }
+
+    .detail-lines {
+      display: grid;
+      gap: 6px;
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .88rem;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    .text-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      fill: none;
+    }
+
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      min-height: 38px;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      text-decoration: none;
+    }
+
+    .icon-link svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      padding: 10px 0;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+    }
+
+    .count-summary {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    footer {
+      padding: 0 16px 24px;
+    }
+
+    footer p {
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    footer a {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (min-width: 720px) {
+      header { padding: 38px 24px 30px; }
+      main { padding: 24px; }
+      .map-panel { padding: 24px 24px 0; }
+      .filter-bar { padding: 14px 16px; }
+
+      .ride-table {
+        --row-highlight-overhang: 16px;
+        padding: 16px;
+      }
+
+      .ride-row {
+        grid-template-columns: minmax(200px, 1.2fr) minmax(200px, 1fr) minmax(180px, 1fr);
+        align-items: center;
+      }
+
+      .ride-row .meta-row,
+      .ride-row .detail-lines,
+      .ride-row .coaster-stats {
+        grid-column: auto;
+      }
+
+      .detail-lines { gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Canada's Wonderland Rides</h1>
+      <p class="subhead">Can my kid ride this? Will they get wet? Quick picks for parents.</p>
+    </div>
+  </header>
+
+  <div class="map-panel">
+    <div id="ride-map"></div>
+  </div>
+
+  <main>
+    <div class="filter-bar">
+      <div class="filter-section">
+        <span class="filter-label">Kid's Height (inches)</span>
+        <div class="filter-chips">
+          <div class="height-input-wrap">
+            <input type="number" class="height-input" id="heightInput" placeholder="48" min="24" max="84">
+            <span class="height-unit">in</span>
+          </div>
+          <button class="chip" data-filter="height" data-value="36">36"</button>
+          <button class="chip" data-filter="height" data-value="42">42"</button>
+          <button class="chip" data-filter="height" data-value="48">48"</button>
+          <button class="chip" data-filter="height" data-value="54">54"</button>
+          <button class="chip" data-filter="height" data-value="60">60"</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Gets Wet?</span>
+        <div class="filter-chips">
+          <button class="chip" data-filter="wet" data-value="yes">Yes — wet</button>
+          <button class="chip" data-filter="wet" data-value="no">Stays dry</button>
+          <button class="chip" data-filter="wet" data-value="unknown">Unknown</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Park Area</span>
+        <div class="filter-chips" id="areaChips"></div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Ride Type</span>
+        <div class="filter-chips" id="typeChips"></div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Thrill Level (1–5)</span>
+        <div class="filter-chips">
+          <button class="chip" data-filter="thrill" data-value="1">1 — Mild</button>
+          <button class="chip" data-filter="thrill" data-value="2">2</button>
+          <button class="chip" data-filter="thrill" data-value="3">3</button>
+          <button class="chip" data-filter="thrill" data-value="4">4</button>
+          <button class="chip" data-filter="thrill" data-value="5">5 — Extreme</button>
+          <button class="clear-btn" id="clearFilters">Clear all</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ride-table">
+      <h2>All Rides</h2>
+      <p id="countSummary">79 rides across 8 park areas</p>
+      <div class="legend" aria-label="Icon legend">
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg> Gets wet</span>
+        <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M8 19l-3-3 3-3"/><path d="M16 5l3 3-3 3"/><path d="M5 16h14"/><path d="M5 8h14"/></svg> Height req</span>
+        <span class="legend-item" style="color:#157a4f">✓ eligible</span>
+        <span class="legend-item" style="color:var(--orange)">👤 with adult</span>
+        <span class="legend-item" style="color:#b42318">✗ too short/tall</span>
+      </div>
+      <ul id="rideList"></ul>
+    </div>
+
+    <div class="no-results" id="noResults" hidden>
+      <p>No rides match your filters.</p>
+      <button class="chip active" onclick="clearAllFilters()">Clear filters</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>Data from official park guide 2026. <strong>Draft</strong> — not for distribution.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-rotate@0.2.8/dist/leaflet-rotate.min.js"></script>
+  <script>
+    let rides = [];
+    let activeFilters = { height: null, wet: [], area: [], type: [], thrill: [] };
+    let map = null;
+    let markers = {};
+    let userLocationMarker = null;
+    let userLocationCircle = null;
+    let locationWatchId = null;
+    let locateControl = null;
+
+    const parkAreas = [
+      "Action Zone", "Alpenfest", "Frontier Canada", "Grande World Expo",
+      "KidZville", "Medieval Faire", "Planet Snoopy", "Splash Works"
+    ];
+
+    const rideTypes = [
+      { value: "coaster", label: "Coaster" },
+      { value: "water", label: "Water" },
+      { value: "kids", label: "Kids" },
+      { value: "flat", label: "Flat" },
+      { value: "thrill", label: "Thrill" },
+      { value: "dark_ride", label: "Dark Ride" },
+      { value: "boat", label: "Boat" }
+    ];
+
+    const typeLabels = {
+      coaster: "Coaster",
+      water: "Water",
+      kids: "Kids",
+      flat: "Flat",
+      thrill: "Thrill",
+      dark_ride: "Dark Ride",
+      boat: "Boat",
+      other: "Other"
+    };
+
+    function initFilterChips() {
+      const areaContainer = document.getElementById("areaChips");
+      parkAreas.forEach(area => {
+        const btn = document.createElement("button");
+        btn.className = "chip";
+        btn.dataset.filter = "area";
+        btn.dataset.value = area;
+        btn.textContent = area;
+        btn.addEventListener("click", handleChipClick);
+        areaContainer.appendChild(btn);
+      });
+
+      const typeContainer = document.getElementById("typeChips");
+      const clearBtn = typeContainer.querySelector(".clear-btn");
+      rideTypes.forEach(t => {
+        const btn = document.createElement("button");
+        btn.className = "chip";
+        btn.dataset.filter = "type";
+        btn.dataset.value = t.value;
+        btn.textContent = t.label;
+        btn.addEventListener("click", handleChipClick);
+        typeContainer.insertBefore(btn, clearBtn);
+      });
+    }
+
+    function handleChipClick(e) {
+      const chip = e.currentTarget;
+      const filterType = chip.dataset.filter;
+      const value = chip.dataset.value;
+
+      if (filterType === "height") {
+        document.querySelectorAll('[data-filter="height"]').forEach(c => c.classList.remove("active"));
+        if (activeFilters.height === parseInt(value)) {
+          activeFilters.height = null;
+          document.getElementById("heightInput").value = "";
+        } else {
+          activeFilters.height = parseInt(value);
+          document.getElementById("heightInput").value = value;
+          chip.classList.add("active");
+        }
+      } else if (filterType === "wet") {
+        document.querySelectorAll('[data-filter="wet"]').forEach(c => c.classList.remove("active"));
+        const idx = activeFilters.wet.indexOf(value);
+        if (idx > -1) {
+          activeFilters.wet = [];
+        } else {
+          activeFilters.wet = [value];
+          chip.classList.add("active");
+        }
+      } else if (filterType === "thrill") {
+        const thrillVal = parseInt(value);
+        const idx = activeFilters.thrill.indexOf(thrillVal);
+        if (idx > -1) {
+          activeFilters.thrill.splice(idx, 1);
+          chip.classList.remove("active");
+        } else {
+          activeFilters.thrill.push(thrillVal);
+          chip.classList.add("active");
+        }
+      } else {
+        const arr = activeFilters[filterType];
+        const idx = arr.indexOf(value);
+        if (idx > -1) {
+          arr.splice(idx, 1);
+          chip.classList.remove("active");
+        } else {
+          arr.push(value);
+          chip.classList.add("active");
+        }
+      }
+
+      renderRides();
+      updateMapMarkers();
+    }
+
+    function getWetStatus(ride) {
+      if (ride.gets_wet === true || (typeof ride.gets_wet === "string" && ride.gets_wet.toLowerCase().includes("yes"))) {
+        return "yes";
+      }
+      if (ride.gets_wet === false || (typeof ride.gets_wet === "string" && ride.gets_wet.toLowerCase().includes("no"))) {
+        return "no";
+      }
+      if (typeof ride.gets_wet === "string" && ride.gets_wet.toLowerCase().includes("sometimes")) {
+        return "maybe";
+      }
+      return "unknown";
+    }
+
+    function getHeightEligibility(ride, kidHeight) {
+      if (!kidHeight) return { status: "unknown", text: getHeightText(ride) };
+
+      const minIn = ride.height?.min_in;
+      const maxIn = ride.height?.max_in;
+      const companion = ride.height?.supervised_companion_rule;
+
+      if (maxIn && kidHeight > maxIn) {
+        return { status: "too-tall", text: `Max ${maxIn}"` };
+      }
+
+      if (!minIn) {
+        return { status: "eligible", text: "All heights" };
+      }
+
+      if (kidHeight >= minIn) {
+        return { status: "eligible", text: `${minIn}"+ ✓` };
+      }
+
+      if (companion) {
+        const companionMatch = companion.match(/(\d+)/);
+        if (companionMatch) {
+          const companionMin = parseInt(companionMatch[1]);
+          if (kidHeight >= companionMin || companion.toLowerCase().includes("less than")) {
+            return { status: "with-companion", text: `${minIn}" (${companionMin}"+ with adult)` };
+          }
+        }
+        return { status: "with-companion", text: `${minIn}" alone (with adult OK)` };
+      }
+
+      return { status: "too-short", text: `${minIn}" min` };
+    }
+
+    function getHeightText(ride) {
+      const minIn = ride.height?.min_in;
+      const maxIn = ride.height?.max_in;
+      const companion = ride.height?.supervised_companion_rule;
+
+      let text = "";
+      if (minIn) {
+        text = `${minIn}"`;
+        if (maxIn) text += ` — ${maxIn}"`;
+        text += " min";
+      } else {
+        text = "All heights";
+      }
+
+      if (companion) {
+        text += ` (${companion})`;
+      }
+
+      return text;
+    }
+
+    function rideMatchesFilters(ride) {
+      if (activeFilters.height) {
+        const elig = getHeightEligibility(ride, activeFilters.height);
+        if (elig.status === "too-short" || elig.status === "too-tall") {
+          return false;
+        }
+      }
+
+      if (activeFilters.wet.length > 0) {
+        const wetStatus = getWetStatus(ride);
+        if (!activeFilters.wet.includes(wetStatus)) {
+          return false;
+        }
+      }
+
+      if (activeFilters.area.length > 0) {
+        if (!activeFilters.area.includes(ride.park_area)) {
+          return false;
+        }
+      }
+
+      if (activeFilters.type.length > 0) {
+        if (!activeFilters.type.includes(ride.ride_type_coarse)) {
+          return false;
+        }
+      }
+
+      if (activeFilters.thrill.length > 0) {
+        const thrillLevel = ride.thrill_level_1_to_5;
+        if (thrillLevel == null || !activeFilters.thrill.includes(thrillLevel)) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function filterRides() {
+      return rides.filter(rideMatchesFilters);
+    }
+
+    function clearAllFilters() {
+      activeFilters = { height: null, wet: [], area: [], type: [], thrill: [] };
+      document.querySelectorAll(".chip.active").forEach(c => c.classList.remove("active"));
+      document.getElementById("heightInput").value = "";
+      renderRides();
+      updateMapMarkers();
+    }
+    window.clearAllFilters = clearAllFilters;
+
+    function waterIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+    }
+
+    function heightIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M8 19l-3-3 3-3"/><path d="M16 5l3 3-3 3"/><path d="M5 16h14"/><path d="M5 8h14"/></svg>`;
+    }
+
+    function linkIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+    }
+
+    function mapPinIcon() {
+      return `<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+    }
+
+    function carIcon() {
+      return `<svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h14l2 5v6h-2"/><path d="M5 11h14"/></svg>`;
+    }
+
+    function getWetMarkup(ride) {
+      const status = getWetStatus(ride);
+      let cls, icon, label;
+
+      switch (status) {
+        case "yes":
+          cls = "wet-yes";
+          icon = waterIcon();
+          label = ride.water_notes || (typeof ride.gets_wet === "string" ? ride.gets_wet : "You will get wet");
+          break;
+        case "no":
+          cls = "wet-no";
+          icon = waterIcon();
+          label = typeof ride.gets_wet === "string" ? ride.gets_wet : "Stays dry";
+          break;
+        case "maybe":
+          cls = "wet-maybe";
+          icon = waterIcon();
+          label = typeof ride.gets_wet === "string" ? ride.gets_wet : "May get wet";
+          break;
+        default:
+          cls = "wet-unknown";
+          icon = waterIcon();
+          label = "Unknown if wet";
+      }
+
+      return `<span class="icon-stat ${cls}" tabindex="0"><span class="tooltip">${label}</span>${icon}</span>`;
+    }
+
+    function getHeightMarkup(ride) {
+      const elig = getHeightEligibility(ride, activeFilters.height);
+      const fullText = getHeightText(ride);
+      const cls = elig.status === "unknown" ? "" : elig.status;
+
+      return `<span class="height-req ${cls}" title="${fullText}">${heightIcon()} ${elig.text}</span>`;
+    }
+
+    function getTypePillClass(type) {
+      if (type === "coaster") return "coaster";
+      if (type === "water") return "water";
+      if (type === "thrill") return "thrill";
+      return "";
+    }
+
+    function getThrillLevelPill(ride) {
+      const level = ride.thrill_level_1_to_5;
+      if (level == null || level < 1 || level > 5) return "";
+      const labels = { 1: "Mild", 2: "Low", 3: "Medium", 4: "High", 5: "Extreme" };
+      return `<span class="status thrill-level" title="Thrill level ${level}/5${ride.thrill_level_label ? ': ' + ride.thrill_level_label : ''}">Thrill ${level}</span>`;
+    }
+
+    function getClosedBadge(ride) {
+      if (ride.operating_status !== "temporarily_closed") return "";
+      return `<span class="status closed" title="${ride.status_notes || 'Temporarily closed'}">Temporarily closed</span>`;
+    }
+
+    function hasCoasterStats(ride) {
+      if (!ride.coaster) return false;
+      return ride.coaster.drop_height || ride.coaster.track_length ||
+             ride.coaster.max_speed || ride.coaster.inversions || ride.coaster.duration;
+    }
+
+    function getCoasterStatsMarkup(ride) {
+      if (!hasCoasterStats(ride)) return "";
+
+      const stats = [];
+      if (ride.coaster.max_speed) stats.push(`<span class="coaster-stat"><strong>${ride.coaster.max_speed}</strong></span>`);
+      if (ride.coaster.drop_height) stats.push(`<span class="coaster-stat">${ride.coaster.drop_height} drop</span>`);
+      if (ride.coaster.track_length) stats.push(`<span class="coaster-stat">${ride.coaster.track_length}</span>`);
+      if (ride.coaster.inversions) stats.push(`<span class="coaster-stat">${ride.coaster.inversions} inversions</span>`);
+      if (ride.coaster.duration) stats.push(`<span class="coaster-stat">${ride.coaster.duration}</span>`);
+
+      return `<div class="coaster-stats">${stats.join("")}</div>`;
+    }
+
+    function highlightRideRow(ride) {
+      const row = document.querySelector(`#ride-${ride.id}`);
+      document.querySelectorAll(".ride-row.is-active").forEach(r => r.classList.remove("is-active"));
+      if (row) {
+        row.classList.add("is-active");
+      }
+    }
+
+    function clearMarkerSelection() {
+      document.querySelectorAll(".ride-overlay.is-selected").forEach(el => {
+        el.classList.remove("is-selected");
+      });
+      document.querySelectorAll(".ride-row.is-active").forEach(r => r.classList.remove("is-active"));
+    }
+
+    function selectRideOnMap(ride) {
+      clearMarkerSelection();
+
+      const marker = markers[ride.id];
+      if (!marker) return;
+
+      const el = marker.getElement();
+      if (el) {
+        el.classList.add("is-selected");
+      }
+
+      highlightRideRow(ride);
+      marker.openPopup();
+    }
+
+    function panToRideAndSelect(ride) {
+      if (!map || !ride.location?.lat || !ride.location?.lng) return;
+
+      const marker = markers[ride.id];
+      if (!marker) return;
+
+      map.setView([ride.location.lat, ride.location.lng], 18, { animate: true });
+
+      setTimeout(() => {
+        selectRideOnMap(ride);
+      }, 300);
+    }
+
+    function getPopupHeightSummary(ride) {
+      const minIn = ride.height?.min_in;
+      const maxIn = ride.height?.max_in;
+      const companion = ride.height?.supervised_companion_rule;
+
+      let parts = [];
+      if (minIn) {
+        parts.push(`${minIn}" min`);
+      }
+      if (maxIn) {
+        parts.push(`${maxIn}" max`);
+      }
+      if (!minIn && !maxIn) {
+        parts.push("All heights");
+      }
+      if (companion) {
+        parts.push(`(${companion})`);
+      }
+      return parts.join(" ");
+    }
+
+    function getPopupWetSummary(ride) {
+      const status = getWetStatus(ride);
+      const labels = {
+        yes: "Yes — gets wet",
+        no: "No — stays dry",
+        maybe: "Maybe — sometimes wet",
+        unknown: "Unknown"
+      };
+      let text = labels[status] || "Unknown";
+      if (ride.water_notes) {
+        text += ` (${ride.water_notes})`;
+      }
+      return text;
+    }
+
+    function buildPopupContent(ride) {
+      const thrillLevel = ride.thrill_level_1_to_5;
+      const thrillLabels = { 1: "Mild", 2: "Low", 3: "Medium", 4: "High", 5: "Extreme" };
+
+      let html = `<div style="min-width:200px;max-width:280px;line-height:1.4">`;
+      html += `<div style="font-weight:700;font-size:1.05rem;margin-bottom:6px">${ride.name}</div>`;
+      if (ride.operating_status === "temporarily_closed") {
+        html += `<div style="display:inline-block;background:#fdecea;color:#b42318;font-weight:900;font-size:.78rem;padding:4px 8px;border-radius:999px;margin-bottom:6px">Temporarily closed</div>`;
+        if (ride.status_notes) {
+          html += `<div style="color:#b42318;font-size:.8rem;margin-bottom:8px">${ride.status_notes}</div>`;
+        }
+      }
+      html += `<div style="color:var(--muted);font-size:.9rem;margin-bottom:8px">${ride.park_area}</div>`;
+
+      html += `<div style="font-size:.88rem;margin-bottom:4px"><strong>Height:</strong> ${getPopupHeightSummary(ride)}</div>`;
+      html += `<div style="font-size:.88rem;margin-bottom:4px"><strong>Gets Wet:</strong> ${getPopupWetSummary(ride)}</div>`;
+
+      if (thrillLevel != null && thrillLevel >= 1 && thrillLevel <= 5) {
+        html += `<div style="font-size:.88rem;margin-bottom:4px"><strong>Thrill:</strong> ${thrillLevel}/5 (${thrillLabels[thrillLevel]})</div>`;
+      }
+
+      html += `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">`;
+      if (ride.location?.map_url) {
+        html += `<a href="${ride.location.map_url}" target="_blank" rel="noopener" style="color:var(--green);font-weight:700;font-size:.85rem;text-decoration:none">Open in Maps ↗</a>`;
+      }
+      html += `<a href="${ride.official_url}" target="_blank" rel="noopener" style="color:var(--green);font-weight:700;font-size:.85rem;text-decoration:none">Official Page ↗</a>`;
+      html += `</div>`;
+
+      html += `</div>`;
+      return html;
+    }
+
+    function renderRides() {
+      const list = document.getElementById("rideList");
+      const noResults = document.getElementById("noResults");
+      const countSummary = document.getElementById("countSummary");
+      const filtered = filterRides();
+
+      if (filtered.length === 0) {
+        list.innerHTML = "";
+        noResults.hidden = false;
+        countSummary.textContent = "No rides match filters";
+        return;
+      }
+
+      noResults.hidden = true;
+      countSummary.textContent = `${filtered.length} ride${filtered.length !== 1 ? "s" : ""} shown`;
+
+      list.innerHTML = filtered.map(ride => `
+        <li class="ride-row" id="ride-${ride.id}" data-ride-id="${ride.id}" tabindex="0">
+          <div class="ride-main">
+            <b>${ride.name}</b>
+            <div class="status-pills">
+              ${getClosedBadge(ride)}
+              <span class="status ${getTypePillClass(ride.ride_type_coarse)}">${typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse}</span>
+              <span class="status area">${ride.park_area}</span>
+              ${getThrillLevelPill(ride)}
+            </div>
+          </div>
+          <a href="${ride.location?.map_url || '#'}" target="_blank" rel="noopener" class="icon-link" title="Open in Maps"${!ride.location?.map_url ? ' style="opacity:0.3;pointer-events:none"' : ''}>${carIcon()}</a>
+          <div class="meta-row">
+            ${getHeightMarkup(ride)}
+            ${getWetMarkup(ride)}
+          </div>
+          ${getCoasterStatsMarkup(ride)}
+          <div class="detail-lines">
+            <div class="link-row">
+              <a href="${ride.official_url}" target="_blank" rel="noopener" class="text-link">${linkIcon()} Official page</a>
+              ${ride.location?.map_url ? `<a href="${ride.location.map_url}" target="_blank" rel="noopener" class="text-link">${mapPinIcon()} Open in Maps</a>` : ''}
+            </div>
+          </div>
+        </li>
+      `).join("");
+
+      list.querySelectorAll(".ride-row").forEach(row => {
+        row.addEventListener("click", (e) => {
+          if (e.target.closest("a")) return;
+          const rideId = row.dataset.rideId;
+          const ride = rides.find(r => r.id === rideId);
+          if (ride) {
+            panToRideAndSelect(ride);
+          }
+        });
+      });
+    }
+
+    function updateMapMarkers() {
+      const filtered = filterRides();
+      const ids = new Set(filtered.map(r => r.id));
+      Object.entries(markers).forEach(([id, m]) => {
+        const el = m.getElement();
+        if (el) {
+          if (ids.has(id)) {
+            el.classList.remove("filtered-out");
+          } else {
+            el.classList.add("filtered-out");
+          }
+        }
+      });
+    }
+
+    function initMap() {
+      if (!window.L) return;
+
+      const overlayIcon = L.divIcon({
+        className: "ride-overlay",
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+        popupAnchor: [0, -18]
+      });
+
+      map = L.map("ride-map", {
+        scrollWheelZoom: false,
+        rotate: true,
+        touchRotate: true,
+        shiftKeyRotate: true,
+        rotateControl: {
+          closeOnZeroBearing: false,
+          position: 'topleft'
+        }
+      });
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      const bounds = [];
+
+      rides.forEach(ride => {
+        if (!ride.location?.lat || !ride.location?.lng) return;
+
+        const marker = L.marker([ride.location.lat, ride.location.lng], { icon: overlayIcon }).addTo(map);
+
+        marker.bindPopup(buildPopupContent(ride), { maxWidth: 300 });
+
+        marker.on("click", () => {
+          selectRideOnMap(ride);
+        });
+
+        marker.on("popupclose", () => {
+          clearMarkerSelection();
+        });
+
+        markers[ride.id] = marker;
+        bounds.push([ride.location.lat, ride.location.lng]);
+      });
+
+      if (bounds.length > 0) {
+        map.fitBounds(bounds, { padding: [24, 24] });
+      }
+
+      initLocationControl();
+    }
+
+    function showLocationToast(message, duration = 3000) {
+      let toast = document.querySelector('.location-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'location-toast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), duration);
+    }
+
+    function updateUserLocation(lat, lng, accuracy) {
+      if (!map) return;
+
+      const latlng = L.latLng(lat, lng);
+
+      if (userLocationMarker) {
+        userLocationMarker.setLatLng(latlng);
+      } else {
+        const dotIcon = L.divIcon({
+          className: 'user-location-dot',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8]
+        });
+        userLocationMarker = L.marker(latlng, { icon: dotIcon, zIndexOffset: 1000 }).addTo(map);
+      }
+
+      if (userLocationCircle) {
+        userLocationCircle.setLatLng(latlng);
+        userLocationCircle.setRadius(accuracy);
+      } else {
+        userLocationCircle = L.circle(latlng, {
+          radius: accuracy,
+          color: '#1a73e8',
+          fillColor: '#1a73e8',
+          fillOpacity: 0.15,
+          weight: 1
+        }).addTo(map);
+      }
+    }
+
+    function handleLocationSuccess(position) {
+      const { latitude, longitude, accuracy } = position.coords;
+      updateUserLocation(latitude, longitude, accuracy);
+
+      if (locateControl) {
+        locateControl.getContainer().classList.remove('locating');
+        locateControl.getContainer().classList.add('active');
+      }
+    }
+
+    function handleLocationError(error) {
+      if (locateControl) {
+        locateControl.getContainer().classList.remove('locating', 'active');
+      }
+
+      let message;
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          message = 'Location access denied. Enable in browser settings.';
+          break;
+        case error.POSITION_UNAVAILABLE:
+          message = 'Location unavailable. Try again later.';
+          break;
+        case error.TIMEOUT:
+          message = 'Location request timed out. Try again.';
+          break;
+        default:
+          message = 'Could not get your location.';
+      }
+      showLocationToast(message, 4000);
+    }
+
+    function startLocationWatch() {
+      if (!navigator.geolocation) {
+        showLocationToast('Geolocation not supported by your browser.');
+        return;
+      }
+
+      if (locateControl) {
+        locateControl.getContainer().classList.add('locating');
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          handleLocationSuccess(position);
+          map.setView([position.coords.latitude, position.coords.longitude], 17);
+        },
+        handleLocationError,
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+
+      if (locationWatchId) {
+        navigator.geolocation.clearWatch(locationWatchId);
+      }
+      locationWatchId = navigator.geolocation.watchPosition(
+        handleLocationSuccess,
+        handleLocationError,
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 }
+      );
+    }
+
+    function panToUserLocation() {
+      if (userLocationMarker) {
+        map.setView(userLocationMarker.getLatLng(), 17);
+      } else {
+        startLocationWatch();
+      }
+    }
+
+    function initLocationControl() {
+      if (!map || !window.L) return;
+
+      const LocateControl = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function() {
+          const container = L.DomUtil.create('div', 'leaflet-control-locate leaflet-bar');
+          const link = L.DomUtil.create('a', '', container);
+          link.href = '#';
+          link.title = 'My location';
+          link.setAttribute('role', 'button');
+          link.setAttribute('aria-label', 'Show my location on map');
+          link.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg>';
+
+          L.DomEvent.disableClickPropagation(container);
+          L.DomEvent.on(link, 'click', function(e) {
+            L.DomEvent.preventDefault(e);
+            panToUserLocation();
+          });
+
+          return container;
+        }
+      });
+
+      locateControl = new LocateControl();
+      map.addControl(locateControl);
+    }
+
+    async function loadRides() {
+      try {
+        const resp = await fetch("public/rides.json");
+        const data = await resp.json();
+        rides = data.rides || [];
+        renderRides();
+        initMap();
+      } catch (err) {
+        console.error("Failed to load rides:", err);
+        document.getElementById("rideList").innerHTML = '<li class="no-results">Failed to load ride data.</li>';
+      }
+    }
+
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", handleChipClick);
+    });
+
+    document.getElementById("clearFilters").addEventListener("click", clearAllFilters);
+
+    document.getElementById("heightInput").addEventListener("input", (e) => {
+      const val = parseInt(e.target.value);
+      document.querySelectorAll('[data-filter="height"]').forEach(c => c.classList.remove("active"));
+      if (val && val >= 24 && val <= 84) {
+        activeFilters.height = val;
+        document.querySelectorAll('[data-filter="height"]').forEach(c => {
+          if (parseInt(c.dataset.value) === val) c.classList.add("active");
+        });
+      } else if (!e.target.value) {
+        activeFilters.height = null;
+      }
+      renderRides();
+      updateMapMarkers();
+    });
+
+    let activeTooltip = null;
+    document.addEventListener("click", (e) => {
+      const iconStat = e.target.closest(".icon-stat");
+
+      if (activeTooltip && activeTooltip !== iconStat) {
+        activeTooltip.classList.remove("show-tooltip");
+        activeTooltip = null;
+      }
+
+      if (iconStat) {
+        e.preventDefault();
+        if (iconStat.classList.contains("show-tooltip")) {
+          iconStat.classList.remove("show-tooltip");
+          activeTooltip = null;
+        } else {
+          iconStat.classList.add("show-tooltip");
+          activeTooltip = iconStat;
+          setTimeout(() => {
+            if (activeTooltip === iconStat) {
+              iconStat.classList.remove("show-tooltip");
+              activeTooltip = null;
+            }
+          }, 2500);
+        }
+      }
+    });
+
+    initFilterChips();
+    loadRides();
+  </script>
+</body>
+</html>
