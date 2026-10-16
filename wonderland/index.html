@@ -1441,7 +1441,7 @@
       showLocationToast(message, 4000);
     }
 
-    function startLocationWatch() {
+    function startLocationWatch(recenter = true) {
       if (!navigator.geolocation) {
         showLocationToast('Geolocation not supported by your browser.');
         return;
@@ -1454,7 +1454,7 @@
       navigator.geolocation.getCurrentPosition(
         (position) => {
           handleLocationSuccess(position);
-          map.setView([position.coords.latitude, position.coords.longitude], 17);
+          if (recenter) map.setView([position.coords.latitude, position.coords.longitude], 17);
         },
         handleLocationError,
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -1513,6 +1513,7 @@
         rides = data.rides || [];
         renderRides();
         initMap();
+        startLocationWatch(false);
       } catch (err) {
         console.error("Failed to load rides:", err);
         document.getElementById("rideList").innerHTML = '<li class="no-results">Failed to load ride data.</li>';
