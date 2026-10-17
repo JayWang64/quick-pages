@@ -189,6 +189,206 @@
       50% { opacity: 0.4; }
     }
 
+    /* Search UI - positioned below Leaflet topright controls (locate button) */
+    .search-container {
+      position: absolute;
+      top: 54px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .search-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: white;
+      border: none;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .search-btn:hover {
+      background: #f4f4f4;
+    }
+
+    .search-btn:active {
+      transform: scale(0.95);
+    }
+
+    .search-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: #333;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .search-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8);
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      overflow: hidden;
+      width: 0;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: width 0.25s ease, opacity 0.2s ease, transform 0.25s ease;
+    }
+
+    .search-bar.expanded {
+      width: min(320px, calc(100vw - 90px));
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      min-width: 0;
+      background: transparent;
+    }
+
+    .search-bar input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-close-btn {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .search-close-btn:hover {
+      background: #f4f4f4;
+    }
+
+    .search-close-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: #666;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .search-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 6px;
+      width: min(320px, calc(100vw - 90px));
+      max-height: min(320px, 50vh);
+      overflow-y: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .search-dropdown.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .search-suggestion {
+      padding: 12px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--line);
+      transition: background-color 0.1s ease;
+    }
+
+    .search-suggestion:last-child {
+      border-bottom: none;
+    }
+
+    .search-suggestion:hover,
+    .search-suggestion.highlighted {
+      background: var(--green-soft);
+    }
+
+    .search-suggestion-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .search-suggestion-name .status.closed {
+      font-size: 0.7rem;
+      padding: 3px 6px;
+    }
+
+    .search-suggestion-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .search-suggestion mark {
+      background: #fff59d;
+      color: inherit;
+      padding: 0 1px;
+      border-radius: 2px;
+    }
+
+    .search-no-results {
+      padding: 16px 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (min-width: 720px) {
+      .search-container {
+        top: 10px;
+        right: 10px;
+      }
+
+      .search-bar.expanded {
+        width: 340px;
+      }
+
+      .search-dropdown {
+        width: 340px;
+        max-height: 400px;
+      }
+    }
+
     .location-toast {
       position: fixed;
       bottom: 20px;
@@ -736,7 +936,19 @@
     </div>
   </header>
 
-  <div class="map-panel">
+  <div class="map-panel" style="position: relative;">
+    <div class="search-container" id="searchContainer">
+      <button class="search-btn" id="searchBtn" aria-label="Search rides" title="Search rides">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <div class="search-bar" id="searchBar">
+        <input type="text" id="searchInput" placeholder="Search rides..." autocomplete="off" aria-label="Search rides">
+        <button class="search-close-btn" id="searchCloseBtn" aria-label="Close search">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="search-dropdown" id="searchDropdown" role="listbox"></div>
+    </div>
     <div id="ride-map"></div>
   </div>
 
@@ -1570,6 +1782,225 @@
 
     initFilterChips();
     loadRides();
+
+    // Search functionality
+    const searchContainer = document.getElementById("searchContainer");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchBar = document.getElementById("searchBar");
+    const searchInput = document.getElementById("searchInput");
+    const searchCloseBtn = document.getElementById("searchCloseBtn");
+    const searchDropdown = document.getElementById("searchDropdown");
+
+    let searchHighlightIndex = -1;
+    let currentSuggestions = [];
+
+    function openSearch() {
+      searchBtn.classList.add("hidden");
+      searchBar.classList.add("expanded");
+      setTimeout(() => searchInput.focus(), 100);
+    }
+
+    function closeSearch() {
+      searchBar.classList.remove("expanded");
+      searchBtn.classList.remove("hidden");
+      searchInput.value = "";
+      searchDropdown.classList.remove("visible");
+      searchDropdown.innerHTML = "";
+      searchHighlightIndex = -1;
+      currentSuggestions = [];
+    }
+
+    function matchesSearch(ride, query) {
+      const q = query.toLowerCase().trim();
+      if (!q) return { matches: false };
+
+      const name = (ride.name || "").toLowerCase();
+      const area = (ride.park_area || "").toLowerCase();
+      const type = (ride.ride_type_coarse || "").toLowerCase();
+      const typeLabel = (typeLabels[ride.ride_type_coarse] || "").toLowerCase();
+
+      const fields = [
+        { text: name, field: "name" },
+        { text: area, field: "area" },
+        { text: type, field: "type" },
+        { text: typeLabel, field: "type" }
+      ];
+
+      for (const { text, field } of fields) {
+        const substringIdx = text.indexOf(q);
+        if (substringIdx !== -1) {
+          return { matches: true, field, index: substringIdx, matchType: "substring" };
+        }
+
+        const words = text.split(/\s+/);
+        for (const word of words) {
+          if (word.startsWith(q)) {
+            const wordIdx = text.indexOf(word);
+            return { matches: true, field, index: wordIdx, matchType: "prefix" };
+          }
+        }
+      }
+
+      return { matches: false };
+    }
+
+    function highlightMatch(text, query) {
+      if (!query) return text;
+      const q = query.toLowerCase();
+      const lower = text.toLowerCase();
+      const idx = lower.indexOf(q);
+      if (idx === -1) return text;
+      return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + query.length) + "</mark>" + text.slice(idx + query.length);
+    }
+
+    function renderSuggestions(query) {
+      const q = query.trim();
+      if (!q) {
+        searchDropdown.classList.remove("visible");
+        searchDropdown.innerHTML = "";
+        currentSuggestions = [];
+        searchHighlightIndex = -1;
+        return;
+      }
+
+      const matches = rides
+        .map(ride => ({ ride, match: matchesSearch(ride, q) }))
+        .filter(r => r.match.matches)
+        .slice(0, 8);
+
+      currentSuggestions = matches.map(m => m.ride);
+      searchHighlightIndex = -1;
+
+      if (matches.length === 0) {
+        searchDropdown.innerHTML = '<div class="search-no-results">No matches found</div>';
+        searchDropdown.classList.add("visible");
+        return;
+      }
+
+      searchDropdown.innerHTML = matches.map((m, i) => {
+        const ride = m.ride;
+        const closedBadge = ride.operating_status === "temporarily_closed"
+          ? '<span class="status closed">Temporarily closed</span>'
+          : '';
+        const highlightedName = highlightMatch(ride.name, q);
+        const area = ride.park_area || "";
+        const typeLabel = typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse || "";
+        const highlightedArea = highlightMatch(area, q);
+        const highlightedType = highlightMatch(typeLabel, q);
+
+        return `
+          <div class="search-suggestion" data-index="${i}" role="option" tabindex="-1">
+            <div class="search-suggestion-name">${highlightedName} ${closedBadge}</div>
+            <div class="search-suggestion-meta">${highlightedArea} · ${highlightedType}</div>
+          </div>
+        `;
+      }).join("");
+
+      searchDropdown.classList.add("visible");
+
+      searchDropdown.querySelectorAll(".search-suggestion").forEach((el, i) => {
+        el.addEventListener("click", () => selectSuggestion(i));
+      });
+    }
+
+    function updateHighlight() {
+      searchDropdown.querySelectorAll(".search-suggestion").forEach((el, i) => {
+        el.classList.toggle("highlighted", i === searchHighlightIndex);
+      });
+
+      if (searchHighlightIndex >= 0) {
+        const highlighted = searchDropdown.querySelector(".search-suggestion.highlighted");
+        if (highlighted) {
+          highlighted.scrollIntoView({ block: "nearest" });
+        }
+      }
+    }
+
+    function selectSuggestion(index) {
+      if (index < 0 || index >= currentSuggestions.length) return;
+      const ride = currentSuggestions[index];
+      closeSearch();
+      panToRideAndSelect(ride);
+
+      const row = document.getElementById(`ride-${ride.id}`);
+      if (row) {
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    searchBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openSearch();
+    });
+
+    searchCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeSearch();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      renderSuggestions(e.target.value);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeSearch();
+        return;
+      }
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (currentSuggestions.length > 0) {
+          searchHighlightIndex = Math.min(searchHighlightIndex + 1, currentSuggestions.length - 1);
+          updateHighlight();
+        }
+        return;
+      }
+
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (currentSuggestions.length > 0) {
+          searchHighlightIndex = Math.max(searchHighlightIndex - 1, 0);
+          updateHighlight();
+        }
+        return;
+      }
+
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (searchHighlightIndex >= 0 && searchHighlightIndex < currentSuggestions.length) {
+          selectSuggestion(searchHighlightIndex);
+        } else if (currentSuggestions.length > 0) {
+          selectSuggestion(0);
+        }
+        return;
+      }
+    });
+
+    // Prevent clicks/touches on search UI from propagating to the map
+    if (window.L) {
+      const disableMapInteraction = () => {
+        L.DomEvent.disableClickPropagation(searchContainer);
+        L.DomEvent.disableScrollPropagation(searchContainer);
+      };
+      if (map) {
+        disableMapInteraction();
+      } else {
+        const origInitMap = initMap;
+        initMap = function() {
+          origInitMap();
+          disableMapInteraction();
+        };
+      }
+    }
+
+    // Close search when clicking outside
+    document.addEventListener("click", (e) => {
+      if (searchBar.classList.contains("expanded") && !searchContainer.contains(e.target)) {
+        closeSearch();
+      }
+    });
   </script>
 </body>
 </html>
