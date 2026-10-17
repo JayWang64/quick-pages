@@ -10,28 +10,45 @@
   <style>
     :root {
       color-scheme: light;
-      --ink: #17231d;
-      --muted: #627066;
-      --line: #dce5dd;
-      --page: #f7faf7;
+      /* Canada's Wonderland official brand colors */
+      --cw-navy: #102f45;
+      --cw-navy-dark: #000536;
+      --cw-red: #9c212f;
+      --cw-orange: #da532c;
+      --cw-blue: #5bbad5;
+      --cw-blue-light: #f0f6fd;
+      
+      /* Semantic colors mapped to brand */
+      --ink: #000536;
+      --muted: #4a5c6a;
+      --line: #d0dce5;
+      --page: #f0f6fd;
       --panel: #ffffff;
-      --green: #174a35;
-      --green-soft: #dff4e8;
-      --orange: #9b4d18;
-      --orange-soft: #ffe9d6;
-      --blue: #1e5a8a;
-      --blue-soft: #dbeeff;
-      --purple: #5a3d8a;
-      --purple-soft: #efe8ff;
-      --shadow: 0 -4px 20px rgba(29, 54, 38, .12);
+      --primary: #102f45;
+      --primary-soft: #e8f4f8;
+      --accent: #da532c;
+      --accent-soft: #ffede6;
+      --red: #9c212f;
+      --red-soft: #fde8ea;
+      --blue: #5bbad5;
+      --blue-soft: #e0f4fa;
+      --shadow: 0 -4px 20px rgba(16, 47, 69, .12);
+      
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --safe-left: env(safe-area-inset-left, 0px);
       --safe-right: env(safe-area-inset-right, 0px);
+      --header-height: 48px;
+      --header-collapsed: 6px;
       --top-bar-height: 56px;
       --sheet-peek: 180px;
       --sheet-half: 50%;
-      --sheet-full: calc(100% - var(--top-bar-height) - var(--safe-top) - 12px);
+      --sheet-full: calc(100% - var(--top-bar-height) - var(--safe-top) - var(--header-height) - 12px);
+    }
+    
+    :root.header-collapsed {
+      --header-height: 6px;
+      --sheet-full: calc(100% - var(--top-bar-height) - var(--safe-top) - var(--header-collapsed) - 12px);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,15 +68,104 @@
       touch-action: manipulation;
     }
 
-    /* Full-screen map */
-    #ride-map {
+    /* Brand header */
+    .brand-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
+      z-index: 1100;
+      height: calc(var(--header-height) + var(--safe-top));
+      padding-top: var(--safe-top);
+      background: linear-gradient(135deg, var(--cw-navy) 0%, var(--cw-navy-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: calc(var(--safe-left) + 12px);
+      padding-right: calc(var(--safe-right) + 8px);
+      transition: height 0.3s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .brand-header.collapsed {
+      height: calc(var(--header-collapsed) + var(--safe-top));
+    }
+    
+    .brand-header.collapsed .brand-title,
+    .brand-header.collapsed .header-toggle span {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .brand-title {
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: opacity 0.2s ease;
+    }
+    
+    .header-toggle {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .header-toggle:active {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .header-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      fill: none;
+      transition: transform 0.3s ease;
+    }
+    
+    .brand-header.collapsed .header-toggle svg {
+      transform: rotate(180deg);
+    }
+    
+    .brand-header.collapsed .header-toggle {
+      position: absolute;
+      right: calc(var(--safe-right) + 8px);
+      top: var(--safe-top);
+      height: var(--header-collapsed);
+      width: 60px;
+      border-radius: 0 0 8px 8px;
+      background: var(--cw-navy);
+    }
+
+    /* Full-screen map */
+    #ride-map {
+      position: fixed;
+      top: calc(var(--header-height) + var(--safe-top));
+      left: 0;
+      right: 0;
       bottom: 0;
       z-index: 1;
-      background: #dce5dd;
+      background: var(--line);
+      transition: top 0.3s ease;
+    }
+    
+    :root.header-collapsed #ride-map {
+      top: calc(var(--header-collapsed) + var(--safe-top));
     }
 
     .leaflet-popup-content {
@@ -68,21 +174,21 @@
       line-height: 1.35;
       font-size: 15px;
     }
-    .leaflet-popup-content a { color: var(--green); font-weight: 700; }
+    .leaflet-popup-content a { color: var(--primary); font-weight: 700; }
 
     .ride-overlay {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(23, 74, 53, 0.12);
+      background: rgba(16, 47, 69, 0.15);
       border: 2px solid transparent;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .ride-overlay:hover, .ride-overlay.is-selected {
-      background: rgba(23, 74, 53, 0.25);
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(23, 74, 53, 0.15);
+      background: rgba(16, 47, 69, 0.3);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(16, 47, 69, 0.15);
     }
     .ride-overlay.filtered-out {
       opacity: 0.15;
@@ -101,19 +207,24 @@
     /* Top bar */
     .top-bar {
       position: fixed;
-      top: 0;
+      top: calc(var(--header-height) + var(--safe-top));
       left: 0;
       right: 0;
       z-index: 1000;
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: calc(var(--safe-top) + 8px) calc(var(--safe-right) + 8px) 8px calc(var(--safe-left) + 8px);
+      padding: 8px calc(var(--safe-right) + 8px) 8px calc(var(--safe-left) + 8px);
       background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
       overflow: hidden;
+      transition: top 0.3s ease;
+    }
+    
+    :root.header-collapsed .top-bar {
+      top: calc(var(--header-collapsed) + var(--safe-top));
     }
 
     .top-bar-title {
@@ -144,9 +255,9 @@
     }
     .top-btn:active { transform: scale(0.96); }
     .top-btn.active {
-      background: var(--green);
+      background: var(--primary);
       color: white;
-      border-color: var(--green);
+      border-color: var(--primary);
     }
     .top-btn svg {
       width: 20px;
@@ -163,7 +274,7 @@
       min-width: 20px;
       height: 20px;
       padding: 0 6px;
-      background: #e53935;
+      background: var(--cw-red);
       color: white;
       font-size: 0.75rem;
       font-weight: 800;
@@ -191,8 +302,8 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .search-bar-inline:focus-within {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(23, 74, 53, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 47, 69, 0.1);
     }
     .search-bar-inline input {
       flex: 1;
@@ -272,7 +383,7 @@
     }
     .search-suggestion:last-child { border-bottom: none; }
     .search-suggestion:active, .search-suggestion.highlighted {
-      background: var(--green-soft);
+      background: var(--primary-soft);
     }
     .search-suggestion-name {
       font-weight: 700;
@@ -313,7 +424,7 @@
       box-shadow: var(--shadow);
       transform: translateY(calc(100% - var(--sheet-peek)));
       transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-      max-height: calc(100dvh - var(--top-bar-height) - var(--safe-top));
+      max-height: calc(100dvh - var(--top-bar-height) - var(--header-height) - var(--safe-top));
       display: flex;
       flex-direction: column;
       will-change: transform;
@@ -377,12 +488,12 @@
       transition: background-color 0.1s ease;
     }
     .ride-row:last-child { border-bottom: none; }
-    .ride-row:active { background: var(--green-soft); margin: 0 -16px; padding: 14px 16px; }
+    .ride-row:active { background: var(--primary-soft); margin: 0 -16px; padding: 14px 16px; }
     .ride-row.is-active {
-      background: var(--green-soft);
+      background: var(--primary-soft);
       margin: 0 -16px;
       padding: 14px 16px;
-      border-left: 4px solid var(--green);
+      border-left: 4px solid var(--primary);
     }
 
     .ride-info { flex: 1; min-width: 0; }
@@ -432,15 +543,15 @@
       white-space: nowrap;
     }
     .status.closed {
-      background: #fdecea;
-      color: #b42318;
+      background: var(--red-soft);
+      color: var(--cw-red);
     }
     .status.type {
       background: var(--page);
       color: var(--muted);
     }
-    .status.coaster { background: var(--orange-soft); color: var(--orange); }
-    .status.water { background: var(--blue-soft); color: var(--blue); }
+    .status.coaster { background: var(--accent-soft); color: var(--accent); }
+    .status.water { background: var(--blue-soft); color: var(--cw-navy); }
 
     /* Filter sheet (modal) */
     .filter-overlay {
@@ -547,9 +658,9 @@
     }
     .chip:active { transform: scale(0.96); }
     .chip.active {
-      background: var(--green);
+      background: var(--primary);
       color: white;
-      border-color: var(--green);
+      border-color: var(--primary);
     }
 
     .height-input-wrap {
@@ -571,7 +682,7 @@
     }
     .height-input:focus {
       outline: none;
-      border-color: var(--green);
+      border-color: var(--primary);
     }
     .height-unit {
       font-size: 1rem;
@@ -597,12 +708,12 @@
       border: none;
     }
     .filter-apply-btn {
-      background: var(--green);
+      background: var(--primary);
       color: white;
     }
     .filter-clear-btn {
       background: var(--page);
-      color: var(--green);
+      color: var(--primary);
       border: 2px solid var(--line);
     }
 
@@ -639,8 +750,8 @@
       border-bottom: 1px solid var(--line);
     }
     .sort-option:last-child { border-bottom: none; }
-    .sort-option:active { background: var(--green-soft); }
-    .sort-option.active { color: var(--green); font-weight: 800; }
+    .sort-option:active { background: var(--primary-soft); }
+    .sort-option.active { color: var(--primary); font-weight: 800; }
     .sort-option svg {
       width: 20px;
       height: 20px;
@@ -673,12 +784,20 @@
 
     /* Leaflet control adjustments */
     .leaflet-top.leaflet-left {
-      top: calc(var(--top-bar-height) + var(--safe-top) + 8px);
+      top: calc(var(--top-bar-height) + var(--header-height) + var(--safe-top) + 8px);
       left: calc(var(--safe-left) + 8px);
+      transition: top 0.3s ease;
     }
     .leaflet-top.leaflet-right {
-      top: calc(var(--top-bar-height) + var(--safe-top) + 8px);
+      top: calc(var(--top-bar-height) + var(--header-height) + var(--safe-top) + 8px);
       right: calc(var(--safe-right) + 8px);
+      transition: top 0.3s ease;
+    }
+    :root.header-collapsed .leaflet-top.leaflet-left {
+      top: calc(var(--top-bar-height) + var(--header-collapsed) + var(--safe-top) + 8px);
+    }
+    :root.header-collapsed .leaflet-top.leaflet-right {
+      top: calc(var(--top-bar-height) + var(--header-collapsed) + var(--safe-top) + 8px);
     }
     .leaflet-control-zoom a, .leaflet-control-rotate a, .leaflet-control-locate a {
       width: 44px !important;
@@ -726,6 +845,14 @@
   </style>
 </head>
 <body>
+  <!-- Brand header -->
+  <header class="brand-header" id="brandHeader">
+    <span class="brand-title">Canada's Wonderland Map</span>
+    <button class="header-toggle" id="headerToggle" aria-label="Toggle header">
+      <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+  </header>
+
   <!-- Top bar -->
   <div class="top-bar">
     <div class="search-wrapper">
@@ -1312,17 +1439,17 @@
       const wetText = wet === "yes" ? "Gets wet" : wet === "no" ? "Stays dry" : "Unknown";
 
       let html = `<div style="line-height:1.4">`;
-      html += `<div style="font-weight:700;font-size:1.05rem;margin-bottom:4px">${ride.name}</div>`;
+      html += `<div style="font-weight:700;font-size:1.05rem;margin-bottom:4px;color:#000536">${ride.name}</div>`;
       if (ride.operating_status === "temporarily_closed") {
-        html += `<div style="display:inline-block;background:#fdecea;color:#b42318;font-weight:800;font-size:.75rem;padding:3px 7px;border-radius:6px;margin-bottom:6px">Closed</div>`;
+        html += `<div style="display:inline-block;background:#fde8ea;color:#9c212f;font-weight:800;font-size:.75rem;padding:3px 7px;border-radius:6px;margin-bottom:6px">Closed</div>`;
       }
-      html += `<div style="color:var(--muted);font-size:.9rem;margin-bottom:8px">${ride.park_area} · ${typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse}</div>`;
+      html += `<div style="color:#4a5c6a;font-size:.9rem;margin-bottom:8px">${ride.park_area} · ${typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse}</div>`;
       html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Height:</b> ${heightText}</div>`;
       html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Wet:</b> ${wetText}</div>`;
       if (thrillLevel) html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Thrill:</b> ${thrillLevel}/5 (${thrillLabels[thrillLevel]})</div>`;
       html += `<div style="margin-top:10px;display:flex;gap:12px">`;
-      if (ride.location?.map_url) html += `<a href="${ride.location.map_url}" target="_blank" rel="noopener" style="font-weight:700;font-size:.85rem">Maps ↗</a>`;
-      html += `<a href="${ride.official_url}" target="_blank" rel="noopener" style="font-weight:700;font-size:.85rem">Info ↗</a>`;
+      if (ride.location?.map_url) html += `<a href="${ride.location.map_url}" target="_blank" rel="noopener" style="color:#102f45;font-weight:700;font-size:.85rem">Maps ↗</a>`;
+      html += `<a href="${ride.official_url}" target="_blank" rel="noopener" style="color:#102f45;font-weight:700;font-size:.85rem">Info ↗</a>`;
       html += `</div></div>`;
       return html;
     }
@@ -1585,6 +1712,44 @@
 
     initFilterChips();
     loadRides();
+
+    // Header collapse functionality with localStorage
+    const brandHeader = document.getElementById('brandHeader');
+    const headerToggle = document.getElementById('headerToggle');
+    const HEADER_STORAGE_KEY = 'cw-header-collapsed';
+
+    function setHeaderCollapsed(collapsed) {
+      if (collapsed) {
+        brandHeader.classList.add('collapsed');
+        document.documentElement.classList.add('header-collapsed');
+      } else {
+        brandHeader.classList.remove('collapsed');
+        document.documentElement.classList.remove('header-collapsed');
+      }
+      try {
+        localStorage.setItem(HEADER_STORAGE_KEY, collapsed ? '1' : '0');
+      } catch (e) {}
+      
+      // Invalidate map size after transition
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, 350);
+    }
+
+    function toggleHeader() {
+      const isCollapsed = brandHeader.classList.contains('collapsed');
+      setHeaderCollapsed(!isCollapsed);
+    }
+
+    // Restore header state from localStorage
+    try {
+      const saved = localStorage.getItem(HEADER_STORAGE_KEY);
+      if (saved === '1') {
+        setHeaderCollapsed(true);
+      }
+    } catch (e) {}
+
+    headerToggle.addEventListener('click', toggleHeader);
   </script>
 </body>
 </html>
