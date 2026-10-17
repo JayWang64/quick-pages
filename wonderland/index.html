@@ -918,6 +918,199 @@
     .no-results p { margin-bottom: 16px; font-size: 1rem; }
 
     [hidden] { display: none !important; }
+
+    /* Walking directions styles */
+    .directions-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--panel);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+      padding: 12px 16px;
+      padding-bottom: calc(12px + var(--safe-bottom));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2000;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .directions-bar.visible { transform: translateY(0); }
+
+    .directions-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .directions-route {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .directions-stats {
+      display: flex;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .directions-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .directions-stat svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .directions-stat strong { color: var(--ink); font-weight: 700; }
+
+    .directions-close-btn {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border: none;
+      background: var(--red-soft);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .directions-close-btn:active { background: #fcd0d5; }
+    .directions-close-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--red);
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .walk-here-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 10px 14px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .walk-here-btn:active { background: var(--cw-navy-dark); }
+    .walk-here-btn svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    /* Start point selector modal */
+    .start-selector {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 3000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .start-selector.visible { opacity: 1; pointer-events: auto; }
+
+    .start-selector-panel {
+      background: var(--panel);
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      padding-bottom: calc(20px + var(--safe-bottom));
+      width: 100%;
+      max-width: 420px;
+      max-height: 70vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .start-selector.visible .start-selector-panel { transform: translateY(0); }
+
+    .start-selector h3 {
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+
+    .start-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--page);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .start-option:active { background: var(--primary-soft); border-color: var(--primary); }
+
+    .start-option-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .start-option-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+    .start-option-icon.orange { background: var(--accent-soft); color: var(--accent); }
+
+    .start-option-text { flex: 1; min-width: 0; }
+    .start-option-title { font-weight: 700; color: var(--ink); }
+    .start-option-desc { font-size: 0.85rem; color: var(--muted); }
+
+    .no-route-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--ink);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      text-align: center;
+      z-index: 4000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .no-route-toast.visible { opacity: 1; }
   </style>
 </head>
 <body>
@@ -1617,7 +1810,13 @@
       html += `<div style="margin-top:10px;display:flex;gap:12px">`;
       if (ride.location?.map_url) html += `<a href="${ride.location.map_url}" target="_blank" rel="noopener" style="color:#102f45;font-weight:700;font-size:.85rem">Maps ↗</a>`;
       html += `<a href="${ride.official_url}" target="_blank" rel="noopener" style="color:#102f45;font-weight:700;font-size:.85rem">Info ↗</a>`;
-      html += `</div></div>`;
+      html += `</div>`;
+      if (ride.location?.lat) {
+        html += `<button class="walk-here-btn" onclick="handleWalkHereClick('${ride.id}')" style="margin-top:10px;width:100%">`;
+        html += `<svg viewBox="0 0 24 24"><path d="M13 4h-2l-1 7h4l-1-7z"/><circle cx="12" cy="2.5" r="1.5"/><path d="M9 22l3-8 3 8M7 12l2 4M17 12l-2 4"/></svg>`;
+        html += `Walk here</button>`;
+      }
+      html += `</div>`;
       return html;
     }
 
@@ -2006,6 +2205,408 @@
     } catch (e) {}
 
     headerToggle.addEventListener('click', toggleHeader);
+
+    // ========================================
+    // WALKING DIRECTIONS
+    // ========================================
+    
+    let walkGraph = null;
+    let walkGraphLoading = false;
+    let routePolyline = null;
+    let routeCasing = null;
+    let routeStartMarker = null;
+    let routeEndMarker = null;
+    let currentRoute = null;
+    let pendingDestination = null;
+    
+    // Park entrance location (main gate)
+    const PARK_ENTRANCE = { lat: 43.8415, lng: -79.5390 };
+    const PARK_CENTER = { lat: 43.8419, lng: -79.5436 };
+    const PARK_RADIUS_M = 1000;
+    
+    // Walking speed: ~80 m/min
+    const WALK_SPEED_M_PER_MIN = 80;
+    
+    // Haversine distance in meters
+    function haversineM(lat1, lon1, lat2, lon2) {
+      const R = 6371000;
+      const toRad = x => x * Math.PI / 180;
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+    
+    // Load walk graph lazily
+    async function loadWalkGraph() {
+      if (walkGraph) return walkGraph;
+      if (walkGraphLoading) {
+        return new Promise((resolve) => {
+          const check = setInterval(() => {
+            if (walkGraph) { clearInterval(check); resolve(walkGraph); }
+          }, 100);
+        });
+      }
+      
+      walkGraphLoading = true;
+      try {
+        const resp = await fetch('public/walkgraph.json');
+        walkGraph = await resp.json();
+        
+        // Build adjacency list
+        walkGraph.adj = [];
+        for (let i = 0; i < walkGraph.nodes.length; i++) walkGraph.adj[i] = [];
+        for (const [from, to, dist] of walkGraph.edges) {
+          walkGraph.adj[from].push({ node: to, dist });
+          walkGraph.adj[to].push({ node: from, dist });
+        }
+        console.log(`Walk graph: ${walkGraph.nodes.length} nodes, ${walkGraph.edges.length} edges`);
+        return walkGraph;
+      } catch (err) {
+        console.error('Failed to load walk graph:', err);
+        walkGraphLoading = false;
+        return null;
+      }
+    }
+    
+    // Find nearest graph node
+    function findNearestNode(lat, lng) {
+      if (!walkGraph) return null;
+      let bestIdx = -1, bestDist = Infinity;
+      for (let i = 0; i < walkGraph.nodes.length; i++) {
+        const node = walkGraph.nodes[i];
+        const dist = haversineM(lat, lng, node.lat, node.lng);
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      }
+      return bestIdx >= 0 ? { idx: bestIdx, dist: bestDist } : null;
+    }
+    
+    // A* routing
+    function findRoute(startIdx, endIdx) {
+      if (!walkGraph || startIdx < 0 || endIdx < 0) return null;
+      const nodes = walkGraph.nodes;
+      const adj = walkGraph.adj;
+      const endNode = nodes[endIdx];
+      const heuristic = (idx) => haversineM(nodes[idx].lat, nodes[idx].lng, endNode.lat, endNode.lng);
+      
+      const gScore = new Array(nodes.length).fill(Infinity);
+      const fScore = new Array(nodes.length).fill(Infinity);
+      const cameFrom = new Array(nodes.length).fill(-1);
+      
+      gScore[startIdx] = 0;
+      fScore[startIdx] = heuristic(startIdx);
+      
+      const openSet = [{ idx: startIdx, f: fScore[startIdx] }];
+      const inOpen = new Set([startIdx]);
+      const closed = new Set();
+      
+      while (openSet.length > 0) {
+        openSet.sort((a, b) => a.f - b.f);
+        const current = openSet.shift();
+        inOpen.delete(current.idx);
+        
+        if (current.idx === endIdx) {
+          const path = [];
+          let node = endIdx;
+          while (node >= 0) { path.unshift(node); node = cameFrom[node]; }
+          return { path, distance: gScore[endIdx] };
+        }
+        
+        closed.add(current.idx);
+        
+        for (const neighbor of adj[current.idx]) {
+          if (closed.has(neighbor.node)) continue;
+          const tentativeG = gScore[current.idx] + neighbor.dist;
+          if (tentativeG < gScore[neighbor.node]) {
+            cameFrom[neighbor.node] = current.idx;
+            gScore[neighbor.node] = tentativeG;
+            fScore[neighbor.node] = tentativeG + heuristic(neighbor.node);
+            if (!inOpen.has(neighbor.node)) {
+              openSet.push({ idx: neighbor.node, f: fScore[neighbor.node] });
+              inOpen.add(neighbor.node);
+            }
+          }
+        }
+      }
+      return null;
+    }
+    
+    // Check if inside park
+    function isInsidePark(lat, lng) {
+      return haversineM(lat, lng, PARK_CENTER.lat, PARK_CENTER.lng) <= PARK_RADIUS_M;
+    }
+    
+    // Get default start point
+    function getDefaultStartPoint() {
+      if (userLocation && isInsidePark(userLocation.lat, userLocation.lng)) {
+        return { ...userLocation, type: 'user' };
+      }
+      return { ...PARK_ENTRANCE, type: 'entrance' };
+    }
+    
+    // Draw route on map
+    function drawRoute(route, startName, endName) {
+      clearRoute();
+      if (!route || !route.path || route.path.length < 2) return;
+      
+      const latlngs = route.path.map(idx => [walkGraph.nodes[idx].lat, walkGraph.nodes[idx].lng]);
+      
+      // White casing
+      routeCasing = L.polyline(latlngs, {
+        color: '#ffffff', weight: 8, opacity: 1, lineCap: 'round', lineJoin: 'round'
+      }).addTo(map);
+      
+      // Main route (navy brand color)
+      routePolyline = L.polyline(latlngs, {
+        color: '#102f45', weight: 5, opacity: 1, lineCap: 'round', lineJoin: 'round'
+      }).addTo(map);
+      
+      // Start marker
+      routeStartMarker = L.circleMarker(latlngs[0], {
+        radius: 8, fillColor: '#1a73e8', fillOpacity: 1, color: 'white', weight: 3
+      }).addTo(map);
+      
+      // End marker
+      routeEndMarker = L.circleMarker(latlngs[latlngs.length - 1], {
+        radius: 8, fillColor: '#102f45', fillOpacity: 1, color: 'white', weight: 3
+      }).addTo(map);
+      
+      map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50] });
+      
+      currentRoute = { route, startName, endName };
+      showDirectionsBar(startName, endName, route.distance);
+    }
+    
+    // Draw fallback dashed line
+    function drawFallbackLine(startLat, startLng, endLat, endLng, startName, endName) {
+      clearRoute();
+      const latlngs = [[startLat, startLng], [endLat, endLng]];
+      routePolyline = L.polyline(latlngs, {
+        color: '#9c212f', weight: 3, opacity: 0.7, dashArray: '10, 10'
+      }).addTo(map);
+      const directDist = haversineM(startLat, startLng, endLat, endLng);
+      map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50] });
+      showNoRouteToast();
+      currentRoute = { startName, endName, distance: directDist, noRoute: true };
+      showDirectionsBar(startName, endName, directDist, true);
+    }
+    
+    // Clear route
+    function clearRoute() {
+      if (routePolyline) { map.removeLayer(routePolyline); routePolyline = null; }
+      if (routeCasing) { map.removeLayer(routeCasing); routeCasing = null; }
+      if (routeStartMarker) { map.removeLayer(routeStartMarker); routeStartMarker = null; }
+      if (routeEndMarker) { map.removeLayer(routeEndMarker); routeEndMarker = null; }
+      currentRoute = null;
+      hideDirectionsBar();
+    }
+    
+    // Format helpers
+    function formatDistance(m) { return m >= 1000 ? (m / 1000).toFixed(1) + ' km' : Math.round(m) + ' m'; }
+    function formatWalkTime(m) {
+      const min = Math.ceil(m / WALK_SPEED_M_PER_MIN);
+      return min < 60 ? min + ' min' : Math.floor(min / 60) + 'h ' + (min % 60) + 'm';
+    }
+    
+    // Show/hide directions bar
+    function showDirectionsBar(startName, endName, distance, noRoute = false) {
+      const bar = document.getElementById('directionsBar');
+      bar.querySelector('.directions-route').textContent = `${startName} → ${endName}`;
+      bar.querySelector('.directions-dist').innerHTML = `<strong>${formatDistance(distance)}</strong>`;
+      bar.querySelector('.directions-time').innerHTML = `<strong>${formatWalkTime(distance)}</strong>${noRoute ? ' (straight)' : ''}`;
+      bar.classList.add('visible');
+    }
+    function hideDirectionsBar() { document.getElementById('directionsBar').classList.remove('visible'); }
+    
+    // Show no-route toast
+    function showNoRouteToast() {
+      const toast = document.getElementById('noRouteToast');
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+    
+    // Main function to get directions
+    async function getDirectionsToRide(ride, startPoint = null) {
+      if (!ride.location?.lat || !ride.location?.lng) return;
+      
+      const graph = await loadWalkGraph();
+      if (!graph) return;
+      
+      let start = startPoint || getDefaultStartPoint();
+      let startName = start.type === 'user' ? 'Your location' : 
+                      start.type === 'entrance' ? 'Main Entrance' : 
+                      start.name || 'Start';
+      
+      const startNode = findNearestNode(start.lat, start.lng);
+      const endNode = findNearestNode(ride.location.lat, ride.location.lng);
+      
+      if (!startNode || !endNode) {
+        drawFallbackLine(start.lat, start.lng, ride.location.lat, ride.location.lng, startName, ride.name);
+        return;
+      }
+      
+      const route = findRoute(startNode.idx, endNode.idx);
+      if (!route) {
+        drawFallbackLine(start.lat, start.lng, ride.location.lat, ride.location.lng, startName, ride.name);
+        return;
+      }
+      
+      route.distance += startNode.dist + endNode.dist;
+      drawRoute(route, startName, ride.name);
+    }
+    
+    // Show start selector
+    function showStartSelector(destinationRide) {
+      pendingDestination = destinationRide;
+      const selector = document.getElementById('startSelector');
+      const optionsList = document.getElementById('startOptionsList');
+      
+      let html = '';
+      
+      // User location option
+      if (userLocation) {
+        const inPark = isInsidePark(userLocation.lat, userLocation.lng);
+        html += `
+          <div class="start-option" data-type="user" ${!inPark ? 'style="opacity:0.5"' : ''}>
+            <div class="start-option-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg>
+            </div>
+            <div class="start-option-text">
+              <div class="start-option-title">Your location</div>
+              <div class="start-option-desc">${inPark ? 'Currently in the park' : 'Outside the park'}</div>
+            </div>
+          </div>`;
+      }
+      
+      // Main entrance
+      html += `
+        <div class="start-option" data-type="entrance">
+          <div class="start-option-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <div class="start-option-text">
+            <div class="start-option-title">Main Entrance</div>
+            <div class="start-option-desc">Park front gate</div>
+          </div>
+        </div>`;
+      
+      // Nearby rides
+      const nearbyRides = rides
+        .filter(r => r.id !== destinationRide.id && r.location?.lat)
+        .map(r => ({ ride: r, dist: haversineM(destinationRide.location.lat, destinationRide.location.lng, r.location.lat, r.location.lng) }))
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, 5);
+      
+      for (const { ride, dist } of nearbyRides) {
+        html += `
+          <div class="start-option" data-type="ride" data-ride-id="${ride.id}">
+            <div class="start-option-icon orange">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="start-option-text">
+              <div class="start-option-title">${ride.name}</div>
+              <div class="start-option-desc">${ride.park_area} · ${Math.round(dist)}m away</div>
+            </div>
+          </div>`;
+      }
+      
+      optionsList.innerHTML = html;
+      
+      optionsList.querySelectorAll('.start-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const type = opt.dataset.type;
+          let startPoint = null;
+          
+          if (type === 'user' && userLocation) {
+            startPoint = { ...userLocation, type: 'user' };
+          } else if (type === 'entrance') {
+            startPoint = { ...PARK_ENTRANCE, type: 'entrance' };
+          } else if (type === 'ride') {
+            const ride = rides.find(r => r.id === opt.dataset.rideId);
+            if (ride) startPoint = { lat: ride.location.lat, lng: ride.location.lng, type: 'ride', name: ride.name };
+          }
+          
+          const destination = pendingDestination;
+          hideStartSelector();
+          if (destination) getDirectionsToRide(destination, startPoint);
+        });
+      });
+      
+      selector.classList.add('visible');
+    }
+    
+    // Hide start selector
+    function hideStartSelector() {
+      document.getElementById('startSelector').classList.remove('visible');
+      pendingDestination = null;
+    }
+    
+    // Handle walk button click
+    window.handleWalkHereClick = function(rideId) {
+      const ride = rides.find(r => r.id === rideId);
+      if (!ride) return;
+      
+      map.closePopup();
+      snapSheet('peek');
+      
+      if (userLocation && isInsidePark(userLocation.lat, userLocation.lng)) {
+        getDirectionsToRide(ride, { ...userLocation, type: 'user' });
+      } else {
+        showStartSelector(ride);
+      }
+    };
+    
+    // Handle clear route
+    window.handleClearRoute = function() { clearRoute(); };
+    
+    // Add directions UI to DOM
+    (function initDirectionsUI() {
+      // Directions bar
+      const directionsBar = document.createElement('div');
+      directionsBar.id = 'directionsBar';
+      directionsBar.className = 'directions-bar';
+      directionsBar.innerHTML = `
+        <div class="directions-info">
+          <div class="directions-route"></div>
+          <div class="directions-stats">
+            <span class="directions-stat directions-dist">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span class="directions-stat directions-time">
+              <svg viewBox="0 0 24 24"><path d="M13 4h-2l-1 7h4l-1-7z"/><circle cx="12" cy="2.5" r="1.5"/><path d="M9 22l3-8 3 8M7 12l2 4M17 12l-2 4"/></svg>
+            </span>
+          </div>
+        </div>
+        <button class="directions-close-btn" onclick="handleClearRoute()" aria-label="Clear">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      `;
+      document.body.appendChild(directionsBar);
+      
+      // Start selector
+      const startSelector = document.createElement('div');
+      startSelector.id = 'startSelector';
+      startSelector.className = 'start-selector';
+      startSelector.innerHTML = `
+        <div class="start-selector-panel">
+          <h3>Choose starting point</h3>
+          <div id="startOptionsList"></div>
+        </div>
+      `;
+      startSelector.addEventListener('click', (e) => {
+        if (e.target === startSelector) hideStartSelector();
+      });
+      document.body.appendChild(startSelector);
+      
+      // No-route toast
+      const toast = document.createElement('div');
+      toast.id = 'noRouteToast';
+      toast.className = 'no-route-toast';
+      toast.textContent = 'No walking path found. Showing straight-line distance.';
+      document.body.appendChild(toast);
+    })();
   </script>
 </body>
 </html>
