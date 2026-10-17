@@ -219,7 +219,6 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
-      overflow: hidden;
       transition: top 0.3s ease;
     }
     
@@ -354,20 +353,22 @@
       fill: none;
     }
 
+    /* Search dropdown - fixed to body, positioned via JS */
     .search-dropdown {
-      position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      right: 0;
+      position: fixed;
+      left: 8px;
+      right: 8px;
       max-height: 200px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       background: white;
       border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.1s ease;
-      z-index: 2000;
+      z-index: 9999;
+      transform: translateZ(0);
+      will-change: opacity, top;
     }
     .search-dropdown.visible {
       opacity: 1;
@@ -378,10 +379,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       cursor: pointer;
       border-bottom: 1px solid var(--line);
-      min-height: 40px;
+      min-height: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .search-suggestion:last-child { border-bottom: none; }
     .search-suggestion:active, .search-suggestion.highlighted {
@@ -871,7 +876,7 @@
   <!-- Top bar -->
   <div class="top-bar">
     <div class="search-wrapper">
-      <div class="search-bar-inline">
+      <div class="search-bar-inline" id="searchBarInline">
         <span class="search-icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         </span>
@@ -880,7 +885,6 @@
           <svg viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
-      <div class="search-dropdown" id="searchDropdown" role="listbox"></div>
     </div>
     <button class="top-btn" id="filterBtn" aria-label="Filters">
       <svg viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
@@ -890,6 +894,9 @@
       <svg viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M9 18h6"/></svg>
     </button>
   </div>
+
+  <!-- Search dropdown - outside top-bar to avoid clipping/stacking issues -->
+  <div class="search-dropdown" id="searchDropdown" role="listbox"></div>
 
   <!-- Map -->
   <div id="ride-map"></div>
@@ -1602,9 +1609,11 @@
       map.addControl(locateControl);
     }
 
-    // Search
+    // Search - mobile-friendly implementation
     let currentSuggestions = [];
     let searchHighlightIndex = -1;
+    let isSelectingRow = false;
+    const searchBarInline = document.getElementById("searchBarInline");
 
     function matchesSearch(ride, query) {
       const q = query.toLowerCase().trim();
@@ -1618,6 +1627,20 @@
       const idx = text.toLowerCase().indexOf(query.toLowerCase());
       if (idx === -1) return text;
       return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + query.length) + "</mark>" + text.slice(idx + query.length);
+    }
+
+    function positionDropdown() {
+      const rect = searchBarInline.getBoundingClientRect();
+      const vvHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      const vvOffsetTop = window.visualViewport ? window.visualViewport.offsetTop : 0;
+      
+      searchDropdown.style.top = (rect.bottom + 4) + "px";
+      searchDropdown.style.left = "8px";
+      searchDropdown.style.right = "8px";
+      
+      // Cap max-height to fit in visible viewport
+      const availableHeight = vvHeight - (rect.bottom - vvOffsetTop) - 20;
+      searchDropdown.style.maxHeight = Math.min(200, Math.max(100, availableHeight)) + "px";
     }
 
     function renderSuggestions(query) {
@@ -1636,6 +1659,7 @@
 
       if (matches.length === 0) {
         searchDropdown.innerHTML = '<div class="search-no-results">No matches</div>';
+        positionDropdown();
         searchDropdown.classList.add("visible");
         return;
       }
@@ -1653,9 +1677,29 @@
         `;
       }).join("");
 
+      positionDropdown();
       searchDropdown.classList.add("visible");
+      
+      // Attach touch-friendly event handlers
       searchDropdown.querySelectorAll(".search-suggestion").forEach((el, i) => {
-        el.addEventListener("click", () => selectSuggestion(i));
+        // Use pointerdown for immediate response on mobile
+        el.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+          isSelectingRow = true;
+          selectSuggestion(i);
+        }, { passive: false });
+        
+        // Fallback for older browsers
+        el.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          isSelectingRow = true;
+          selectSuggestion(i);
+        }, { passive: false });
+        
+        // Click fallback for desktop
+        el.addEventListener("click", (e) => {
+          if (!isSelectingRow) selectSuggestion(i);
+        });
       });
     }
 
@@ -1673,26 +1717,52 @@
       if (index < 0 || index >= currentSuggestions.length) return;
       const ride = currentSuggestions[index];
       searchInput.value = "";
+      searchInput.blur();
       searchClearBtn.classList.remove("visible");
       searchDropdown.classList.remove("visible");
       currentSuggestions = [];
       searchHighlightIndex = -1;
+      isSelectingRow = false;
       panToRideAndSelect(ride);
       snapSheet("peek");
     }
 
-    searchInput.addEventListener("input", (e) => renderSuggestions(e.target.value));
-    searchInput.addEventListener("focus", () => { if (searchInput.value.trim()) renderSuggestions(searchInput.value); });
+    function hideDropdown() {
+      if (isSelectingRow) return; // Don't hide while selecting
+      searchDropdown.classList.remove("visible");
+    }
+
+    // Input event - fires on every keystroke including mobile
+    searchInput.addEventListener("input", (e) => {
+      isSelectingRow = false;
+      renderSuggestions(e.target.value);
+    });
+    
+    // Show dropdown on focus if there's text
+    searchInput.addEventListener("focus", () => {
+      isSelectingRow = false;
+      if (searchInput.value.trim()) renderSuggestions(searchInput.value);
+    });
+    
+    // Hide dropdown on blur with delay to allow tap selection
+    searchInput.addEventListener("blur", () => {
+      setTimeout(() => {
+        if (!isSelectingRow) hideDropdown();
+      }, 200);
+    });
+    
     searchClearBtn.addEventListener("click", () => {
       searchInput.value = "";
       searchClearBtn.classList.remove("visible");
       searchDropdown.classList.remove("visible");
       currentSuggestions = [];
+      searchInput.focus();
     });
+    
     searchInput.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         searchInput.blur();
-        searchDropdown.classList.remove("visible");
+        hideDropdown();
       } else if (e.key === "ArrowDown" && currentSuggestions.length > 0) {
         e.preventDefault();
         searchHighlightIndex = Math.min(searchHighlightIndex + 1, currentSuggestions.length - 1);
@@ -1707,9 +1777,32 @@
         else if (currentSuggestions.length > 0) selectSuggestion(0);
       }
     });
-    document.addEventListener("click", (e) => {
-      if (!document.querySelector(".search-wrapper").contains(e.target)) {
-        searchDropdown.classList.remove("visible");
+    
+    // Close dropdown when tapping outside
+    document.addEventListener("pointerdown", (e) => {
+      if (!searchDropdown.contains(e.target) && 
+          !searchBarInline.contains(e.target) &&
+          searchDropdown.classList.contains("visible")) {
+        hideDropdown();
+      }
+    });
+    
+    // Update dropdown position on viewport changes (keyboard open/close)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        if (searchDropdown.classList.contains("visible")) {
+          positionDropdown();
+        }
+      });
+      window.visualViewport.addEventListener("scroll", () => {
+        if (searchDropdown.classList.contains("visible")) {
+          positionDropdown();
+        }
+      });
+    }
+    window.addEventListener("resize", () => {
+      if (searchDropdown.classList.contains("visible")) {
+        positionDropdown();
       }
     });
 
