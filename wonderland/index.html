@@ -1031,6 +1031,15 @@
       thrill: "Thrill", dark_ride: "Dark Ride", boat: "Boat", other: "Other"
     };
 
+    // Get type label with thrill number if applicable
+    function getTypeLabel(ride) {
+      const baseLabel = typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse || "";
+      if (ride.ride_type_coarse === "thrill" && ride.thrill_level_1_to_5) {
+        return `Thrill ${ride.thrill_level_1_to_5}`;
+      }
+      return baseLabel;
+    }
+
     // DOM refs
     const searchInput = document.getElementById("searchInput");
     const searchClearBtn = document.getElementById("searchClearBtn");
@@ -1376,7 +1385,7 @@
         const closedBadge = ride.operating_status === "temporarily_closed"
           ? '<span class="status closed">Closed</span>' : '';
         const typeClass = getTypeClass(ride.ride_type_coarse);
-        const typeLabel = typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse;
+        const typeLabel = getTypeLabel(ride);
         let distText = "";
         if (sortOrder === "nearest" && userLocation && ride.location?.lat) {
           const d = getDistance(userLocation.lat, userLocation.lng, ride.location.lat, ride.location.lng);
@@ -1465,7 +1474,7 @@
       if (ride.operating_status === "temporarily_closed") {
         html += `<div style="display:inline-block;background:#fde8ea;color:#9c212f;font-weight:800;font-size:.75rem;padding:3px 7px;border-radius:6px;margin-bottom:6px">Closed</div>`;
       }
-      html += `<div style="color:#4a5c6a;font-size:.9rem;margin-bottom:8px">${ride.park_area} · ${typeLabels[ride.ride_type_coarse] || ride.ride_type_coarse}</div>`;
+      html += `<div style="color:#4a5c6a;font-size:.9rem;margin-bottom:8px">${ride.park_area} · ${getTypeLabel(ride)}</div>`;
       html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Height:</b> ${heightText}</div>`;
       html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Wet:</b> ${wetText}</div>`;
       if (thrillLevel) html += `<div style="font-size:.9rem;margin-bottom:3px"><b>Thrill:</b> ${thrillLevel}/5 (${thrillLabels[thrillLevel]})</div>`;
@@ -1618,7 +1627,7 @@
     function matchesSearch(ride, query) {
       const q = query.toLowerCase().trim();
       if (!q) return false;
-      const fields = [ride.name, ride.park_area, typeLabels[ride.ride_type_coarse] || ""].map(f => (f || "").toLowerCase());
+      const fields = [ride.name, ride.park_area, getTypeLabel(ride)].map(f => (f || "").toLowerCase());
       return fields.some(f => f.includes(q) || f.split(/\s+/).some(w => w.startsWith(q)));
     }
 
@@ -1667,7 +1676,7 @@
       searchDropdown.innerHTML = matches.map((ride, i) => {
         const closedTag = ride.operating_status === "temporarily_closed" ? '<span class="closed-tag">✗</span>' : "";
         const areaShort = ride.park_area ? ride.park_area.split(" ")[0] : "";
-        const typeShort = typeLabels[ride.ride_type_coarse] || "";
+        const typeShort = getTypeLabel(ride);
         const tag = areaShort && typeShort ? `${areaShort} · ${typeShort}` : (areaShort || typeShort);
         return `
           <div class="search-suggestion" data-index="${i}">
