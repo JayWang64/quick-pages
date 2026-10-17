@@ -737,6 +737,43 @@
       border: 2px solid var(--line);
     }
 
+    /* Sort options in filter sheet */
+    .sort-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sort-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 52px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: var(--page);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--ink);
+      text-align: left;
+    }
+    .sort-chip:active { transform: scale(0.98); }
+    .sort-chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .sort-chip svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
     /* Sort menu */
     .sort-menu {
       position: fixed;
@@ -915,6 +952,10 @@
       <svg viewBox="0 0 24 24"><path d="M12 19V5M19 12l-7 7-7-7"/></svg>
       Z → A
     </div>
+    <div class="sort-option" data-sort="thrill">
+      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Thrill (highest)
+    </div>
     <div class="sort-option" data-sort="nearest">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg>
       Nearest to Me
@@ -986,6 +1027,31 @@
           <button class="chip" data-filter="thrill" data-value="3">3</button>
           <button class="chip" data-filter="thrill" data-value="4">4</button>
           <button class="chip" data-filter="thrill" data-value="5">5 Extreme</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">Sort By</span>
+        <div class="sort-options" id="filterSortOptions">
+          <button class="sort-chip active" data-sort="default">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            Default
+          </button>
+          <button class="sort-chip" data-sort="asc">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
+            Name A → Z
+          </button>
+          <button class="sort-chip" data-sort="desc">
+            <svg viewBox="0 0 24 24"><path d="M12 19V5M19 12l-7 7-7-7"/></svg>
+            Name Z → A
+          </button>
+          <button class="sort-chip" data-sort="thrill">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Thrill (highest)
+          </button>
+          <button class="sort-chip" data-sort="nearest">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/></svg>
+            Nearest to Me
+          </button>
         </div>
       </div>
     </div>
@@ -1152,6 +1218,33 @@
     function closeSortMenu() {
       sortMenu.classList.remove("visible");
     }
+    
+    // Sync all sort UI controls to current sortOrder
+    function syncSortUI() {
+      // Update sort menu (top bar dropdown)
+      sortMenu.querySelectorAll(".sort-option").forEach(o => {
+        o.classList.toggle("active", o.dataset.sort === sortOrder);
+      });
+      // Update sort chips in filter sheet
+      document.querySelectorAll("#filterSortOptions .sort-chip").forEach(c => {
+        c.classList.toggle("active", c.dataset.sort === sortOrder);
+      });
+      // Update sort button active state
+      sortBtn.classList.toggle("active", sortOrder !== "default");
+    }
+    
+    // Apply a new sort order from any source
+    function applySortOrder(newSort) {
+      if (newSort === "nearest" && !userLocation) {
+        showToast("Enable location to sort by distance");
+        return false;
+      }
+      sortOrder = newSort;
+      syncSortUI();
+      renderRides();
+      return true;
+    }
+    
     sortBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       toggleSortMenu();
@@ -1159,20 +1252,19 @@
     document.addEventListener("click", (e) => {
       if (!sortMenu.contains(e.target) && e.target !== sortBtn) closeSortMenu();
     });
+    
+    // Sort menu (top bar dropdown) options
     sortMenu.querySelectorAll(".sort-option").forEach(opt => {
       opt.addEventListener("click", () => {
-        const newSort = opt.dataset.sort;
-        if (newSort === "nearest" && !userLocation) {
-          showToast("Enable location to sort by distance");
-          closeSortMenu();
-          return;
-        }
-        sortOrder = newSort;
-        sortMenu.querySelectorAll(".sort-option").forEach(o => o.classList.remove("active"));
-        opt.classList.add("active");
-        sortBtn.classList.toggle("active", sortOrder !== "default");
+        applySortOrder(opt.dataset.sort);
         closeSortMenu();
-        renderRides();
+      });
+    });
+    
+    // Sort chips in filter sheet
+    document.querySelectorAll("#filterSortOptions .sort-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        applySortOrder(chip.dataset.sort);
       });
     });
 
@@ -1353,6 +1445,18 @@
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       } else if (sortOrder === "desc") {
         filtered.sort((a, b) => b.name.localeCompare(a.name));
+      } else if (sortOrder === "thrill") {
+        filtered.sort((a, b) => {
+          const tA = a.thrill_level_1_to_5;
+          const tB = b.thrill_level_1_to_5;
+          // Rides with no thrill rank go last
+          if (tA == null && tB == null) return a.name.localeCompare(b.name);
+          if (tA == null) return 1;
+          if (tB == null) return -1;
+          // Higher thrill first
+          if (tB !== tA) return tB - tA;
+          return a.name.localeCompare(b.name);
+        });
       } else if (sortOrder === "nearest" && userLocation) {
         filtered.sort((a, b) => {
           const dA = a.location?.lat ? getDistance(userLocation.lat, userLocation.lng, a.location.lat, a.location.lng) : Infinity;
