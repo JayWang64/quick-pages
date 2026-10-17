@@ -885,6 +885,58 @@
       margin-bottom: 8px;
     }
 
+    .list-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin-bottom: 8px;
+    }
+
+    .sort-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--page);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .sort-btn:hover {
+      background: var(--green-soft);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .sort-btn.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .sort-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+
+    .sort-btn.desc svg {
+      transform: rotate(180deg);
+    }
+
     footer {
       padding: 0 16px 24px;
     }
@@ -999,7 +1051,13 @@
 
     <div class="ride-table">
       <h2>All Rides</h2>
-      <p id="countSummary">79 rides across 8 park areas</p>
+      <div class="list-header">
+        <p id="countSummary" style="margin:0">79 rides across 8 park areas</p>
+        <button class="sort-btn" id="sortBtn" aria-label="Sort rides by name">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12l7-7 7 7"/></svg>
+          <span id="sortLabel">Sort: Default</span>
+        </button>
+      </div>
       <div class="legend" aria-label="Icon legend">
         <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg> Gets wet</span>
         <span class="legend-item"><svg viewBox="0 0 24 24"><path d="M8 19l-3-3 3-3"/><path d="M16 5l3 3-3 3"/><path d="M5 16h14"/><path d="M5 8h14"/></svg> Height req</span>
@@ -1025,6 +1083,7 @@
   <script>
     let rides = [];
     let activeFilters = { height: null, wet: [], area: [], type: [], thrill: [] };
+    let sortOrder = "default"; // "default", "asc", "desc"
     let map = null;
     let markers = {};
     let userLocationMarker = null;
@@ -1238,11 +1297,50 @@
     }
 
     function filterRides() {
-      return rides.filter(rideMatchesFilters);
+      let filtered = rides.filter(rideMatchesFilters);
+      
+      if (sortOrder === "asc") {
+        filtered = filtered.slice().sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sortOrder === "desc") {
+        filtered = filtered.slice().sort((a, b) => b.name.localeCompare(a.name));
+      }
+      
+      return filtered;
+    }
+
+    function updateSortButton() {
+      const sortBtn = document.getElementById("sortBtn");
+      const sortLabel = document.getElementById("sortLabel");
+      
+      sortBtn.classList.remove("active", "desc");
+      
+      if (sortOrder === "asc") {
+        sortBtn.classList.add("active");
+        sortLabel.textContent = "Sort: A–Z";
+      } else if (sortOrder === "desc") {
+        sortBtn.classList.add("active", "desc");
+        sortLabel.textContent = "Sort: Z–A";
+      } else {
+        sortLabel.textContent = "Sort: Default";
+      }
+    }
+
+    function cycleSortOrder() {
+      if (sortOrder === "default") {
+        sortOrder = "asc";
+      } else if (sortOrder === "asc") {
+        sortOrder = "desc";
+      } else {
+        sortOrder = "default";
+      }
+      updateSortButton();
+      renderRides();
     }
 
     function clearAllFilters() {
       activeFilters = { height: null, wet: [], area: [], type: [], thrill: [] };
+      sortOrder = "default";
+      updateSortButton();
       document.querySelectorAll(".chip.active").forEach(c => c.classList.remove("active"));
       document.getElementById("heightInput").value = "";
       renderRides();
@@ -1737,6 +1835,8 @@
     });
 
     document.getElementById("clearFilters").addEventListener("click", clearAllFilters);
+
+    document.getElementById("sortBtn").addEventListener("click", cycleSortOrder);
 
     document.getElementById("heightInput").addEventListener("input", (e) => {
       const val = parseInt(e.target.value);
