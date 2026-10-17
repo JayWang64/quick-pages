@@ -356,30 +356,32 @@
 
     .search-dropdown {
       position: absolute;
-      top: calc(100% + 6px);
+      top: calc(100% + 2px);
       left: 0;
       right: 0;
-      max-height: min(360px, 60vh);
+      max-height: 200px;
       overflow-y: auto;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
       opacity: 0;
-      transform: translateY(-8px);
       pointer-events: none;
-      transition: opacity 0.15s ease, transform 0.15s ease;
-      z-index: 100;
+      transition: opacity 0.1s ease;
+      z-index: 2000;
     }
     .search-dropdown.visible {
       opacity: 1;
-      transform: translateY(0);
       pointer-events: auto;
     }
     .search-suggestion {
-      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
       cursor: pointer;
       border-bottom: 1px solid var(--line);
-      min-height: 44px;
+      min-height: 40px;
     }
     .search-suggestion:last-child { border-bottom: none; }
     .search-suggestion:active, .search-suggestion.highlighted {
@@ -387,29 +389,42 @@
     }
     .search-suggestion-name {
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
     }
-    .search-suggestion-meta {
-      font-size: 0.88rem;
+    .search-suggestion-name .closed-tag {
+      display: inline;
+      color: var(--cw-red);
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-left: 4px;
+    }
+    .search-suggestion-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--muted);
-      margin-top: 4px;
+      background: var(--page);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .search-suggestion mark {
       background: #fff59d;
       color: inherit;
-      padding: 0 2px;
+      padding: 0 1px;
       border-radius: 2px;
     }
     .search-no-results {
-      padding: 20px 16px;
+      padding: 12px;
       text-align: center;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     /* Bottom sheet */
@@ -1615,7 +1630,7 @@
         return;
       }
 
-      const matches = rides.filter(r => matchesSearch(r, q)).slice(0, 8);
+      const matches = rides.filter(r => matchesSearch(r, q)).slice(0, 5);
       currentSuggestions = matches;
       searchHighlightIndex = -1;
 
@@ -1626,11 +1641,14 @@
       }
 
       searchDropdown.innerHTML = matches.map((ride, i) => {
-        const closedBadge = ride.operating_status === "temporarily_closed" ? '<span class="status closed" style="font-size:.7rem;padding:2px 5px;margin-left:6px">Closed</span>' : "";
+        const closedTag = ride.operating_status === "temporarily_closed" ? '<span class="closed-tag">✗</span>' : "";
+        const areaShort = ride.park_area ? ride.park_area.split(" ")[0] : "";
+        const typeShort = typeLabels[ride.ride_type_coarse] || "";
+        const tag = areaShort && typeShort ? `${areaShort} · ${typeShort}` : (areaShort || typeShort);
         return `
           <div class="search-suggestion" data-index="${i}">
-            <div class="search-suggestion-name">${highlightMatch(ride.name, q)}${closedBadge}</div>
-            <div class="search-suggestion-meta">${highlightMatch(ride.park_area, q)} · ${highlightMatch(typeLabels[ride.ride_type_coarse] || "", q)}</div>
+            <span class="search-suggestion-name">${highlightMatch(ride.name, q)}${closedTag}</span>
+            <span class="search-suggestion-tag">${tag}</span>
           </div>
         `;
       }).join("");
