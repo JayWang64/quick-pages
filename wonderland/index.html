@@ -268,6 +268,25 @@
       stroke-linejoin: round;
       flex-shrink: 0;
     }
+    
+    /* Sort button with label */
+    #sortBtn {
+      gap: 4px;
+      transition: width 0.15s ease, background 0.15s ease;
+    }
+    #sortBtn.has-label {
+      width: auto;
+      padding: 0 12px;
+    }
+    .sort-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      display: none;
+    }
+    #sortBtn.has-label .sort-label {
+      display: inline;
+    }
 
     .filter-badge {
       min-width: 20px;
@@ -929,6 +948,7 @@
     </button>
     <button class="top-btn" id="sortBtn" aria-label="Sort">
       <svg viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M9 18h6"/></svg>
+      <span class="sort-label" id="sortLabel"></span>
     </button>
   </div>
 
@@ -1220,6 +1240,15 @@
     }
     
     // Sync all sort UI controls to current sortOrder
+    // Sort label names for the button
+    const sortLabels = {
+      default: "",
+      asc: "A-Z",
+      desc: "Z-A",
+      thrill: "Thrill",
+      nearest: "Near"
+    };
+    
     function syncSortUI() {
       // Update sort menu (top bar dropdown)
       sortMenu.querySelectorAll(".sort-option").forEach(o => {
@@ -1229,8 +1258,11 @@
       document.querySelectorAll("#filterSortOptions .sort-chip").forEach(c => {
         c.classList.toggle("active", c.dataset.sort === sortOrder);
       });
-      // Update sort button active state
-      sortBtn.classList.toggle("active", sortOrder !== "default");
+      // Update sort button active state and label
+      const isNonDefault = sortOrder !== "default";
+      sortBtn.classList.toggle("active", isNonDefault);
+      sortBtn.classList.toggle("has-label", isNonDefault);
+      document.getElementById("sortLabel").textContent = sortLabels[sortOrder] || "";
     }
     
     // Apply a new sort order from any source
