@@ -2347,30 +2347,78 @@
     }
     
     // Draw route on map
+    // Get dotted route style based on zoom level (Google Maps walking style)
+    function getRouteStyle(zoom) {
+      // Scale dot size and spacing with zoom (zoom 15-19)
+      // At lower zoom, smaller dots with more spacing; at higher zoom, larger dots tighter together
+      const baseWeight = 6;
+      const baseSpacing = 14;
+      const zoomFactor = Math.max(0, Math.min(1, (zoom - 15) / 4)); // 0 at zoom 15, 1 at zoom 19
+      const weight = baseWeight + zoomFactor * 2; // 6-8
+      const spacing = baseSpacing - zoomFactor * 4; // 14-10
+      return {
+        color: '#0d7377', // Brand teal/blue-green
+        weight: weight,
+        opacity: 1,
+        lineCap: 'round',
+        lineJoin: 'round',
+        dashArray: `1, ${spacing}` // Creates round dots with spacing
+      };
+    }
+    
+    // Get casing style (thin white outline for dot contrast)
+    function getCasingStyle(zoom) {
+      const routeStyle = getRouteStyle(zoom);
+      return {
+        color: '#ffffff',
+        weight: routeStyle.weight + 4, // Slightly wider than dots
+        opacity: 0.9,
+        lineCap: 'round',
+        lineJoin: 'round',
+        dashArray: routeStyle.dashArray // Match dot pattern
+      };
+    }
+    
+    // Update route polyline styles on zoom
+    function updateRouteStyleOnZoom() {
+      if (!routePolyline || !routeCasing) return;
+      const zoom = map.getZoom();
+      routePolyline.setStyle(getRouteStyle(zoom));
+      routeCasing.setStyle(getCasingStyle(zoom));
+    }
+    
+    // Initialize zoom listener for route style updates
+    let routeZoomListenerAdded = false;
+    function ensureRouteZoomListener() {
+      if (routeZoomListenerAdded) return;
+      map.on('zoomend', updateRouteStyleOnZoom);
+      routeZoomListenerAdded = true;
+    }
+
     function drawRoute(route, startName, endName) {
       clearRoute();
       if (!route || !route.path || route.path.length < 2) return;
       
       const latlngs = route.path.map(idx => [walkGraph.nodes[idx].lat, walkGraph.nodes[idx].lng]);
+      const zoom = map.getZoom();
       
-      // White casing
-      routeCasing = L.polyline(latlngs, {
-        color: '#ffffff', weight: 8, opacity: 1, lineCap: 'round', lineJoin: 'round'
-      }).addTo(map);
+      // White casing (dotted pattern for contrast)
+      routeCasing = L.polyline(latlngs, getCasingStyle(zoom)).addTo(map);
       
-      // Main route (navy brand color)
-      routePolyline = L.polyline(latlngs, {
-        color: '#102f45', weight: 5, opacity: 1, lineCap: 'round', lineJoin: 'round'
-      }).addTo(map);
+      // Main route - dotted line (Google Maps walking style)
+      routePolyline = L.polyline(latlngs, getRouteStyle(zoom)).addTo(map);
       
-      // Start marker
+      // Ensure zoom listener is active
+      ensureRouteZoomListener();
+      
+      // Start marker (blue)
       routeStartMarker = L.circleMarker(latlngs[0], {
         radius: 8, fillColor: '#1a73e8', fillOpacity: 1, color: 'white', weight: 3
       }).addTo(map);
       
-      // End marker
+      // End marker (brand teal)
       routeEndMarker = L.circleMarker(latlngs[latlngs.length - 1], {
-        radius: 8, fillColor: '#102f45', fillOpacity: 1, color: 'white', weight: 3
+        radius: 8, fillColor: '#0d7377', fillOpacity: 1, color: 'white', weight: 3
       }).addTo(map);
       
       map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50] });
@@ -2379,12 +2427,17 @@
       showDirectionsBar(startName, endName, route.distance);
     }
     
-    // Draw fallback dashed line
+    // Draw fallback dashed line (visually distinct from dotted route - longer dashes)
     function drawFallbackLine(startLat, startLng, endLat, endLng, startName, endName) {
       clearRoute();
       const latlngs = [[startLat, startLng], [endLat, endLng]];
+      // White casing for fallback
+      routeCasing = L.polyline(latlngs, {
+        color: '#ffffff', weight: 6, opacity: 0.8, lineCap: 'round', dashArray: '20, 12'
+      }).addTo(map);
+      // Longer dashes in red/maroon to distinguish from dotted walking route
       routePolyline = L.polyline(latlngs, {
-        color: '#9c212f', weight: 3, opacity: 0.7, dashArray: '10, 10'
+        color: '#9c212f', weight: 4, opacity: 0.85, lineCap: 'round', dashArray: '20, 12'
       }).addTo(map);
       const directDist = haversineM(startLat, startLng, endLat, endLng);
       map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50] });
