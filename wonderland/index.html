@@ -204,6 +204,29 @@
       box-shadow: 0 2px 8px rgba(26, 115, 232, 0.5);
     }
 
+    .entrance-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .entrance-marker svg {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    .entrance-tooltip {
+      font-size: 12px;
+      text-align: center;
+      padding: 4px 8px;
+      background: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .entrance-tooltip small {
+      color: #666;
+      font-size: 10px;
+    }
+
     /* Top bar */
     .top-bar {
       position: fixed;
@@ -1857,6 +1880,23 @@
       });
 
       if (bounds.length > 0) map.fitBounds(bounds, { padding: [40, 40] });
+      
+      // Add entrance marker (Guest Services / FunPix)
+      const entranceIcon = L.divIcon({
+        className: 'entrance-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        html: '<svg viewBox="0 0 24 24" fill="#0d7377" stroke="white" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>'
+      });
+      L.marker([PARK_ENTRANCE.lat, PARK_ENTRANCE.lng], { icon: entranceIcon })
+        .addTo(map)
+        .bindTooltip('Main Entrance<br><small>Guest Services / FunPix</small>', {
+          permanent: false,
+          direction: 'top',
+          offset: [0, -10],
+          className: 'entrance-tooltip'
+        });
+      
       initLocationControl();
 
       L.DomEvent.disableClickPropagation(document.querySelector(".top-bar"));
@@ -2219,8 +2259,9 @@
     let currentRoute = null;
     let pendingDestination = null;
     
-    // Park entrance location (main gate)
-    const PARK_ENTRANCE = { lat: 43.8415, lng: -79.5390 };
+    // Park entrance location (Guest Services / FunPix Photos, just inside main gate)
+    // OSM nodes: Guest Services 8406748277 (43.8431046, -79.5392026), FunPix 8406748276 (43.8430833, -79.5392506)
+    const PARK_ENTRANCE = { lat: 43.84309, lng: -79.53922 };
     const PARK_CENTER = { lat: 43.8419, lng: -79.5436 };
     const PARK_RADIUS_M = 1000;
     
@@ -2489,7 +2530,7 @@
       
       let start = startPoint || getDefaultStartPoint();
       let startName = start.type === 'user' ? 'Your location' : 
-                      start.type === 'entrance' ? 'Main Entrance' : 
+                      start.type === 'entrance' ? 'Main Entrance (Guest Services)' : 
                       start.name || 'Start';
       
       const startNode = findNearestNode(start.lat, start.lng);
@@ -2541,7 +2582,7 @@
           </div>
           <div class="start-option-text">
             <div class="start-option-title">Main Entrance</div>
-            <div class="start-option-desc">Park front gate</div>
+            <div class="start-option-desc">Guest Services / FunPix Photos</div>
           </div>
         </div>`;
       
