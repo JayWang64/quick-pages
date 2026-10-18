@@ -176,8 +176,31 @@ async function runTests() {
       console.log(`   Directions bar: ${routeState.barVisible ? 'visible' : 'NOT visible'}`);
       console.log(`   Polylines: ${routeState.polylines}`);
       
-      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-07-route.png`) });
-      console.log('   ✓ Route displayed');
+      // Screenshot at initial zoom level (after fitBounds)
+      const initialZoom = await page.evaluate(() => map.getZoom());
+      console.log(`   Initial zoom: ${initialZoom}`);
+      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-07-route-zoom${Math.round(initialZoom)}.png`) });
+      console.log(`   ✓ Route screenshot at zoom ${Math.round(initialZoom)}`);
+      
+      // Zoom to level 17 for closer view of dotted line
+      console.log('   Zooming to level 17...');
+      await page.evaluate(() => {
+        map.setZoom(17);
+      });
+      await page.waitForTimeout(800);
+      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-08-route-zoom17.png`) });
+      console.log('   ✓ Route screenshot at zoom 17');
+      
+      // Zoom to level 18 for even closer view
+      console.log('   Zooming to level 18...');
+      await page.evaluate(() => {
+        map.setZoom(18);
+      });
+      await page.waitForTimeout(800);
+      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-09-route-zoom18.png`) });
+      console.log('   ✓ Route screenshot at zoom 18');
+      
+      console.log('   ✓ Route displayed at multiple zoom levels');
       
       // Test clear button
       await page.evaluate(() => handleClearRoute());
@@ -187,7 +210,7 @@ async function runTests() {
         !document.querySelector('#directionsBar')?.classList.contains('visible')
       );
       console.log(`   Clear button: ${barCleared ? 'works' : 'FAILED'}`);
-      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-08-cleared.png`) });
+      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-10-cleared.png`) });
       
       // Verify Walk here button in popup
       console.log('9. Verifying Walk here button in popup...');
@@ -217,7 +240,7 @@ async function runTests() {
         !!document.querySelector('.leaflet-popup .walk-here-btn')
       );
       console.log(`   Walk here in popup: ${popupWalkBtn ? 'present' : 'MISSING'}`);
-      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-09-popup.png`) });
+      await page.screenshot({ path: join(SCREENSHOTS_DIR, `${prefix}-11-popup.png`) });
       
       console.log(`\n✓ ${device} tests completed`);
       
